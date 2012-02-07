@@ -27,6 +27,7 @@ public class FilterImage extends CommandBase {
     
     public FilterImage() {
         requires(camera);
+        System.out.println("Filter image Init");
     }
     
     protected void initialize(){

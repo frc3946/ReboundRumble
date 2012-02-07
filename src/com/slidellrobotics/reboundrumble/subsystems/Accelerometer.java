@@ -19,9 +19,11 @@ public class Accelerometer extends Subsystem {
 
     public void Accelerometer() {
         //look for accelerometer by trying all slots
+        System.out.println("staring Accelerometer init");
         for (slot = 1; slot <= 4; slot++) {
             accelerometer = new ADXL345_I2C(slot, ADXL345_I2C.DataFormat_Range.k2G);
             if (accelerometer != null) {
+                System.out.println("Found ADXL!!!!!!!");
                 break;
             }
         }
@@ -45,6 +47,6 @@ public ADXL345_I2C.AllAxes GetAcceleration() {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new ProcessAccelerometer());
+        //setDefaultCommand(new ProcessAccelerometer());
     }
 }

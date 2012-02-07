@@ -14,6 +14,7 @@ public class TankDrive extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(driveTrain);
+         System.out.println("Tank Drive on!");
     }
 
     // Called just before this Command runs the first time

@@ -23,6 +23,7 @@ public class DriveTrain extends Subsystem {
         leftJaguar = new Jaguar(RobotMap.leftMotor);
         rightJaguar = new Jaguar(RobotMap.rightMotor);
         robotDrive = new RobotDrive(leftJaguar, rightJaguar);
+        System.out.println("Drive Train Init");
     }
 
     public void initDefaultCommand() {

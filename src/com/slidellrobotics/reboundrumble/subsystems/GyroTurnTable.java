@@ -20,6 +20,7 @@ public class GyroTurnTable extends Subsystem {
     public GyroTurnTable() {
         gyro= new Gyro(RobotMap.gyroTurntable);
           angleToBasket =0;
+          System.out.println("Gyro inited");
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -29,11 +30,11 @@ public class GyroTurnTable extends Subsystem {
     }
     
     public void updateAngle(){
-     angleToBasket=angleToBasket+gyro.getAngle()*.02;   
+     angleToBasket=gyro.getAngle();   
     }
             
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ProcessTurnTableGyro());
+        //setDefaultCommand(new ProcessTurnTableGyro());
     }
 }

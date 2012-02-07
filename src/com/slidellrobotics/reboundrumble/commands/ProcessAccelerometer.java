@@ -51,8 +51,8 @@ public class ProcessAccelerometer extends CommandBase {
         theDash.log(velocityY,"Y");
         theDash.log(allaxes.XAxis,"X axis");
         theDash.log(allaxes.YAxis,"Y axis");
-        theDash.log(Timer.getFPGATimestamp(),"FPGATimestamp");
-        theDash.log(newtime,"timespan");
+        theDash.log(newtime,"FPGATimestamp");
+        theDash.log(timespan,"timespan");
      }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -26,13 +26,13 @@ public class Camera extends Subsystem {
 
     public void Camera() {
         camera = AxisCamera.getInstance("10.39.46.11");
-        System.out.println("no camera?");
+        System.out.println("Camera init");
         
     }
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FilterImage());
+        //setDefaultCommand(new FilterImage());
     }
 
     public ColorImage getImageFromCamera() throws NIVisionException {
@@ -52,7 +52,8 @@ public class Camera extends Subsystem {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            //System.out.println(ex);
+            //System.out.println("Camera Error");
         }
         return pic;
     }

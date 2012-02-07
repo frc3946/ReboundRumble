@@ -16,10 +16,13 @@ public class TheDash extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
+    public void TheDash(){
+        System.out.println("TheDash Init");
+    }
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new UpdateDashboard());
+        //setDefaultCommand(new UpdateDashboard());
     }
     
     public void log(int value, String key) {

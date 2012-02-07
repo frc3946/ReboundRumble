@@ -14,10 +14,15 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * @author gixxy
  */
 public class Transmission extends Subsystem {
-    DoubleSolenoid gearShifter = new DoubleSolenoid(RobotMap.gearSolinoid, RobotMap.gearSolinoid+1);
+    DoubleSolenoid gearShifter;
     boolean currentGear; //true == HighGear
     // Put methods for controlling this subsystem
     // here. Call these from Commands.    
+    public Transmission() {
+        gearShifter = new DoubleSolenoid(RobotMap.gearSolinoid, RobotMap.gearSolinoid+1);
+        System.out.println("Transmission Inited");
+    }
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

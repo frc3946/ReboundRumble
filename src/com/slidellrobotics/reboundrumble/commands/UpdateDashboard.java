@@ -26,6 +26,7 @@ public class UpdateDashboard extends CommandBase {
         theDash.log(transmission.getGearString(), "Gear");
         theDash.log(driveTrain.getLeftSpeed(), "Left Speed");
         theDash.log(driveTrain.getRightSpeed(), "Right Speed");
+        theDash.log(gyroTurnTable.getAngle(), "Angle");
 
         updated = true;
     }

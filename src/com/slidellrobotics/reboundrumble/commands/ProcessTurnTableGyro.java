@@ -15,6 +15,7 @@ public class ProcessTurnTableGyro extends CommandBase {
     public ProcessTurnTableGyro() {
         // Use requires() here to declare subsystem dependencies
         requires(gyroTurnTable);
+        System.out.println("Process turn table Gyro init");
       
     }
 

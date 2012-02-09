@@ -6,6 +6,7 @@ package com.slidellrobotics.reboundrumble.commands;
 
 import edu.wpi.first.wpilibj.ADXL345_I2C;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -47,12 +48,12 @@ public class ProcessAccelerometer extends CommandBase {
         velocityX = velocityX + allaxes.XAxis * timespan;
         velocityY = velocityY + allaxes.YAxis * timespan;
         
-        theDash.log(velocityX,"X");
-        theDash.log(velocityY,"Y");
-        theDash.log(allaxes.XAxis,"X axis");
-        theDash.log(allaxes.YAxis,"Y axis");
-        theDash.log(newtime,"FPGATimestamp");
-        theDash.log(timespan,"timespan");
+        SmartDashboard.putDouble("X", velocityX);
+        SmartDashboard.putDouble("Y", velocityY);
+        SmartDashboard.putDouble("X axis", allaxes.XAxis);
+        SmartDashboard.putDouble("Y axis", allaxes.YAxis);
+        SmartDashboard.putDouble("FPGATimestamp", newtime);
+        SmartDashboard.putDouble("timespan",timespan);
      }
 
     // Make this return true when this Command no longer needs to run execute()

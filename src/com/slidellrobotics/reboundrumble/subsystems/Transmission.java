@@ -8,46 +8,39 @@ import com.slidellrobotics.reboundrumble.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  * @author gixxy
  */
 public class Transmission extends Subsystem {
-    DoubleSolenoid gearShifter;
-    boolean currentGear; //true == HighGear
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.    
-    public Transmission() {
-        gearShifter = new DoubleSolenoid(RobotMap.gearSolinoid, RobotMap.gearSolinoid+1);
-        System.out.println("Transmission Inited");
-    }
+    private DoubleSolenoid gearShifter;
     
-    public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        //setDefaultCommand(new AutoTransmission());
+    public Transmission() {
+        System.out.println("[Transmission] Starting");
+        gearShifter = new DoubleSolenoid(RobotMap.highGear,RobotMap.lowGear);
+        System.out.println("[Transmission] gearShifter initialized");
+        System.out.println("[Transmission] Started");
     }
     
     public void setHighGear() {
         gearShifter.set(DoubleSolenoid.Value.kForward);
-        currentGear = true;
+        System.out.println("[Transmission] High Gear Set");
+        SmartDashboard.putString("Transmission", "High Gear");
     }
     
     public void setLowGear() {
         gearShifter.set(DoubleSolenoid.Value.kReverse);
-        currentGear = false;
+        System.out.println("[Transmission] Low Gear Set");
+        SmartDashboard.putString("Transmission", "Low Gear");
     }
     
     public Value getGear() {
         return gearShifter.get();
     }
     
-    public String getGearString() {
-        if(getGear() == Value.kForward) {
-            return "High Gear";
-        } else {
-            return "Low Gear";
-        }
+    public void initDefaultCommand() {
+        
     }
 }

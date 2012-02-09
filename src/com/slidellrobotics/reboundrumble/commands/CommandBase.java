@@ -6,7 +6,6 @@ import com.slidellrobotics.reboundrumble.subsystems.Accelerometer;
 import com.slidellrobotics.reboundrumble.subsystems.Camera;
 import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
 import com.slidellrobotics.reboundrumble.subsystems.GyroTurnTable;
-import com.slidellrobotics.reboundrumble.subsystems.TheDash;
 import com.slidellrobotics.reboundrumble.subsystems.Transmission;
 
 /**
@@ -22,7 +21,6 @@ public abstract class CommandBase extends Command {
     public static DriveTrain driveTrain = new DriveTrain();
     public static Transmission transmission = new Transmission();
     public static Accelerometer accelerometer = new Accelerometer();
-    public static TheDash theDash = new TheDash();
     public static GyroTurnTable gyroTurnTable = new GyroTurnTable();
 
     

@@ -23,7 +23,7 @@ public class TankDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        driveTrain.drive(oi.getLeftJoystick().getY(), oi.getRightJoystick().getY());
+        driveTrain.tankDrive(oi.getLeftJoystick().getY(), oi.getRightJoystick().getY());
     }
 
     // Make this return true when this Command no longer needs to run execute()

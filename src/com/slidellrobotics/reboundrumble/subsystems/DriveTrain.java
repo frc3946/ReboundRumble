@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
@@ -9,46 +6,43 @@ import com.slidellrobotics.reboundrumble.commands.TankDrive;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
  */
 public class DriveTrain extends Subsystem {
-    private Jaguar leftJaguar;
-    private Jaguar rightJaguar;
+    private Jaguar leftJaguars;
+    private Jaguar rightJaguars;
     private RobotDrive robotDrive;
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
     
     public DriveTrain() {
-        leftJaguar = new Jaguar(RobotMap.leftMotor);
-        rightJaguar = new Jaguar(RobotMap.rightMotor);
-        robotDrive = new RobotDrive(leftJaguar, rightJaguar);
-        System.out.println("Drive Train Init");
+        System.out.println("[DriveTrain] Starting");
+        leftJaguars = new Jaguar(RobotMap.leftDriveMotor);
+        System.out.println("[DriveTrain] leftJaguars initialized");
+        rightJaguars = new Jaguar(RobotMap.rightDriveMotor);
+        System.out.println("[DriveTrain] rightJaguars initialized");
+        robotDrive = new RobotDrive(leftJaguars, rightJaguars);
+        System.out.println("[DriveTrain] robotDrive initialized");
+        System.out.println("[DriveTrain] Started");
     }
-
+    
+    public void tankDrive(double leftSpeed, double rightSpeed) {
+        robotDrive.tankDrive(leftSpeed,rightSpeed);
+        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed());
+        SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*100); //Speed Multipled by 10 for clarity
+        System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed());
+    }
+    
+    public void arcadeDrive(double forward, double turn) {
+        robotDrive.arcadeDrive(forward, turn);
+    }
+    
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
         setDefaultCommand(new TankDrive());
     }
-    
-    public void drive(double leftSpeed, double rightSpeed) {
-        robotDrive.tankDrive(leftSpeed, rightSpeed);
-    }
-    
-    public double getLeftSpeed() {
-        return leftJaguar.getSpeed() * -1; //motors are inverted. *-1 is needed to change it to proper speed representation
-    }
-    
-    public double getRightSpeed() {
-        return rightJaguar.getSpeed();
-    }
-    
-    public double getRawLeftSpeed() {
-        return leftJaguar.getSpeed();
-    }
-    
-    public double getRawRightSpeed() {
-        return rightJaguar.getSpeed();
-    }
 }
+

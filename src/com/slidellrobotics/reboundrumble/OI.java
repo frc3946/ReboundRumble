@@ -3,6 +3,7 @@ package com.slidellrobotics.reboundrumble;
 
 import com.slidellrobotics.reboundrumble.commands.HighGear;
 import com.slidellrobotics.reboundrumble.commands.LowGear;
+import com.slidellrobotics.reboundrumble.commands.SetFeedBelt;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -22,7 +23,7 @@ public class OI {
     public OI() {
         shiftHighGear.whenPressed(new HighGear());
         shiftLowGear.whenPressed(new LowGear());
-        changeFeedBelt.whenPressed(new setSpeedBelt());
+        changeFeedBelt.whenPressed(new SetFeedBelt());
     }
     
     /**

@@ -8,12 +8,12 @@ package com.slidellrobotics.reboundrumble.commands;
  *
  * @author gixxy
  */
-public class SetSpeedBelt extends CommandBase {
+public class SetFeedBelt extends CommandBase {
     private boolean state = false;
     private boolean previousState = true;
     
     
-    public SetSpeedBelt() {
+    public SetFeedBelt() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(feedBelt);

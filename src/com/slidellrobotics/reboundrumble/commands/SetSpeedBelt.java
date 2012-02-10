@@ -8,12 +8,15 @@ package com.slidellrobotics.reboundrumble.commands;
  *
  * @author gixxy
  */
-public class SetShootingMotors extends CommandBase {
+public class SetSpeedBelt extends CommandBase {
+    private boolean state = false;
+    private boolean previousState = true;
     
-    public SetShootingMotors() {
+    
+    public SetSpeedBelt() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(shootingMotors);
+        requires(feedBelt);
     }
 
     // Called just before this Command runs the first time
@@ -22,16 +25,22 @@ public class SetShootingMotors extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shootingMotors.setSpeed(oi.getRightJoystick().getThrottle());
+        state = !state;
+        feedBelt.setBelt(state);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        if(state != previousState) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        previousState = state;
     }
 
     // Called when another command which requires one or more of the same

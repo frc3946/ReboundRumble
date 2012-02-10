@@ -5,7 +5,9 @@ import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.subsystems.Accelerometer;
 import com.slidellrobotics.reboundrumble.subsystems.Camera;
 import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
+import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
 import com.slidellrobotics.reboundrumble.subsystems.GyroTurnTable;
+import com.slidellrobotics.reboundrumble.subsystems.ShootingMotors;
 import com.slidellrobotics.reboundrumble.subsystems.Transmission;
 
 /**
@@ -20,6 +22,8 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static DriveTrain driveTrain = new DriveTrain();
     public static Transmission transmission = new Transmission();
+    public static ShootingMotors shootingMotors = new ShootingMotors();
+    public static FeedBelt feedBelt = new FeedBelt();
     public static Accelerometer accelerometer = new Accelerometer();
     public static GyroTurnTable gyroTurnTable = new GyroTurnTable();
 

@@ -17,10 +17,12 @@ public class OI {
     private Button fireBall = new JoystickButton(rightJoystick, RobotMap.fireButton); //Button to fire the ball
     private Button shiftHighGear = new JoystickButton(rightJoystick, RobotMap.highGearShiftButton); //Button to shift to High Gear
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
+    private Button changeFeedBelt = new JoystickButton(leftJoystick, RobotMap.changeFeedBeltButton);
     
     public OI() {
         shiftHighGear.whenPressed(new HighGear());
         shiftLowGear.whenPressed(new LowGear());
+        changeFeedBelt.whenPressed(new setSpeedBelt());
     }
     
     /**

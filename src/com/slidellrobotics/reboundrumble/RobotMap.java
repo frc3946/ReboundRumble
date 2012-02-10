@@ -20,7 +20,8 @@ public class RobotMap {
     //PWM
     public static final int leftDriveMotor = 1;
     public static final int rightDriveMotor = 2;
-    public static final int ballFeedMotor = 3;
+    public static final int topShootingMotor = 3;
+    public static final int bottomShootingMotor = 4;
     
     //Controls
     public static final int leftJoystick = 2;
@@ -28,10 +29,14 @@ public class RobotMap {
     public static final int fireButton = 1;
     public static final int highGearShiftButton = 5;
     public static final int lowGearShiftButton = 4;
+    public static final int changeFeedBeltButton = 2;
     
     //Solenoid
     public static final int highGear = 1;
     public static final int lowGear = 2;
+    
+    //Relay
+    public static final int feedBeltSpike = 1;
     
     // Analog
     public static final int gyroTurntable = 1;

@@ -19,7 +19,7 @@ public class Accelerometer extends Subsystem {
 
     public void Accelerometer() {
         //look for accelerometer by trying all slots
-        System.out.println("staring Accelerometer init");
+        System.out.println("starting Accelerometer init");
         for (slot = 1; slot <= 4; slot++) {
             accelerometer = new ADXL345_I2C(slot, ADXL345_I2C.DataFormat_Range.k2G);
             if (accelerometer != null) {
@@ -30,7 +30,8 @@ public class Accelerometer extends Subsystem {
     }
 
 public ADXL345_I2C.AllAxes GetAcceleration() {
-        if (accelerometer != null){
+            System.out.println("Starting Axes!");
+            if (accelerometer != null){
             return accelerometer.getAccelerations();
         }
         else{

@@ -24,6 +24,8 @@ public class FilterImage extends CommandBase {
     private BinaryImage filteredImage = null;
     CriteriaCollection cc;
     boolean freePic = false;
+    private BinaryImage partReport = null;
+    private ParticleAnalysisReport leftGoal; 
     
     public FilterImage() {
         requires(camera);
@@ -50,8 +52,8 @@ public class FilterImage extends CommandBase {
     
     public ColorImage getImage() {
         freePic = false;
-        
         ParticleAnalysisReport[] reports = null;
+        
         try {
             pic = camera.getImageFromCamera();
             BinaryImage thresholdHSL = pic.thresholdHSL(145,220,179,255,0,19);
@@ -62,12 +64,17 @@ public class FilterImage extends CommandBase {
             reports = filteredImage.getOrderedParticleAnalysisReports();
             System.out.println(filteredImage.getNumberParticles()+" "+
                     Timer.getFPGATimestamp());
+            
+            leftGoal = partReport.getParticleAnalysisReport(2);
+            
+            
             filteredImage.free();
             convexHullImage.free();
             bigObjectsImage.free();
             thresholdHSL.free();
             pic.free();
             freePic = true;
+            
             for (int i=0; i<reports.length; i++) {
             ParticleAnalysisReport r = reports[i];
             System.out.println("Particle: "+i+": Center of mass x:"+
@@ -77,10 +84,7 @@ public class FilterImage extends CommandBase {
         catch (NIVisionException ex) {
         }
         catch (Exception ex){
-            
         }
-        
-        
         
         return pic;
     }

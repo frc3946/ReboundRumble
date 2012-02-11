@@ -30,7 +30,7 @@ public class FirePiston extends Subsystem {
     }
     
     public void stow() {
-        pistonSolenoid.set(DoubleSolenoid.Value.kOff); //may need to be changed to reverse
+        pistonSolenoid.set(DoubleSolenoid.Value.kReverse); //may need to be changed to reverse
     }
     
     public Value get() {

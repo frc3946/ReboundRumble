@@ -2,12 +2,10 @@ package com.slidellrobotics.reboundrumble.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import com.slidellrobotics.reboundrumble.OI;
-import com.slidellrobotics.reboundrumble.subsystems.Accelerometer;
 import com.slidellrobotics.reboundrumble.subsystems.Camera;
 import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
 import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
 import com.slidellrobotics.reboundrumble.subsystems.FirePiston;
-import com.slidellrobotics.reboundrumble.subsystems.GyroTurnTable;
 import com.slidellrobotics.reboundrumble.subsystems.ShootingMotors;
 import com.slidellrobotics.reboundrumble.subsystems.Transmission;
 
@@ -26,8 +24,6 @@ public abstract class CommandBase extends Command {
     public static ShootingMotors shootingMotors = new ShootingMotors();
     public static FeedBelt feedBelt = new FeedBelt();
     public static FirePiston firePiston = new FirePiston();
-    public static Accelerometer accelerometer = new Accelerometer();
-    public static GyroTurnTable gyroTurnTable = new GyroTurnTable();
 
     
 

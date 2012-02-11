@@ -4,6 +4,8 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.RobotMap;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
@@ -35,6 +37,13 @@ public class FilterImage extends CommandBase {
     private double vertFOV;
     private double d;
     private double launchSpeed;
+    private double targetWidth;
+    private double totalWidth;
+    private double horFOV;
+    private double targetLocale;
+    private double horCenter;
+    public Relay susanMove;
+    
     
     
     public FilterImage() {
@@ -63,6 +72,7 @@ public class FilterImage extends CommandBase {
     public ColorImage getImage() {
         freePic = false;
         ParticleAnalysisReport[] reports = null;
+        susanMove = new Relay(RobotMap.susanMove);
         
         try {
             pic = camera.getImageFromCamera();
@@ -75,6 +85,7 @@ public class FilterImage extends CommandBase {
             System.out.println(filteredImage.getNumberParticles()+" "+
                     Timer.getFPGATimestamp());
             
+            
             leftGoal = partReport.getParticleAnalysisReport(2);
             rightGoal = partReport.getParticleAnalysisReport(3);
             leftWidth = leftGoal.boundingRectWidth;
@@ -86,9 +97,22 @@ public class FilterImage extends CommandBase {
             }
             targetHeight = targetGoal.boundingRectHeight;
             totalHeight = partReport.getHeight();
+            
             vertFOV = ((1.5*totalHeight)/targetHeight);
             d = ((vertFOV/2)/.445228685);
             launchSpeed = 60*(d/(((11/6)-d)/((-1)*16))/((2/3)*3.1415926));
+            
+            horCenter = (totalWidth/2);
+            targetLocale = targetGoal.center_mass_x;
+            
+            while(targetLocale != horCenter) {
+                if(targetLocale > horCenter) {
+                    susanMove.set(Relay.Value.kForward);
+                } else {
+                    susanMove.set(Relay.Value.kReverse);
+                }
+            }
+            
             
             filteredImage.free();
             convexHullImage.free();

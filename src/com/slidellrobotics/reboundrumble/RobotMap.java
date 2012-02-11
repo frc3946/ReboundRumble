@@ -40,6 +40,7 @@ public class RobotMap {
     
     //Relay
     public static final int feedBeltSpike = 1; //Where Feed Belt Spike is attacked to Sidecar
+    public static final int susanMove = 2; //For the Lazy Susan's Window Motor
     
     // Analog
     public static final int gyroTurntable = 1; //Gyro Port

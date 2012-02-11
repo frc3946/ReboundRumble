@@ -27,6 +27,15 @@ public class FilterImage extends CommandBase {
     private BinaryImage partReport = null;
     private ParticleAnalysisReport leftGoal; 
     private ParticleAnalysisReport rightGoal;
+    private double leftWidth;
+    private double rightWidth;
+    private ParticleAnalysisReport targetGoal;
+    private double targetHeight;
+    private double totalHeight;
+    private double vertFOV;
+    private double d;
+    private double launchSpeed;
+    
     
     public FilterImage() {
         requires(camera);
@@ -68,30 +77,18 @@ public class FilterImage extends CommandBase {
             
             leftGoal = partReport.getParticleAnalysisReport(2);
             rightGoal = partReport.getParticleAnalysisReport(3);
-                   
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+            leftWidth = leftGoal.boundingRectWidth;
+            rightWidth = rightGoal.boundingRectWidth;
+            while(leftWidth >= rightWidth) {
+                targetGoal = rightGoal;
+            } while(rightWidth < leftWidth){
+                targetGoal = leftGoal;
+            }
+            targetHeight = targetGoal.boundingRectHeight;
+            totalHeight = partReport.getHeight();
+            vertFOV = ((1.5*totalHeight)/targetHeight);
+            d = ((vertFOV/2)/.445228685);
+            launchSpeed = 60*(d/(((11/6)-d)/((-1)*16))/((2/3)*3.1415926));
             
             filteredImage.free();
             convexHullImage.free();

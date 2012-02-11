@@ -5,6 +5,7 @@ import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.subsystems.Camera;
 import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
 import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
+import com.slidellrobotics.reboundrumble.subsystems.LazySusan;
 import com.slidellrobotics.reboundrumble.subsystems.LoadPiston;
 import com.slidellrobotics.reboundrumble.subsystems.PositioningAccelerometer;
 import com.slidellrobotics.reboundrumble.subsystems.ShootingMotors;
@@ -26,6 +27,7 @@ public abstract class CommandBase extends Command {
     public static FeedBelt feedBelt = new FeedBelt();
     public static LoadPiston loadPiston = new LoadPiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
+    public static LazySusan lazySusan = new LazySusan();
 
     
 

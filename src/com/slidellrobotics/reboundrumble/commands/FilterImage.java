@@ -42,12 +42,12 @@ public class FilterImage extends CommandBase {
     private double horFOV;
     private double targetLocale;
     private double horCenter;
-    public Relay susanMove;
     
     
     
     public FilterImage() {
         requires(camera);
+        requires(lazySusan);
         System.out.println("Filter image Init");
     }
     
@@ -72,7 +72,6 @@ public class FilterImage extends CommandBase {
     public ColorImage getImage() {
         freePic = false;
         ParticleAnalysisReport[] reports = null;
-        susanMove = new Relay(RobotMap.susanMove);
         
         try {
             pic = camera.getImageFromCamera();
@@ -107,9 +106,9 @@ public class FilterImage extends CommandBase {
             
             while(targetLocale != horCenter) {
                 if(targetLocale > horCenter) {
-                    susanMove.set(Relay.Value.kForward);
+                    lazySusan.set(Relay.Value.kForward);
                 } else {
-                    susanMove.set(Relay.Value.kReverse);
+                    lazySusan.set(Relay.Value.kReverse);
                 }
             }
             

@@ -26,6 +26,7 @@ public class FilterImage extends CommandBase {
     boolean freePic = false;
     private BinaryImage partReport = null;
     private ParticleAnalysisReport leftGoal; 
+    private ParticleAnalysisReport rightGoal;
     
     public FilterImage() {
         requires(camera);
@@ -66,6 +67,30 @@ public class FilterImage extends CommandBase {
                     Timer.getFPGATimestamp());
             
             leftGoal = partReport.getParticleAnalysisReport(2);
+            rightGoal = partReport.getParticleAnalysisReport(3);
+                   
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             filteredImage.free();

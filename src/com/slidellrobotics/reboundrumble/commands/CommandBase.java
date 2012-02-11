@@ -5,7 +5,8 @@ import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.subsystems.Camera;
 import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
 import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
-import com.slidellrobotics.reboundrumble.subsystems.FirePiston;
+import com.slidellrobotics.reboundrumble.subsystems.LoadPiston;
+import com.slidellrobotics.reboundrumble.subsystems.PositioningAccelerometer;
 import com.slidellrobotics.reboundrumble.subsystems.ShootingMotors;
 import com.slidellrobotics.reboundrumble.subsystems.Transmission;
 
@@ -23,7 +24,8 @@ public abstract class CommandBase extends Command {
     public static Transmission transmission = new Transmission();
     public static ShootingMotors shootingMotors = new ShootingMotors();
     public static FeedBelt feedBelt = new FeedBelt();
-    public static FirePiston firePiston = new FirePiston();
+    public static LoadPiston loadPiston = new LoadPiston();
+    public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
 
     
 

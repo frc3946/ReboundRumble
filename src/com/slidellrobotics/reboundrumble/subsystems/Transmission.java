@@ -26,13 +26,13 @@ public class Transmission extends Subsystem {
     
     public void setHighGear() {
         gearShifter.set(DoubleSolenoid.Value.kForward);
-        System.out.println("[Transmission] High Gear Set");
+        //System.out.println("[Transmission] High Gear Set"); //uncomment for use with debugging
         SmartDashboard.putString("Transmission", "High Gear");
     }
     
     public void setLowGear() {
         gearShifter.set(DoubleSolenoid.Value.kReverse);
-        System.out.println("[Transmission] Low Gear Set");
+        //System.out.println("[Transmission] Low Gear Set"); //uncomment for use with debugging
         SmartDashboard.putString("Transmission", "Low Gear");
     }
     

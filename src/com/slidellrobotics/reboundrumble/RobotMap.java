@@ -44,4 +44,7 @@ public class RobotMap {
     
     // Analog
     public static final int gyroTurntable = 1; //Gyro Port
+    
+    //Accelerometer
+    public static final int positioningAccelerometer = 1; //Positioning Accelerometer port on Sidecar
 }

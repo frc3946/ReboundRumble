@@ -34,10 +34,10 @@ public class ShootingMotors extends Subsystem {
         bottomMotor.set(speed);
         if(topMotor.get() == bottomMotor.get()) {
             SmartDashboard.putDouble("Shooting Motors", topMotor.get()*10);
-            System.out.println("[ShootingMotors] Speed set to "+topMotor.get()*10);
+            //System.out.println("[ShootingMotors] Speed set to "+topMotor.get()); //uncomment for use with debugging
         } else {
             SmartDashboard.putString("Shooting Motors", "Speeds not equal. Top: "+topMotor.get()+" Bottom: "+bottomMotor.get());
-            System.out.println("[ShootingMotors] [SEVERE] MOTOR SPEEDS NOT EQUAL. Top: "+topMotor.get()+" Bottom: "+bottomMotor.get());
+            //System.out.println("[ShootingMotors] [SEVERE] MOTOR SPEEDS NOT EQUAL. Top: "+topMotor.get()+" Bottom: "+bottomMotor.get()); //uncomment for use with debugging
         }
     }
     

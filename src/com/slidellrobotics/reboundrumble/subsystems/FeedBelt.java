@@ -29,11 +29,11 @@ public class FeedBelt extends Subsystem {
         if(state == true) {
             feedBeltSpike.set(Relay.Value.kForward);
             SmartDashboard.putBoolean("Feed Belt", true);
-            System.out.println("[FeedBelt] spike set to ON");
+            //System.out.println("[FeedBelt] spike set to ON"); //uncomment for use with debugging
         } else {
             feedBeltSpike.set(Relay.Value.kOff);
             SmartDashboard.putBoolean("Feed Belt", false);
-            System.out.println("[FeedBelt] spike set to OFF");
+            //System.out.println("[FeedBelt] spike set to OFF"); //uncomment for use with debugging
         }
     }
     

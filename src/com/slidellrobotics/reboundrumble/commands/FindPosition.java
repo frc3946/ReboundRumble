@@ -4,19 +4,18 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author gixxy
  */
-public class ProcessTurnTableGyro extends CommandBase {
+public class FindPosition extends CommandBase {
     
-    
-    
-    public ProcessTurnTableGyro() {
+    public FindPosition() {
         // Use requires() here to declare subsystem dependencies
-        requires(gyroTurnTable);
-        System.out.println("Process turn table Gyro init");
-      
+        // eg. requires(chassis);
+        requires(pAccelerometer);
     }
 
     // Called just before this Command runs the first time
@@ -25,9 +24,7 @@ public class ProcessTurnTableGyro extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-      gyroTurnTable.updateAngle();  
-        
-        
+        SmartDashboard.putDouble("Accelerometer", pAccelerometer.getPosition());
     }
 
     // Make this return true when this Command no longer needs to run execute()

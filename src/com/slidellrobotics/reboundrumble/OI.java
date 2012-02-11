@@ -1,6 +1,7 @@
 
 package com.slidellrobotics.reboundrumble;
 
+import com.slidellrobotics.reboundrumble.commands.FireBall;
 import com.slidellrobotics.reboundrumble.commands.HighGear;
 import com.slidellrobotics.reboundrumble.commands.LowGear;
 import com.slidellrobotics.reboundrumble.commands.SetFeedBelt;
@@ -24,6 +25,8 @@ public class OI {
         shiftHighGear.whenPressed(new HighGear());
         shiftLowGear.whenPressed(new LowGear());
         changeFeedBelt.whenPressed(new SetFeedBelt());
+        fireBall.whenPressed(new FireBall());
+        
     }
     
     /**

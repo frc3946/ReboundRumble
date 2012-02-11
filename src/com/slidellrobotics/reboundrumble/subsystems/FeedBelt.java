@@ -14,24 +14,24 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author gixxy
  */
 public class FeedBelt extends Subsystem {
-    public Relay spike;
+    public Relay feedBeltSpike;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public FeedBelt() {
         System.out.println("[FeedBelt] Starting");
-        spike = new Relay(RobotMap.feedBeltSpike);
-        System.out.println("[FeedBelt] spike  initialized");
+        feedBeltSpike = new Relay(RobotMap.feedBeltSpike);
+        System.out.println("[FeedBelt] feedBeltSpike  initialized");
         System.out.println("[FeedBelt] Started");
     }
     
     public void setBelt(boolean state) {
         if(state == true) {
-            spike.set(Relay.Value.kForward);
+            feedBeltSpike.set(Relay.Value.kForward);
             SmartDashboard.putBoolean("Feed Belt", true);
             System.out.println("[FeedBelt] spike set to ON");
         } else {
-            spike.set(Relay.Value.kOff);
+            feedBeltSpike.set(Relay.Value.kOff);
             SmartDashboard.putBoolean("Feed Belt", false);
             System.out.println("[FeedBelt] spike set to OFF");
         }

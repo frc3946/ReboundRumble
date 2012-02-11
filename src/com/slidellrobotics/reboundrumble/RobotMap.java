@@ -18,26 +18,29 @@ public class RobotMap {
     // public static final int rangefinderModule = 1;
     
     //PWM
-    public static final int leftDriveMotor = 1;
-    public static final int rightDriveMotor = 2;
-    public static final int topShootingMotor = 3;
-    public static final int bottomShootingMotor = 4;
+    public static final int leftDriveMotor = 1; //Left Jaguar's Port
+    public static final int rightDriveMotor = 2; //Right Jaguar's Port
+    public static final int topShootingMotor = 3; //Top Shooting Victor Port
+    public static final int bottomShootingMotor = 4; //Bottom Shooting Victor Port (try to combine the two)
     
     //Controls
-    public static final int leftJoystick = 2;
-    public static final int rightJoystick = 1;
-    public static final int fireButton = 1;
-    public static final int highGearShiftButton = 5;
-    public static final int lowGearShiftButton = 4;
-    public static final int changeFeedBeltButton = 2;
+    public static final int leftJoystick = 2; //Main Driver Left Joystick
+    public static final int rightJoystick = 1; //Main Driver Right Joystick
+    public static final int thirdJoystick = 3; //Possible third Joystick for secondary Driver Control (maybe use this for ajusting the Lazy Susan and ball shooter/feed.)
+    public static final int fireButton = 1; //Button to fire Phumatic piston
+    public static final int highGearShiftButton = 5; //Button to shift into High Gear
+    public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
+    public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
     
     //Solenoid
-    public static final int highGear = 1;
-    public static final int lowGear = 2;
+    public static final int highGear = 1; //Transmission Solenoid's A valve port
+    public static final int lowGear = 2; //Transmission Solenoid's B valve port
+    public static final int firePiston = 3; //FirePiston Solenoid's A valve port
+    public static final int stowPiston = 4; //FirePiston Solenoid's B valve port
     
     //Relay
-    public static final int feedBeltSpike = 1;
+    public static final int feedBeltSpike = 1; //Where Feed Belt Spike is attacked to Sidecar
     
     // Analog
-    public static final int gyroTurntable = 1;
+    public static final int gyroTurntable = 1; //Gyro Port
 }

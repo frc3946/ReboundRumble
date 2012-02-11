@@ -18,48 +18,32 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
  * @author gixxy
  */
 public class FilterImage extends CommandBase {
-    private ColorImage pic;
-    private BinaryImage thresholdHSL = null;
-    private int remove  = 0;
-    private BinaryImage bigObjectsImage = null;
-    private BinaryImage convexHullImage = null;
-    private BinaryImage filteredImage = null;
-    CriteriaCollection cc;
-    boolean freePic = false;
-    private BinaryImage partReport = null;
-    private ParticleAnalysisReport leftGoal; 
-    private ParticleAnalysisReport rightGoal;
-    private double leftWidth;
-    private double rightWidth;
-    private ParticleAnalysisReport targetGoal;
-    private double targetHeight;
-    private double totalHeight;
-    private double vertFOV;
-    private double d;
-    private double launchSpeed;
-    private double targetWidth;
-    private double totalWidth;
-    private double horFOV;
-    private double targetLocale;
-    private double horCenter;
+    private ColorImage pic;                     //
+    private BinaryImage thresholdHSL = null;    //
+    private int remove  = 0;                    //
+    private BinaryImage bigObjectsImage = null; //
+    private BinaryImage convexHullImage = null; //  Variable Constructors
+    private BinaryImage filteredImage = null;   //
+    CriteriaCollection cc;                      //
+    boolean freePic = false;                    //
+    private BinaryImage partReport = null;      //
     
-    
-    
+
     public FilterImage() {
         requires(camera);
         requires(lazySusan);
-        System.out.println("Filter image Init");
+        System.out.println("Filter image Init");    //States that the camera initialized
     }
     
     protected void initialize(){
     }
     
     protected void execute(){
-        getImage();
+        getImage();                 //loops getting a fresh image
     }    
     
     protected boolean isFinished() {
-       return false;
+       return false;                //never ends
     }
     
     protected void end() {
@@ -70,49 +54,21 @@ public class FilterImage extends CommandBase {
 
     
     public ColorImage getImage() {
-        freePic = false;
-        ParticleAnalysisReport[] reports = null;
+        freePic = false;            //States that the camera's picture is still held
+        ParticleAnalysisReport[] reports = null;    //Creates an array of Analysis Reports
         
         try {
-            pic = camera.getImageFromCamera();
-            BinaryImage thresholdHSL = pic.thresholdHSL(145,220,179,255,0,19);
-            int remove = thresholdHSL.getNumberParticles() - 1;
-            BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);
-            BinaryImage convexHullImage = bigObjectsImage.convexHull(false);
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);
+            pic = camera.getImageFromCamera();      //Declares pic variable
+            BinaryImage thresholdHSL = pic.thresholdHSL(145,220,179,255,0,19);      //Sets a Blue light threshold
+            int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
+            BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all bu tthe largest particle
+            BinaryImage convexHullImage = bigObjectsImage.convexHull(false);        //Reduces camera edge/perspective distortion
+            BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the 
             reports = filteredImage.getOrderedParticleAnalysisReports();
             System.out.println(filteredImage.getNumberParticles()+" "+
                     Timer.getFPGATimestamp());
             
-            
-            leftGoal = partReport.getParticleAnalysisReport(2);
-            rightGoal = partReport.getParticleAnalysisReport(3);
-            leftWidth = leftGoal.boundingRectWidth;
-            rightWidth = rightGoal.boundingRectWidth;
-            while(leftWidth >= rightWidth) {
-                targetGoal = rightGoal;
-            } while(rightWidth < leftWidth){
-                targetGoal = leftGoal;
-            }
-            targetHeight = targetGoal.boundingRectHeight;
-            totalHeight = partReport.getHeight();
-            
-            vertFOV = ((1.5*totalHeight)/targetHeight);
-            d = ((vertFOV/2)/.445228685);
-            launchSpeed = 60*(d/(((11/6)-d)/((-1)*16))/((2/3)*3.1415926));
-            
-            horCenter = (totalWidth/2);
-            targetLocale = targetGoal.center_mass_x;
-            
-            while(targetLocale != horCenter) {
-                if(targetLocale > horCenter) {
-                    lazySusan.set(Relay.Value.kForward);
-                } else {
-                    lazySusan.set(Relay.Value.kReverse);
-                }
-            }
-            
-            
+      
             filteredImage.free();
             convexHullImage.free();
             bigObjectsImage.free();

@@ -25,6 +25,10 @@ public class LazySusan extends Subsystem {
         System.out.println("[LazySusan] Started");
     }
     
+    /**
+     * Set the relay for the Lazy Susan window motor
+     * @param value Relay.Value value for the Relay.
+     */
     public void setRelay(Value value) {
         susanWindow.set(value);
     }

@@ -5,6 +5,7 @@
 package com.slidellrobotics.reboundrumble.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *

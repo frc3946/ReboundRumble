@@ -25,6 +25,10 @@ public class FeedBelt extends Subsystem {
         System.out.println("[FeedBelt] Started");
     }
     
+    /**
+     * Set the State of the Ball intake belt.
+     * @param state Boolean value of the state (on=true, off=false)
+     */
     public void setBelt(boolean state) {
         if(state == true) {
             feedBeltSpike.set(Relay.Value.kForward);

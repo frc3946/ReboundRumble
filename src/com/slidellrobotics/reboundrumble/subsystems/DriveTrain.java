@@ -29,6 +29,11 @@ public class DriveTrain extends Subsystem {
         System.out.println("[DriveTrain] Started");
     }
     
+    /**
+     * Drive with two Joysticks
+     * @param leftSpeed speed for left Jaguars
+     * @param rightSpeed speed for right Jaguars
+     */
     public void tankDrive(double leftSpeed, double rightSpeed) {
         robotDrive.tankDrive(leftSpeed,rightSpeed);
         SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
@@ -37,6 +42,11 @@ public class DriveTrain extends Subsystem {
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
     }
     
+    /**
+     * Drive with one Joystick
+     * @param forward Speed to move
+     * @param turn How much/Which side to turn
+     */
     public void arcadeDrive(double forward, double turn) {
         robotDrive.arcadeDrive(forward, turn);
     }

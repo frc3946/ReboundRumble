@@ -20,8 +20,7 @@ public class RobotMap {
     //PWM
     public static final int leftDriveMotor = 1; //Left Jaguar's Port
     public static final int rightDriveMotor = 2; //Right Jaguar's Port
-    public static final int topShootingMotor = 3; //Top Shooting Victor Port
-    public static final int bottomShootingMotor = 4; //Bottom Shooting Victor Port (try to combine the two)
+    public static final int shootingMotors = 3; //Top Shooting Victor Port
     
     //Controls
     public static final int leftJoystick = 2; //Main Driver Left Joystick

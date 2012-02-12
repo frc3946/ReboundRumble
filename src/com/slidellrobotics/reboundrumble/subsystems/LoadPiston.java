@@ -7,6 +7,7 @@ package com.slidellrobotics.reboundrumble.subsystems;
 import com.slidellrobotics.reboundrumble.RobotMap;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,18 +27,29 @@ public class LoadPiston extends Subsystem {
         System.out.println("[LoadPiston] Started");
     }
     
+    /**
+     * Extends piston
+     */
     public void load() {
         pistonSolenoid.set(DoubleSolenoid.Value.kForward);
         SmartDashboard.putBoolean("Load Piston", true);
         //System.out.println("[LoadPiston] Fired"); //uncomment for use with debugging
     }
     
+    /**
+     * Retracks piston
+     */
     public void stow() {
         pistonSolenoid.set(DoubleSolenoid.Value.kReverse);
+        Timer.delay(4); //allows time for SmartDashboard to register the piston was infact launched (basicly for nice appearences)
         SmartDashboard.putBoolean("Load Piston", false);
         //System.out.println("[LoadPiston] Fired"); //uncomment for use with debugging
     }
     
+    /**
+     * Get the state of the piston
+     * @return value of the Piston's Solenoid
+     */
     public Value get() {
         return pistonSolenoid.get();
     }

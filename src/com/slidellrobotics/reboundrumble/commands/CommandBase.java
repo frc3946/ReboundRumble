@@ -8,7 +8,7 @@ import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
 import com.slidellrobotics.reboundrumble.subsystems.LazySusan;
 import com.slidellrobotics.reboundrumble.subsystems.LoadPiston;
 import com.slidellrobotics.reboundrumble.subsystems.PositioningAccelerometer;
-import com.slidellrobotics.reboundrumble.subsystems.ShootingMotors;
+import com.slidellrobotics.reboundrumble.subsystems.FireMotors;
 import com.slidellrobotics.reboundrumble.subsystems.Transmission;
 
 /**
@@ -23,7 +23,7 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static DriveTrain driveTrain = new DriveTrain();
     public static Transmission transmission = new Transmission();
-    public static ShootingMotors shootingMotors = new ShootingMotors();
+    public static FireMotors shootingMotors = new FireMotors();
     public static FeedBelt feedBelt = new FeedBelt();
     public static LoadPiston loadPiston = new LoadPiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();

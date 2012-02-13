@@ -4,19 +4,18 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.ADXL345_I2C.Axes;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  * @author gixxy
  */
-public class FindPosition extends CommandBase {
+public class ArcadeDrive extends CommandBase {
     
-    public FindPosition() {
+    public ArcadeDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(pAccelerometer);
+        requires(driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -25,9 +24,8 @@ public class FindPosition extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        SmartDashboard.putDouble("Accelerometer X", pAccelerometer.getPosition(Axes.kX));
-        SmartDashboard.putDouble("Accelerometer Y", pAccelerometer.getPosition(Axes.kY));
-        SmartDashboard.putDouble("Accelerometer Z", pAccelerometer.getPosition(Axes.kZ));
+        driveTrain.arcadeDrive(oi.getRightJoystick().getY(), oi.getRightJoystick().getX());
+        SmartDashboard.putBoolean("TankDrive", false);
     }
 
     // Make this return true when this Command no longer needs to run execute()

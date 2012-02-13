@@ -49,6 +49,10 @@ public class DriveTrain extends Subsystem {
      */
     public void arcadeDrive(double forward, double turn) {
         robotDrive.arcadeDrive(forward, turn);
+        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
+        SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
     }
     
     public void initDefaultCommand() {

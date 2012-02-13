@@ -4,6 +4,8 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author gixxy
@@ -24,6 +26,7 @@ public class TankDrive extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         driveTrain.tankDrive(oi.getLeftJoystick().getY(), oi.getRightJoystick().getY());
+        SmartDashboard.putBoolean("TankDrive", true);
     }
 
     // Make this return true when this Command no longer needs to run execute()

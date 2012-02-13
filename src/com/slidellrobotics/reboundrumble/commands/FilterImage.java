@@ -27,7 +27,7 @@ public class FilterImage extends CommandBase {
     CriteriaCollection cc;                      //
     boolean freePic = false;                    //
     private BinaryImage partReport = null;      //
-    
+    private int i;                              //
 
     public FilterImage() {
         requires(camera);
@@ -56,6 +56,7 @@ public class FilterImage extends CommandBase {
     public ColorImage getImage() {
         freePic = false;            //States that the camera's picture is still held
         ParticleAnalysisReport[] reports = null;    //Creates an array of Analysis Reports
+        i=0;
         
         try {
             pic = camera.getImageFromCamera();      //Declares pic variable
@@ -63,31 +64,29 @@ public class FilterImage extends CommandBase {
             int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
             BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all bu tthe largest particle
             BinaryImage convexHullImage = bigObjectsImage.convexHull(false);        //Reduces camera edge/perspective distortion
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the 
-            reports = filteredImage.getOrderedParticleAnalysisReports();
-            System.out.println(filteredImage.getNumberParticles()+" "+
-                    Timer.getFPGATimestamp());
-            
-      
-            filteredImage.free();
-            convexHullImage.free();
-            bigObjectsImage.free();
-            thresholdHSL.free();
-            pic.free();
-            freePic = true;
-            
-            for (int i=0; i<reports.length; i++) {
-            ParticleAnalysisReport r = reports[i];
-            System.out.println("Particle: "+i+": Center of mass x:"+
-                    r.center_mass_x);
+            BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the criteria from RobotInit
+            reports = filteredImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
+            for (int i=0; i<reports.length; i++) {                          //Systematically
+                ParticleAnalysisReport r = reports[i];                      //prints the 
+                System.out.println("Particle: "+i+": Center of mass x:"+    //geometric center
+                    r.center_mass_x);                                       //of mass per particle.
             }
+            System.out.println(filteredImage.getNumberParticles()+" "+  //Prints the number of particles
+                    Timer.getFPGATimestamp());                          //per elapsed robot time.
+            
+            filteredImage.free();       //
+            convexHullImage.free();     //
+            bigObjectsImage.free();     //Memory leak
+            thresholdHSL.free();        //preventions.
+            pic.free();                 //
+            freePic = true;         //Sets off the FilterImage command's idFinished
         } 
-        catch (NIVisionException ex) {
-        }
-        catch (Exception ex){
-        }
+        catch (NIVisionException ex) {      //
+        }                                   //Catches both possible exceptions
+        catch (Exception ex){               //that could be caused from above code
+        }                                   //
         
-        return pic;
+        return pic;             //Returns the camera's most recent picture.
     }
 }
 

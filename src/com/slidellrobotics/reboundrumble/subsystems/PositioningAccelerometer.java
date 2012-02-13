@@ -5,7 +5,7 @@
 package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
-import com.slidellrobotics.reboundrumble.commands.FindPosition;
+import com.slidellrobotics.reboundrumble.commands.FindAccelerometerSpeed;
 import edu.wpi.first.wpilibj.ADXL345_I2C;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -44,6 +44,6 @@ public class PositioningAccelerometer extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        setDefaultCommand(new FindPosition());
+        setDefaultCommand(new FindAccelerometerSpeed());
     }
 }

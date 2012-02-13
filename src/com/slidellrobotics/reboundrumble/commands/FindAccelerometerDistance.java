@@ -8,9 +8,9 @@ package com.slidellrobotics.reboundrumble.commands;
  *
  * @author gixxy
  */
-public class JoystickDrive extends CommandBase {
+public class FindAccelerometerDistance extends CommandBase {
     
-    public JoystickDrive() {
+    public FindAccelerometerDistance() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

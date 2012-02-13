@@ -20,16 +20,22 @@ public class RobotMap {
     //PWM
     public static final int leftDriveMotor = 1; //Left Jaguar's Port
     public static final int rightDriveMotor = 2; //Right Jaguar's Port
-    public static final int shootingMotors = 3; //Top Shooting Victor Port
+    public static final int lefttShootingMotor = 3; //Left Shooting Victor Port
+    public static final int rightShootingMotor = 4; //Right Shooting Victor Port
     
     //Controls
     public static final int leftJoystick = 2; //Main Driver Left Joystick
     public static final int rightJoystick = 1; //Main Driver Right Joystick
     public static final int thirdJoystick = 3; //Possible third Joystick for secondary Driver Control (maybe use this for ajusting the Lazy Susan and ball shooter/feed.)
+    public static final int arcadeModeButton = 3; //Button that activates Arcade Drive Mode.
     public static final int fireButton = 1; //Button to fire Phumatic piston
     public static final int highGearShiftButton = 5; //Button to shift into High Gear
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
     public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
+    
+    //Digital IO
+    public static final int rightFireEncoder = 1;
+    public static final int leftFireEncoder = 2;
     
     //Solenoid
     public static final int highGear = 1; //Transmission Solenoid's A valve port
@@ -42,7 +48,8 @@ public class RobotMap {
     public static final int susanRelay = 2; //For the Lazy Susan's Window Motor
     
     // Analog
-    public static final int gyroTurntable = 1; //Gyro Port
+    public static final int turretGyro = 1; //Turret Gyro Port
+    public static final int balanceGyro = 2; //Balancing Chasis Gyro
     
     //Accelerometer
     public static final int positioningAccelerometer = 1; //Positioning Accelerometer port on Sidecar

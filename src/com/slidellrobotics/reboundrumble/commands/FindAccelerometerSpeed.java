@@ -4,16 +4,19 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import edu.wpi.first.wpilibj.ADXL345_I2C.Axes;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  *
  * @author gixxy
  */
-public class SetShootingMotors extends CommandBase {
+public class FindAccelerometerSpeed extends CommandBase {
     
-    public SetShootingMotors() {
+    public FindAccelerometerSpeed() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(shootingMotors);
+        requires(pAccelerometer);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +25,9 @@ public class SetShootingMotors extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        shootingMotors.setSpeed(oi.getRightJoystick().getZ());
+        SmartDashboard.putDouble("Accelerometer X", pAccelerometer.getPosition(Axes.kX));
+        SmartDashboard.putDouble("Accelerometer Y", pAccelerometer.getPosition(Axes.kY));
+        SmartDashboard.putDouble("Accelerometer Z", pAccelerometer.getPosition(Axes.kZ));
     }
 
     // Make this return true when this Command no longer needs to run execute()

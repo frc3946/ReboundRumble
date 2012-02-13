@@ -53,7 +53,7 @@ public class FindDistance extends CommandBase {
             totalHeight = partReport.getHeight();           //Gets the pixel height of the image
             
             vertFOV = ((1.5*totalHeight)/targetHeight);     //Gets the foot equivalent of our vertical Field of View
-            d = ((vertFOV/2)/.445228685);       //Finds the distance from the camera to the Goal
+            d = ((vertFOV/2)/.445228685);       //Finds the distance from the camera to the Goal (tangent45)
             launchSpeed = 60*(d/(((11/6)-d)/((-1)*16))/((2/3)*3.1415926));  //Calcs the required rpms for firing
         } catch(NIVisionException ex) {
         }    

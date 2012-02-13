@@ -1,6 +1,7 @@
 
 package com.slidellrobotics.reboundrumble;
 
+import com.slidellrobotics.reboundrumble.commands.ArcadeDrive;
 import com.slidellrobotics.reboundrumble.commands.LoadBall;
 import com.slidellrobotics.reboundrumble.commands.HighGear;
 import com.slidellrobotics.reboundrumble.commands.LowGear;
@@ -20,13 +21,14 @@ public class OI {
     private Button shiftHighGear = new JoystickButton(rightJoystick, RobotMap.highGearShiftButton); //Button to shift to High Gear
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
     private Button changeFeedBelt = new JoystickButton(leftJoystick, RobotMap.changeFeedBeltButton);
+    private Button arcadeMode = new JoystickButton(rightJoystick, RobotMap.arcadeModeButton);
     
     public OI() {
+        arcadeMode.whileHeld(new ArcadeDrive());
         shiftHighGear.whenPressed(new HighGear());
         shiftLowGear.whenPressed(new LowGear());
         changeFeedBelt.whenPressed(new SetFeedBelt());
         fireBall.whenPressed(new LoadBall());
-        
     }
     
     /**

@@ -30,7 +30,8 @@ public class FindDistance extends CommandBase {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(camera);
-        requires(shootingMotors);
+        requires(leftShootingMotors);
+        requires(rightShootingMotors);
     }
 
     // Called just before this Command runs the first time

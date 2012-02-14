@@ -34,8 +34,8 @@ public class RobotMap {
     public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
     
     //Digital IO
-    public static final int rightFireEncoder = 1;
-    public static final int leftFireEncoder = 2;
+    public static final int leftFireEncoder = 1;
+    public static final int rightFireEncoder = 2;
     
     //Solenoid
     public static final int highGear = 1; //Transmission Solenoid's A valve port

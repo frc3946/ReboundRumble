@@ -2,6 +2,7 @@ package com.slidellrobotics.reboundrumble.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import com.slidellrobotics.reboundrumble.OI;
+import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.subsystems.Camera;
 import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
 import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
@@ -23,7 +24,9 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static DriveTrain driveTrain = new DriveTrain();
     public static Transmission transmission = new Transmission();
-    public static FireMotors shootingMotors = new FireMotors();
+    public static FireMotors leftShootingMotors = new FireMotors(RobotMap.leftFireEncoder, RobotMap.leftShootingMotor);
+    public static FireMotors rightShootingMotors = new FireMotors(RobotMap.rightFireEncoder, RobotMap.rightShootingMotor);
+    
     public static FeedBelt feedBelt = new FeedBelt();
     public static LoadPiston loadPiston = new LoadPiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();

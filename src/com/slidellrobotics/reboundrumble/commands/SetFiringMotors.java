@@ -9,14 +9,22 @@ package com.slidellrobotics.reboundrumble.commands;
  * @author programming
  */
 public class SetFiringMotors extends CommandBase {
+    int setup;
     
-    public SetFiringMotors() {
+    public SetFiringMotors(int num) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
+        setup = num;
+        
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        if(setup == 1) {
+            CommandBase.leftShootingMotors.setSetpoint(1000);
+        } else {
+            CommandBase.leftShootingMotors.setSetpoint(2000);
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,7 +33,7 @@ public class SetFiringMotors extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

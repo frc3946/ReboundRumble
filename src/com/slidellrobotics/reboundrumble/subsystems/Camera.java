@@ -24,7 +24,7 @@ public class Camera extends Subsystem {
     private ColorImage pic;
     boolean freePic = false;
 
-    public void Camera() {
+    public Camera() {
         camera = AxisCamera.getInstance("10.39.46.11");
         System.out.println("Camera init");
         

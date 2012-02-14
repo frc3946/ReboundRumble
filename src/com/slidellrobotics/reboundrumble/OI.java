@@ -1,11 +1,7 @@
 
 package com.slidellrobotics.reboundrumble;
 
-import com.slidellrobotics.reboundrumble.commands.ArcadeDrive;
-import com.slidellrobotics.reboundrumble.commands.LoadBall;
-import com.slidellrobotics.reboundrumble.commands.HighGear;
-import com.slidellrobotics.reboundrumble.commands.LowGear;
-import com.slidellrobotics.reboundrumble.commands.SetFeedBelt;
+import com.slidellrobotics.reboundrumble.commands.SetFiringMotors;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -22,13 +18,18 @@ public class OI {
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
     private Button changeFeedBelt = new JoystickButton(leftJoystick, RobotMap.changeFeedBeltButton);
     private Button arcadeMode = new JoystickButton(rightJoystick, RobotMap.arcadeModeButton);
+    private Button button1000 = new JoystickButton(rightJoystick, 1);
+    private Button button2000 = new JoystickButton(leftJoystick, 1);
     
     public OI() {
-        arcadeMode.whileHeld(new ArcadeDrive());
-        shiftHighGear.whenPressed(new HighGear());
-        shiftLowGear.whenPressed(new LowGear());
-        changeFeedBelt.whenPressed(new SetFeedBelt());
-        fireBall.whenPressed(new LoadBall());
+        //arcadeMode.whileHeld(new ArcadeDrive());
+        //shiftHighGear.whenPressed(new HighGear());
+        //shiftLowGear.whenPressed(new LowGear());
+        //changeFeedBelt.whenPressed(new SetFeedBelt());
+        //fireBall.whenPressed(new LoadBall());
+        button1000.whenPressed(new SetFiringMotors(1));
+        button2000.whenPressed(new SetFiringMotors(2));
+        
     }
     
     /**

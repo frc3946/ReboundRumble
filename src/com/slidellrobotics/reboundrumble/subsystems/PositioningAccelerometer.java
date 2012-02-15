@@ -47,3 +47,40 @@ public class PositioningAccelerometer extends Subsystem {
         //setDefaultCommand(new FindAccelerometerSpeed());
     }
 }
+//double timespan;
+//    double lastTime;
+//    double newtime;
+//    double velocityX;
+//    protected double velocityY;
+//    
+//    ADXL345_I2C.AllAxes allaxes;
+//    Timer timer;
+//    
+//    public ProcessAccelerometer() {
+//       // Use requires() here to declare subsystem dependencies
+//       requires(accelerometer);
+//       
+//       timespan = .02;
+//       velocityX = 0;
+//       velocityY = 0;
+//        lastTime = Timer.getFPGATimestamp();
+//       
+//    }
+//
+//    // Called repeatedly when this Command is scheduled to run
+//    protected void execute() {
+//        newtime = Timer.getFPGATimestamp();
+//        timespan =  newtime- lastTime;
+//        lastTime = newtime;
+//        
+//        allaxes = accelerometer.GetAcceleration();
+//        velocityX = velocityX + allaxes.XAxis * timespan;
+//        velocityY = velocityY + allaxes.YAxis * timespan;
+//        
+//        SmartDashboard.putDouble("X", velocityX);
+//        SmartDashboard.putDouble("Y", velocityY);
+//        SmartDashboard.putDouble("X axis", allaxes.XAxis);
+//        SmartDashboard.putDouble("Y axis", allaxes.YAxis);
+//        SmartDashboard.putDouble("FPGATimestamp", newtime);
+//        SmartDashboard.putDouble("timespan",timespan);
+//     }

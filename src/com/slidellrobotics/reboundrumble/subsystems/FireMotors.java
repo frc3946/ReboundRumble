@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class FireMotors extends PIDSubsystem {
 
-    private static double Kp = 0.0000005;
+    private static double Kp = 0.0001;
     private static  double Ki = 0.0;
     private static  double Kd = 0.0;
     

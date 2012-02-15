@@ -35,34 +35,34 @@ public class FireMotors extends PIDSubsystem {
         lastTime = Timer.getFPGATimestamp();
         counter.start();
         
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
+        
     }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
-        //setDefaultCommand(new FireMotors());
+      
     }
     
     protected double returnPIDInput() {
         // Return your input value for the PID loop
-        // e.g. a sensor, like a potentiometer:
-        // yourPot.getAverageVoltage() / kYourMaxVoltage;
+        
         double timespan;
         int counts;
+        
+        // these three lines are time critial
         newtime = Timer.getFPGATimestamp();
-        timespan = newtime- lastTime; //milliseconds during counting
+        counts = counter.get(); //number of counts since last update
+        counter.reset();        //reset counts ASAP so we don't miss any
+        
+        timespan = newtime- lastTime; //number of seconds during counting        
         lastTime = newtime;
-        if (timespan == 0) {
+        if (timespan == 0) 
             return 0.0;
-        }
-        counts = counter.get();
-        rpms = counts/ 16.0 / timespan*60.0; //16 different counts and it is converted into seconds
-        counter.reset();
        
+        rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute       
+       
+        //this would update both left and right motors!!!
+        //TODO: remove next three lines
         SmartDashboard.putDouble("RPMS",rpms);
         SmartDashboard.putDouble("TimeSpan",timespan);
         SmartDashboard.putDouble("Counts",counts);
@@ -71,10 +71,13 @@ public class FireMotors extends PIDSubsystem {
     }
     
     protected void usePIDOutput(double output) {
-        // Use output to drive your system, like a motor
-        // e.g. yourMotor.set(output);
-        //FireMotors.set()}        
+        //When the PID system thinks there is no error then
+        //set point is equal to rpms and output = 0
+               
         victor.set(victor.get()+output);
+        
+        //this would update both left and right motors!!!
+        //TODO: remove next line
         SmartDashboard.putDouble("PID Fire Motor", output);
     }
 

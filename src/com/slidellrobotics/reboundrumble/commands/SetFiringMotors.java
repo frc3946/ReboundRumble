@@ -21,9 +21,9 @@ public class SetFiringMotors extends CommandBase {
     // Called just before this Command runs the first time
     protected void initialize() {
         if(setup == 1) {
-            CommandBase.leftShootingMotors.setSetpoint(1000);
+            leftShootingMotors.setSetpoint(1000);
         } else {
-            CommandBase.leftShootingMotors.setSetpoint(2000);
+            leftShootingMotors.setSetpoint(2000);
         }
     }
 

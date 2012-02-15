@@ -31,7 +31,7 @@ public class FindDistance extends CommandBase {
         // eg. requires(chassis);
         requires(camera);
         requires(leftShootingMotors);
-        requires(rightShootingMotors);
+        //requires(rightShootingMotors);
     }
 
     // Called just before this Command runs the first time

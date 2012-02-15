@@ -25,7 +25,7 @@ public class Camera extends Subsystem {
     boolean freePic = false;
 
     public Camera() {
-        camera = AxisCamera.getInstance("10.39.46.11");
+        //camera = AxisCamera.getInstance("10.39.46.11");
         System.out.println("Camera init");
         
     }

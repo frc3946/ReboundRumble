@@ -11,6 +11,7 @@ import com.slidellrobotics.reboundrumble.subsystems.LoadPiston;
 import com.slidellrobotics.reboundrumble.subsystems.PositioningAccelerometer;
 import com.slidellrobotics.reboundrumble.subsystems.FireMotors;
 import com.slidellrobotics.reboundrumble.subsystems.Transmission;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
@@ -25,7 +26,7 @@ public abstract class CommandBase extends Command {
     public static DriveTrain driveTrain = new DriveTrain();
     public static Transmission transmission = new Transmission();
     public static FireMotors leftShootingMotors = new FireMotors(RobotMap.leftFireEncoder, RobotMap.leftShootingMotor);
-    public static FireMotors rightShootingMotors = new FireMotors(RobotMap.rightFireEncoder, RobotMap.rightShootingMotor);
+    //public static FireMotors rightShootingMotors = new FireMotors(RobotMap.rightFireEncoder, RobotMap.rightShootingMotor);
     public static FeedBelt feedBelt = new FeedBelt();
     public static LoadPiston loadPiston = new LoadPiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
@@ -39,7 +40,7 @@ public abstract class CommandBase extends Command {
         // yet. Thus, their requires() statements may grab null pointers. Bad
         // news. Don't move it.
         oi = new OI();
-
+        SmartDashboard.putData(leftShootingMotors);
         // Show what command your subsystem is running on the TheDash
         
     }

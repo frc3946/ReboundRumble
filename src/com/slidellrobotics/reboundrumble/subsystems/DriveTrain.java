@@ -1,24 +1,34 @@
-
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.commands.TankDrive;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
+ * @author gixxy
  */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends PIDSubsystem {
+
+    private static final double Kp = 0.0;
+    private static final double Ki = 0.0;
+    private static final double Kd = 0.0;
+    
     private Jaguar leftJaguars;
     private Jaguar rightJaguars;
     private RobotDrive robotDrive;
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
     
+    // Initialize your subsystem here
     public DriveTrain() {
+        super("DriveTrain2", Kp, Ki, Kd);
+        
         System.out.println("[DriveTrain] Starting");
         leftJaguars = new Jaguar(RobotMap.leftDriveMotor);
         System.out.println("[DriveTrain] leftJaguars initialized");
@@ -27,6 +37,28 @@ public class DriveTrain extends Subsystem {
         robotDrive = new RobotDrive(leftJaguars, rightJaguars);
         System.out.println("[DriveTrain] robotDrive initialized");
         System.out.println("[DriveTrain] Started");
+        // Use these to get going:
+        // setSetpoint() -  Sets where the PID controller should move the system
+        //                  to
+        // enable() - Enables the PID controller.
+    }
+    
+    public void initDefaultCommand() {
+        // Set the default command for a subsystem here.
+        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(new TankDrive());
+    }
+    
+    protected double returnPIDInput() {
+        // Return your input value for the PID loop
+        // e.g. a sensor, like a potentiometer:
+        // yourPot.getAverageVoltage() / kYourMaxVoltage;
+        return 0.0;
+    }
+    
+    protected void usePIDOutput(double output) {
+        // Use output to drive your system, like a motor
+        // e.g. yourMotor.set(output);
     }
     
     /**
@@ -54,9 +86,4 @@ public class DriveTrain extends Subsystem {
         SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
     }
-    
-    public void initDefaultCommand() {
-        setDefaultCommand(new TankDrive());
-    }
 }
-

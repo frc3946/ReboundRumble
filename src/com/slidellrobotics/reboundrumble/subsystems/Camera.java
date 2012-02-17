@@ -4,7 +4,6 @@
  */
 package com.slidellrobotics.reboundrumble.subsystems;
 
-import com.slidellrobotics.reboundrumble.commands.FilterImage;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -20,12 +19,12 @@ public class Camera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    AxisCamera camera;
+    public AxisCamera cam;
     private ColorImage pic;
     boolean freePic = false;
 
     public Camera() {
-        //camera = AxisCamera.getInstance("10.39.46.11");
+        cam = AxisCamera.getInstance("10.39.46.11");
         System.out.println("Camera init");
         
     }
@@ -40,9 +39,9 @@ public class Camera extends Subsystem {
         SmartDashboard.putInt( "Pic Height",0);
         try {
             SmartDashboard.putInt( "Pic Height",1);
-            if (camera.freshImage()) {
+            if (cam.freshImage()) {
                 try {
-                    pic = camera.getImage();
+                    pic = cam.getImage();
                    
                     SmartDashboard.putInt( "Pic Height",pic.getHeight());
                 } catch (AxisCameraException ex) {

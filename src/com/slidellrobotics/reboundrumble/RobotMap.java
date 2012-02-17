@@ -32,6 +32,8 @@ public class RobotMap {
     public static final int highGearShiftButton = 5; //Button to shift into High Gear
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
     public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
+    public static final int stowBridgeButton = 5; //Button to stow BridgeMounter
+    public static final int dropBridgeButton = 4; //Button to drop BridgeMounter
     
     //Digital IO
     public static final int leftFireEncoder = 1;
@@ -45,7 +47,8 @@ public class RobotMap {
     
     //Relay
     public static final int feedBeltSpike = 1; //Where Feed Belt Spike is attacked to Sidecar
-    public static final int susanRelay = 2; //For the Lazy Susan's Window Motor
+    public static final int susanSpike = 2; //For the Lazy Susan's Window Motor
+    public static final int bridgeSpike = 3;
     
     // Analog
     public static final int turretGyro = 1; //Turret Gyro Port

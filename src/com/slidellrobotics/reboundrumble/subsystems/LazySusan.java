@@ -20,7 +20,7 @@ public class LazySusan extends Subsystem {
     
     public LazySusan() {
         System.out.println("[LazySusan] Starting");
-        susanWindow = new Relay(RobotMap.susanRelay);
+        susanWindow = new Relay(RobotMap.susanSpike);
         System.out.println("[LazySusan] susanWindow initalized");
         System.out.println("[LazySusan] Started");
     }

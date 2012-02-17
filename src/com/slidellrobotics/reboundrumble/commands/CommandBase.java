@@ -25,6 +25,7 @@ public abstract class CommandBase extends Command {
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
     public static LazySusan lazySusan = new LazySusan();
     public static Camera camera = new Camera();
+    public static BridgeMounter bridgeMounter = new BridgeMounter();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

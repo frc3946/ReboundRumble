@@ -6,6 +6,7 @@ package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.commands.TankDrive;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
@@ -25,6 +26,9 @@ public class DriveTrain extends PIDSubsystem {
     private Jaguar rightJaguars;
     private RobotDrive robotDrive;
     
+    private Gyro balanceGyro;
+    private double gyroSpeed;
+    private double gyroAngle;
     // Initialize your subsystem here
     public DriveTrain() {
         super("DriveTrain2", Kp, Ki, Kd);
@@ -36,11 +40,10 @@ public class DriveTrain extends PIDSubsystem {
         System.out.println("[DriveTrain] rightJaguars initialized");
         robotDrive = new RobotDrive(leftJaguars, rightJaguars);
         System.out.println("[DriveTrain] robotDrive initialized");
+        balanceGyro = new Gyro(RobotMap.balanceGyro);
+        System.out.println("[DriveTrain] balanceGyro initialized");
         System.out.println("[DriveTrain] Started");
-        // Use these to get going:
-        // setSetpoint() -  Sets where the PID controller should move the system
-        //                  to
-        // enable() - Enables the PID controller.
+        
     }
     
     public void initDefaultCommand() {
@@ -50,15 +53,27 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     protected double returnPIDInput() {
-        // Return your input value for the PID loop
-        // e.g. a sensor, like a potentiometer:
-        // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return 0.0;
+        gyroAngle = balanceGyro.getAngle();
+        if(gyroAngle < -5) {
+            gyroSpeed = .1;
+        } else if(gyroAngle > 5) {
+            gyroSpeed = -.1;
+        } else {
+            if(gyroAngle > 1) {
+                gyroSpeed = -.05;
+            } else if(gyroAngle < 1) {
+                gyroSpeed = .05;
+            } else {
+                gyroSpeed = 0;
+            }
+        }
+        return gyroSpeed;
     }
     
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
+        tankDrive(output, output);
     }
     
     /**

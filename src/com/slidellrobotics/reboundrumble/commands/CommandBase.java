@@ -3,14 +3,7 @@ package com.slidellrobotics.reboundrumble.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.RobotMap;
-import com.slidellrobotics.reboundrumble.subsystems.Camera;
-import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
-import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
-import com.slidellrobotics.reboundrumble.subsystems.LazySusan;
-import com.slidellrobotics.reboundrumble.subsystems.LoadPiston;
-import com.slidellrobotics.reboundrumble.subsystems.PositioningAccelerometer;
-import com.slidellrobotics.reboundrumble.subsystems.FireMotors;
-import com.slidellrobotics.reboundrumble.subsystems.Transmission;
+import com.slidellrobotics.reboundrumble.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**

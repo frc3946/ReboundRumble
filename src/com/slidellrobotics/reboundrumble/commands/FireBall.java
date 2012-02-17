@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author gixxy
  */
-public class LoadBall extends CommandBase {
+public class FireBall extends CommandBase {
     
-    public LoadBall() {
+    public FireBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(loadPiston);
+        requires(firePiston);
     }
 
     // Called just before this Command runs the first time
@@ -25,25 +25,22 @@ public class LoadBall extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        loadPiston.load();
+        firePiston.fire();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(loadPiston.get() == Value.kForward) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        loadPiston.stow();
+        firePiston.stow();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        firePiston.stow();
     }
 }

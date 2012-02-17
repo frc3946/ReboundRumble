@@ -17,23 +17,27 @@ public class RobotMap {
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
     
-    //PWM
+    //Motors
     public static final int leftDriveMotor = 1; //Left Jaguar's Port
     public static final int rightDriveMotor = 2; //Right Jaguar's Port
     public static final int leftShootingMotor = 3; //Left Shooting Victor Port
     public static final int rightShootingMotor = 4; //Right Shooting Victor Port
     
     //Controls
-    public static final int leftJoystick = 2; //Main Driver Left Joystick
     public static final int rightJoystick = 1; //Main Driver Right Joystick
+    public static final int leftJoystick = 2; //Main Driver Left Joystick
     public static final int thirdJoystick = 3; //Possible third Joystick for secondary Driver Control (maybe use this for ajusting the Lazy Susan and ball shooter/feed.)
-    public static final int arcadeModeButton = 3; //Button that activates Arcade Drive Mode.
+        //Right Joystick
     public static final int fireButton = 1; //Button to fire Phumatic piston
-    public static final int highGearShiftButton = 5; //Button to shift into High Gear
+    public static final int arcadeModeButton = 3; //Button that activates Arcade Drive Mode.
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
+    public static final int highGearShiftButton = 5; //Button to shift into High Gear
+        //Left Joystick
     public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
-    public static final int stowBridgeButton = 5; //Button to stow BridgeMounter
     public static final int dropBridgeButton = 4; //Button to drop BridgeMounter
+    public static final int stowBridgeButton = 5; //Button to stow BridgeMounter
+        //Third Joystick
+    
     
     //Digital IO
     public static final int leftFireEncoder = 1;

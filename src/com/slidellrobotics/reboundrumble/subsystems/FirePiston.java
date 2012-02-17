@@ -15,12 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  * @author gixxy
  */
-public class LoadPiston extends Subsystem {
+public class FirePiston extends Subsystem {
     private DoubleSolenoid pistonSolenoid;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
-    public LoadPiston() {
+    public FirePiston() {
         System.out.println("[LoadPiston] Starting");
         pistonSolenoid = new DoubleSolenoid(RobotMap.firePiston,RobotMap.stowPiston);
         System.out.println("[LoadPiston] pistonSolenoid initialized");
@@ -30,10 +30,10 @@ public class LoadPiston extends Subsystem {
     /**
      * Extends piston
      */
-    public void load() {
+    public void fire() {
         pistonSolenoid.set(DoubleSolenoid.Value.kForward);
         SmartDashboard.putBoolean("Load Piston", true);
-        //System.out.println("[LoadPiston] Fired"); //uncomment for use with debugging
+        //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging
     }
     
     /**
@@ -43,7 +43,7 @@ public class LoadPiston extends Subsystem {
         pistonSolenoid.set(DoubleSolenoid.Value.kReverse);
         Timer.delay(4); //allows time for SmartDashboard to register the piston was infact launched (basicly for nice appearences)
         SmartDashboard.putBoolean("Load Piston", false);
-        //System.out.println("[LoadPiston] Fired"); //uncomment for use with debugging
+        //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging
     }
     
     /**

@@ -1,9 +1,9 @@
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.subsystems.*;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**

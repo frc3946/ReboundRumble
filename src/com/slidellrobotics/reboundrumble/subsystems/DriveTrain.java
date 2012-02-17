@@ -53,27 +53,13 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     protected double returnPIDInput() {
-        gyroAngle = balanceGyro.getAngle();
-        if(gyroAngle < -5) {
-            gyroSpeed = .1;
-        } else if(gyroAngle > 5) {
-            gyroSpeed = -.1;
-        } else {
-            if(gyroAngle > 1) {
-                gyroSpeed = -.05;
-            } else if(gyroAngle < 1) {
-                gyroSpeed = .05;
-            } else {
-                gyroSpeed = 0;
-            }
-        }
-        return gyroSpeed;
+        return balanceGyro.getAngle();
     }
     
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
-        tankDrive(output, output);
+        balanceDrive(output);
     }
     
     /**
@@ -83,7 +69,7 @@ public class DriveTrain extends PIDSubsystem {
      */
     public void tankDrive(double leftSpeed, double rightSpeed) {
         robotDrive.tankDrive(leftSpeed,rightSpeed);
-        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
         //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
         SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
@@ -96,7 +82,19 @@ public class DriveTrain extends PIDSubsystem {
      */
     public void arcadeDrive(double forward, double turn) {
         robotDrive.arcadeDrive(forward, turn);
-        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
+        //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
+        SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
+    }
+    
+    /**
+     * Drive Straight for use with PID Gyro
+     * @param speed Speed to drive forward
+     */
+    public void balanceDrive(double speed) {
+        robotDrive.tankDrive(speed, speed);
+        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
         //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
         SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging

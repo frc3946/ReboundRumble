@@ -43,6 +43,9 @@ public class BridgeMounter extends Subsystem {
         windowSpike.set(Relay.Value.kOff);
     }
     
+    public void stop() {
+        windowSpike.set(Relay.Value.kOff);
+    }
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());

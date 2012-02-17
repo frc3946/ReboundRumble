@@ -24,7 +24,7 @@ public abstract class CommandBase extends Command {
     public static FirePiston firePiston = new FirePiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
     public static LazySusan lazySusan = new LazySusan();
-    public static Camera camera = new Camera();
+    public static TrackingCamera camera = new TrackingCamera();
     public static BridgeMounter bridgeMounter = new BridgeMounter();
 
     public static void init() {

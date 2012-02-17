@@ -15,16 +15,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  * @author gixxy
  */
-public class Camera extends Subsystem {
+public class TrackingCamera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
-    public AxisCamera cam;
+    public AxisCamera camera;
     private ColorImage pic;
     boolean freePic = false;
 
-    public Camera() {
-        cam = AxisCamera.getInstance("10.39.46.11");
+    public TrackingCamera() {
+        camera = AxisCamera.getInstance("10.39.46.11");
         System.out.println("Camera init");
         
     }
@@ -39,9 +39,9 @@ public class Camera extends Subsystem {
         SmartDashboard.putInt( "Pic Height",0);
         try {
             SmartDashboard.putInt( "Pic Height",1);
-            if (cam.freshImage()) {
+            if (camera.freshImage()) {
                 try {
-                    pic = cam.getImage();
+                    pic = camera.getImage();
                    
                     SmartDashboard.putInt( "Pic Height",pic.getHeight());
                 } catch (AxisCameraException ex) {
@@ -52,7 +52,7 @@ public class Camera extends Subsystem {
             }
         } catch (Exception ex) {
             //System.out.println(ex);
-            //System.out.println("Camera Error");
+            //System.out.println("TrackingCamera Error");
         }
         return pic;
     }

@@ -37,6 +37,7 @@ public class Main extends IterativeRobot {
         //autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
+        System.out.println("Robot Init!!!!!!!!!!!!!!!");
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
         cc = new CriteriaCollection();                              //Sets the

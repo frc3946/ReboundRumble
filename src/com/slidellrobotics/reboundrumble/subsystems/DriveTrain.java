@@ -49,6 +49,7 @@ public class DriveTrain extends PIDSubsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+        System.out.println("[DriveTrain] TankDrive command started.");
         setDefaultCommand(new TankDrive());
     }
     

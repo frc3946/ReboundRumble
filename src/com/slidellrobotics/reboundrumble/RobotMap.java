@@ -59,5 +59,5 @@ public class RobotMap {
     public static final int balanceGyro = 2; //Balancing Chasis Gyro
     
     //Accelerometer
-    public static final int positioningAccelerometer = 1; //Positioning Accelerometer port on Sidecar
+    public static final int positioningAccelerometer = 2; //Positioning Accelerometer port on Sidecar
 }

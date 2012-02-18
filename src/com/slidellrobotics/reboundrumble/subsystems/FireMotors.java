@@ -34,8 +34,8 @@ public class FireMotors extends PIDSubsystem {
         setSetpoint(1000); //rpms
         lastTime = Timer.getFPGATimestamp();
         counter.start();
-        getPIDController().setOutputRange(0, .1);
-        victor.set(1.0);
+        getPIDController().setOutputRange(-.1, .1);
+        
     }
     
     public void initDefaultCommand() {

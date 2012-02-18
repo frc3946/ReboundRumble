@@ -37,14 +37,13 @@ public class TrackingCamera extends Subsystem {
 
     public ColorImage getImageFromCamera() throws NIVisionException {
        
-        SmartDashboard.putInt( "Pic Height",0);
+        
         try {
-            SmartDashboard.putInt( "Pic Height",1);
+           
             if (camera.freshImage()) {
                 try {
-                    pic = camera.getImage();
-                   
-                    SmartDashboard.putInt( "Pic Height",pic.getHeight());
+                     camera.getImage();                  
+                    
                 } catch (AxisCameraException ex) {
                      System.out.println(ex);
                 } catch (NIVisionException ex) {

@@ -6,7 +6,7 @@ package com.slidellrobotics.reboundrumble.commands;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class SetFeedBelt extends CommandBase {
     private boolean state = false;

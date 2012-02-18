@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class BridgeMounter extends Subsystem {
     private Relay windowSpike;

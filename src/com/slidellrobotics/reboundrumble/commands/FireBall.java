@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class FireBall extends CommandBase {
     

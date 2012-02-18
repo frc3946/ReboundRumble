@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class FeedBelt extends Subsystem {
     public Relay feedBeltSpike;

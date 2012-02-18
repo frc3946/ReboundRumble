@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.image.*;
 
 /**
  *
- * @author gixxy
+ * @author Allister Wright
  */
 public class FilterImage extends CommandBase {
     private ColorImage pic;                     //

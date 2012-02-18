@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class LowGear extends CommandBase {
     

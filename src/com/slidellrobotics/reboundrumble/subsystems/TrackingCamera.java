@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class TrackingCamera extends Subsystem {
     // Put methods for controlling this subsystem

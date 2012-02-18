@@ -36,7 +36,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
         SmartDashboard.putData(leftShootingMotors);
         // Show what command your subsystem is running on the TheDash
-        
+        System.out.println("CommandBase Init..");
     }
 
     public CommandBase(String name) {

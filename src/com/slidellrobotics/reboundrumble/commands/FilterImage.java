@@ -52,7 +52,7 @@ public class FilterImage extends CommandBase {
         i=0;
         
         try {
-            camera.camera.writeBrightness(7);
+            camera.camera.writeBrightness(7);       //Sets the camera to only accept very bright light
             pic = camera.getImageFromCamera();      //Declares pic variable
             BinaryImage thresholdHSL = pic.thresholdHSL(145,220,179,255,0,19);      //Sets a Blue light threshold
             int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle

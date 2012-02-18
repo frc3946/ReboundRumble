@@ -52,14 +52,14 @@ public class FilterImage extends CommandBase {
         i=0;
         
         try {
-            camera.camera.writeBrightness(7);       //Sets the camera to only accept very bright light
+            //camera.camera.writeBrightness(7);       //Sets the camera to only accept very bright light
             pic = camera.getImageFromCamera();      //Declares pic variable
             BinaryImage thresholdHSL = pic.thresholdHSL(165,185,50,90,95,110);      //Sets a Blue light threshold
-            int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
-            BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all but the largest particle
-            BinaryImage convexHullImage = bigObjectsImage.convexHull(false);        //Fills in the bounding boxes for the targets
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the criteria from RobotInit
-            reports = filteredImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
+            //int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
+            //BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all but the largest particle
+            BinaryImage convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets
+            //BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the criteria from RobotInit
+            reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
             for (int i=0; i<reports.length; i++) {                          //Systematically
                 ParticleAnalysisReport r = reports[i];                      //prints the 
                 System.out.println("Particle: "+i+": Center of mass x:"+    //geometric center

@@ -37,14 +37,13 @@ public class Main extends IterativeRobot {
         //autonomousCommand = new ExampleCommand();
 
         // Initialize all subsystems
-        System.out.println("Robot Init!!!!!!!!!!!!!!!");
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
         cc = new CriteriaCollection();                              //Sets the
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, //criteria
-                20, 500, false);                                    //for height
+        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, //criteria
+                20, 400, false);                                    //for height
         cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, //and width
-                30, 400, false);                                    //thresholds.
+                30, 500, false);                                    //thresholds.
     }
 
     public void autonomousInit() {

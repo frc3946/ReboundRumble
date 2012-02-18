@@ -54,7 +54,7 @@ public class FilterImage extends CommandBase {
         try {
             camera.camera.writeBrightness(7);       //Sets the camera to only accept very bright light
             pic = camera.getImageFromCamera();      //Declares pic variable
-            BinaryImage thresholdHSL = pic.thresholdHSL(145,220,179,255,0,19);      //Sets a Blue light threshold
+            BinaryImage thresholdHSL = pic.thresholdHSL(165,185,50,90,95,110);      //Sets a Blue light threshold
             int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
             BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all but the largest particle
             BinaryImage convexHullImage = bigObjectsImage.convexHull(false);        //Fills in the bounding boxes for the targets

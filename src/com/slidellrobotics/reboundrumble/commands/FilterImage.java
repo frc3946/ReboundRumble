@@ -111,7 +111,7 @@ public class FilterImage extends CommandBase {
     } 
     
   
-public void selectGoal() {
+    public void selectGoal() {
         ParticleAnalysisReport leftGoal;    //
         ParticleAnalysisReport rightGoal;   //
         //todo set to 4 for comp
@@ -132,37 +132,36 @@ public void selectGoal() {
                 targetGoal = leftGoal;              //
             }
         }
-}
+    }
 
-public void findDistance(){
-    double targetHeight = targetGoal.boundingRectHeight;   //Sets the height of our target.
-    double targetHeightFeet =1.5;
-    double vertFOV  = targetHeightFeet/targetHeight*totalHeight; // //Gets the foot equivalent of our vertical Field of View
-     
-    double camearVerticalFOV=48;
-    double cameraHorizontalFOV=84;
-    
-    double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
-    double targetWidthFeet =2.0;
-    double horFOV = targetWidthFeet/targetHeight*totalHeight; 
-     
-   
-    double d1 =  (vertFOV / 2) / Math.tan(camearVerticalFOV/2);
-    double d2 =  (horFOV / 2) / Math.tan(cameraHorizontalFOV/2);
-    
-    double d = (d1+d2)/2;
-    
-    SmartDashboard.putDouble("Distance", d);
+    public void findDistance(){
+        double targetHeight = targetGoal.boundingRectHeight;   //Sets the height of our target.
+        double targetHeightFeet =1.5;
+        double vertFOV  = targetHeightFeet/targetHeight*totalHeight; // //Gets the foot equivalent of our vertical Field of View
+
+        double camearVerticalFOV=48;
+        double cameraHorizontalFOV=84;
+
+        double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
+        double targetWidthFeet =2.0;
+        double horFOV = targetWidthFeet/targetHeight*totalHeight; 
 
 
-    double launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
-    leftShootingMotors.setSetpoint(launchSpeed);
-    SmartDashboard.putDouble("launchSpeed", launchSpeed);
-    
-    //todo uncomment
-    //rightShootingMotors.setSetpoint(launchSpeed);
-    
-}
+        double d1 =  (vertFOV / 2) / Math.tan(camearVerticalFOV/2);
+        double d2 =  (horFOV / 2) / Math.tan(cameraHorizontalFOV/2);
+
+        double d = (d1+d2)/2;
+
+        SmartDashboard.putDouble("Distance", d);
+
+
+        double launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
+        leftShootingMotors.setSetpoint(launchSpeed);
+        SmartDashboard.putDouble("launchSpeed", launchSpeed);
+
+        //todo uncomment
+        //rightShootingMotors.setSetpoint(launchSpeed);
+    }
 
 
 } // end of class

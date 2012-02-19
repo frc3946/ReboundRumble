@@ -71,6 +71,7 @@ public class Main extends IterativeRobot {
     }
      public void updateStatus(){
       CommandBase.leftShootingMotors.updateStatus();
-      
+      CommandBase.rightShootingMotors.updateStatus();
+     
     }
 }

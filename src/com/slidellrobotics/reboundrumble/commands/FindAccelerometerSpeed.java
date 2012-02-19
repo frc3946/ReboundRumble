@@ -4,9 +4,6 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.ADXL345_I2C.Axes;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  *
  * @author gixxy
@@ -25,9 +22,10 @@ public class FindAccelerometerSpeed extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        SmartDashboard.putDouble("Accelerometer X", pAccelerometer.getPosition(Axes.kX));
-        SmartDashboard.putDouble("Accelerometer Y", pAccelerometer.getPosition(Axes.kY));
-        SmartDashboard.putDouble("Accelerometer Z", pAccelerometer.getPosition(Axes.kZ));
+        pAccelerometer.calculate();
+        //SmartDashboard.putDouble("Accelerometer X", pAccelerometer.getPosition(Axes.kX));
+        //SmartDashboard.putDouble("Accelerometer Y", pAccelerometer.getPosition(Axes.kY));
+        //SmartDashboard.putDouble("Accelerometer Z", pAccelerometer.getPosition(Axes.kZ));
     }
 
     // Make this return true when this Command no longer needs to run execute()

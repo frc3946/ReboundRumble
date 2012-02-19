@@ -21,7 +21,7 @@ public class TrackingCamera extends Subsystem {
 
     public AxisCamera camera;
     private ColorImage pic;
-    boolean freePic = false;
+   
 
     public TrackingCamera() {
         camera = AxisCamera.getInstance("10.39.46.11");

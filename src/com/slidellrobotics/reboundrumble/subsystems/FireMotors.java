@@ -26,7 +26,7 @@ public class FireMotors extends PIDSubsystem {
     private Victor victor;
     double lastTime;
     double newtime;
-    double rpms;
+    double rpms=0;
     
     String Name;
     
@@ -62,10 +62,16 @@ public class FireMotors extends PIDSubsystem {
         
         timespan = newtime- lastTime; //number of seconds during counting        
         lastTime = newtime;
-        if (timespan == 0) 
-            return 0.0;
+        if (timespan <= 0.0) 
+            return rpms; //don't recalculate, just give what ever it was
        
         rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute  
+        
+        //sometimes the counter goes nuts
+        //this deboundes it
+        if (rpms > 7500)
+            rpms = 7500;
+        
         return rpms;
         
     }
@@ -73,7 +79,7 @@ public class FireMotors extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         //When the PID system thinks there is no error then
         //set point is equal to rpms and output = 0        
-        //soft start if we not moving, only set power to 10
+        //soft start if we not moving, only set power to 10%
         if (rpms < 100)
             victor.set(.1);
         else
@@ -82,6 +88,7 @@ public class FireMotors extends PIDSubsystem {
     }
     
     public void updateStatus(){
-        SmartDashboard.putDouble(Name + " RPMS",rpms);         
+        SmartDashboard.putDouble(Name + " RPMS",rpms);   
+        SmartDashboard.putDouble(Name + " victor",victor.get()); 
     }
 }

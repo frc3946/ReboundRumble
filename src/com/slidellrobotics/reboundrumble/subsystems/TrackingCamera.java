@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -32,7 +31,7 @@ public class TrackingCamera extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new FilterImage());
+        setDefaultCommand(new FilterImage());
     }
 
     public ColorImage getImageFromCamera() throws NIVisionException {
@@ -42,7 +41,7 @@ public class TrackingCamera extends Subsystem {
            
             if (camera.freshImage()) {
                 try {
-                     camera.getImage();                  
+                     pic = camera.getImage();                  
                     
                 } catch (AxisCameraException ex) {
                      System.out.println(ex);

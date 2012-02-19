@@ -18,8 +18,8 @@ public abstract class CommandBase extends Command {
     // Create a single static instance of all of your subsystems
     public static DriveTrain driveTrain = new DriveTrain();
     public static Transmission transmission = new Transmission();
-    public static FireMotors leftShootingMotors = new FireMotors(RobotMap.leftFireEncoder, RobotMap.leftShootingMotor);
-    //public static FireMotors rightShootingMotors = new FireMotors(RobotMap.rightFireEncoder, RobotMap.rightShootingMotor);
+    public static FireMotors leftShootingMotors = new FireMotors("Left",RobotMap.leftFireEncoder, RobotMap.leftShootingMotor);
+    public static FireMotors rightShootingMotors = new FireMotors("Right",RobotMap.rightFireEncoder, RobotMap.rightShootingMotor);
     public static FeedBelt feedBelt = new FeedBelt();
     public static FirePiston firePiston = new FirePiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
@@ -35,6 +35,8 @@ public abstract class CommandBase extends Command {
         // news. Don't move it.
         oi = new OI();
         SmartDashboard.putData(leftShootingMotors);
+        SmartDashboard.putData(rightShootingMotors);
+        SmartDashboard.putData(driveTrain);
         // Show what command your subsystem is running on the TheDash
         System.out.println("CommandBase Init..");
     }

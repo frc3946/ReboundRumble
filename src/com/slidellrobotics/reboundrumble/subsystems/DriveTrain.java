@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class DriveTrain extends PIDSubsystem {
 
-    private static final double Kp = 0.0;
+    private static final double Kp = 1.0/360.0; //
     private static final double Ki = 0.0;
     private static final double Kd = 0.0;
     
@@ -31,7 +31,7 @@ public class DriveTrain extends PIDSubsystem {
     private double gyroAngle;
     // Initialize your subsystem here
     public DriveTrain() {
-        super("DriveTrain2", Kp, Ki, Kd);
+        super("DriveTrain", Kp, Ki, Kd);
         
         System.out.println("[DriveTrain] Starting");
         leftJaguars = new Jaguar(RobotMap.leftDriveMotor);
@@ -43,6 +43,7 @@ public class DriveTrain extends PIDSubsystem {
         balanceGyro = new Gyro(RobotMap.balanceGyro);
         System.out.println("[DriveTrain] balanceGyro initialized");
         System.out.println("[DriveTrain] Started");
+        setSetpoint(0);
         
     }
     
@@ -58,9 +59,12 @@ public class DriveTrain extends PIDSubsystem {
     }
     
     protected void usePIDOutput(double output) {
-        // Use output to drive your system, like a motor
-        // e.g. yourMotor.set(output);
-        balanceDrive(output);
+        
+        //if we are within 5 degree, that should be balanced.
+        if (Math.abs(balanceGyro.getAngle()) < 5)
+            balanceDrive(0);
+        else
+            balanceDrive(output);
     }
     
     /**

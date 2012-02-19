@@ -10,9 +10,11 @@ import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 /**
  *
  * @author Gus Michel
+ * 
  */
 public class FireMotors extends PIDSubsystem {
 
@@ -25,9 +27,12 @@ public class FireMotors extends PIDSubsystem {
     double lastTime;
     double newtime;
     double rpms;
+    
+    String Name;
+    
     // Initialize your subsystem here
-    public FireMotors(int counterChannel, int victorChannel) {
-        super("FireMotors", Kp, Ki, Kd);
+    public FireMotors(String Name,int counterChannel, int victorChannel) {
+        super(Name, Kp, Ki, Kd);
         counter = new Counter(counterChannel);
         victor = new Victor(victorChannel); 
         enable();
@@ -35,6 +40,7 @@ public class FireMotors extends PIDSubsystem {
         lastTime = Timer.getFPGATimestamp();
         counter.start();
         getPIDController().setOutputRange(-.1, .1);
+        this.Name = Name; //set class scope name to the Name passed in the constructor
         
     }
     
@@ -59,29 +65,23 @@ public class FireMotors extends PIDSubsystem {
         if (timespan == 0) 
             return 0.0;
        
-        rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute       
-       
-        //this would update both left and right motors!!!
-        //TODO: remove next three lines
-        SmartDashboard.putDouble("RPMS",rpms);
-        SmartDashboard.putDouble("TimeSpan",timespan);
-        SmartDashboard.putDouble("Counts",counts);
-         
+        rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute  
         return rpms;
+        
     }
     
     protected void usePIDOutput(double output) {
         //When the PID system thinks there is no error then
-        //set point is equal to rpms and output = 0
-        
-        
-        if (rmps < 1000)
+        //set point is equal to rpms and output = 0        
+        //soft start if we not moving, only set power to 10
+        if (rpms < 100)
             victor.set(.1);
         else
             victor.set(victor.get()+output);
         
-        //this would update both left and right motors!!!
-        //TODO: remove next line
-        SmartDashboard.putDouble("PID Fire Motor", output);
+    }
+    
+    public void updateStatus(){
+        SmartDashboard.putDouble(Name + " RPMS",rpms);         
     }
 }

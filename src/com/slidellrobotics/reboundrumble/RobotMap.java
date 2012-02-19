@@ -60,6 +60,6 @@ public class RobotMap {
     public static final int turretGyro = 1; //Turret Gyro Port
     public static final int balanceGyro = 2; //Balancing Chasis Gyro
     
-    //Accelerometer
+    //Accelerometer I2C
     public static final int positioningAccelerometer = 1; //Positioning Accelerometer port on Sidecar
 }

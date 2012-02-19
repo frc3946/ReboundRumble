@@ -8,12 +8,10 @@
 package com.slidellrobotics.reboundrumble;
 
 
+import com.slidellrobotics.reboundrumble.commands.CommandBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
-import com.slidellrobotics.reboundrumble.commands.CommandBase;
-import edu.wpi.first.wpilibj.image.CriteriaCollection;
-import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -67,6 +65,12 @@ public class Main extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        updateStatus();
         
+        
+    }
+     public void updateStatus(){
+      CommandBase.leftShootingMotors.updateStatus();
+      
     }
 }

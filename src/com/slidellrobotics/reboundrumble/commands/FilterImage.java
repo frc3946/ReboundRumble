@@ -19,16 +19,19 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class FilterImage extends CommandBase {
 
     double totalWidth = 0;
-    double totalHeight = 0;//
+    double totalHeight = 0;
+    double launchSpeed ;
+    double distanceToTarget;
+    
     ParticleAnalysisReport[] reports = null;
     ParticleAnalysisReport targetGoal=null;
 
     public FilterImage() {
         requires(camera);
         requires(lazySusan);
-        requires(leftShootingMotors);
-        //todo: enable this line
-        //requires(rightShootingMotors);
+        requires(leftShootingMotors);        
+        requires(rightShootingMotors);
+        
         System.out.println("Filter image Init");    //States that the camera initialized
     }
 
@@ -38,9 +41,9 @@ public class FilterImage extends CommandBase {
     protected void execute() {
         try{
         getImage();                 //loops getting a fresh image
-        //selectGoal();
-        //findDistance();
-        //findAngle();
+        selectGoal();
+        findDistance();
+        findAngle();
         }
         catch (Exception ex){}
 
@@ -58,37 +61,39 @@ public class FilterImage extends CommandBase {
 
     public void getImage() {
 
-        ColorImage pic;
+        ColorImage pic=null;
+        BinaryImage thresholdHSL=null;
+        BinaryImage convexHullImage=null;
         try {
-            //camera.camera.wrieBrightness(7);       //Sets the camera to only accept very bright light
+            
             pic = camera.getImageFromCamera();      //Declares pic variable
             totalWidth = pic.getWidth();
             totalHeight = pic.getHeight();
-            BinaryImage thresholdHSL = pic.thresholdHSL(165, 185, 50, 90, 95, 110);      //Sets a Blue light threshold
-            ///int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
-            //BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all but the largest particle
-            BinaryImage convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets
-            // BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the criteria from RobotInit
+            thresholdHSL = pic.thresholdHSL(165, 185, 50, 90, 95, 110);      //Sets a Blue light threshold
+            convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
             reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
-            for (int i = 0; i < reports.length; i++) {                          //Systematically
-                //ParticleAnalysisReport r = reports[i];                      //prints the 
-                System.out.println("Particle: " + i + ": Center of mass x:" + //geometric center
-                        reports[i].center_mass_x);                                       //of mass per particle.
-            }
-            System.out.println(convexHullImage.getNumberParticles() + " " + //Prints the number of particles
-                    Timer.getFPGATimestamp());                          //per elapsed robot time.
+            
+                           
 
-            //filteredImage.free();       //
-            convexHullImage.free();     //
-            //bigObjectsImage.free();     //Memory leak
-            thresholdHSL.free();        //preventions.
-            SmartDashboard.putInt("Pic Height", pic.getHeight());
-            pic.free();                 //
-
-        } catch (NIVisionException ex) {      //
-        } //Catches both possible exceptions
-        catch (Exception ex) {               //that could be caused from above code
-        }                                   //
+        } catch (NIVisionException ex) {
+        }catch (Exception ex) {}  
+        
+        
+        try{
+             //need to free memory on all pic variables
+            if (pic != null)
+                pic.free();  
+            
+            if (convexHullImage != null)
+                convexHullImage.free();               
+            
+            if (thresholdHSL != null)
+                thresholdHSL.free();    
+        }        
+        catch (Exception ex) {
+             System.out.println(ex);
+        }  
+       
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -150,24 +155,37 @@ public class FilterImage extends CommandBase {
 
         double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
         double targetWidthFeet =2.0;
-        double horFOV = targetWidthFeet/targetHeight*totalHeight; 
+        double horFOV = targetWidthFeet/targetWidth*totalWidth; 
 
 
         double d1 =  (vertFOV / 2) / Math.tan(camearVerticalFOV/2);
         double d2 =  (horFOV / 2) / Math.tan(cameraHorizontalFOV/2);
 
-        double d = (d1+d2)/2;
-
-        SmartDashboard.putDouble("Distance", d);
-
-
-        double launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
+        distanceToTarget = (d1+d2)/2;
+        double d=distanceToTarget;
+        
+        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(launchSpeed);
-        SmartDashboard.putDouble("launchSpeed", launchSpeed);
-
-        //todo uncomment
-        //rightShootingMotors.setSetpoint(launchSpeed);
+        rightShootingMotors.setSetpoint(launchSpeed);
     }
+    
+    public void updateStatus()
+    {
+        try{
+         for (int i = 0; i < reports.length; i++) {                          //Systematically prints the                                   
+                System.out.println("Particle: " + i + ": Center of mass x:" + //geometric center
+                        reports[i].center_mass_x);                                       //of mass per particle.
+            }
+            
+            SmartDashboard.putDouble("Pic Height", totalHeight);
+            SmartDashboard.putDouble("Pic Width", totalWidth);
+            SmartDashboard.putDouble("launchSpeed", launchSpeed);
+            SmartDashboard.putDouble("Distance", distanceToTarget);
+        }
+        catch(Exception ex){}
+        
+    }
+    
 
 
 } // end of class

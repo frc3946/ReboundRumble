@@ -34,7 +34,7 @@ public class FireMotors extends PIDSubsystem {
         setSetpoint(1000); //rpms
         lastTime = Timer.getFPGATimestamp();
         counter.start();
-        
+        getPIDController().setOutputRange(0, .1);
         
     }
     
@@ -73,8 +73,12 @@ public class FireMotors extends PIDSubsystem {
     protected void usePIDOutput(double output) {
         //When the PID system thinks there is no error then
         //set point is equal to rpms and output = 0
-               
-        victor.set(victor.get()+output);
+        
+        
+        if (rmps < 1000)
+            victor.set(.1);
+        else
+            victor.set(victor.get()+output);
         
         //this would update both left and right motors!!!
         //TODO: remove next line

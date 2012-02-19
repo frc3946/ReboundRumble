@@ -1,18 +1,12 @@
 
 package com.slidellrobotics.reboundrumble;
 
-import com.slidellrobotics.reboundrumble.commands.ArcadeDrive;
-import com.slidellrobotics.reboundrumble.commands.DropBridgeMounter;
-import com.slidellrobotics.reboundrumble.commands.HighGear;
-import com.slidellrobotics.reboundrumble.commands.FireBall;
-import com.slidellrobotics.reboundrumble.commands.LazySusanLeft;
-import com.slidellrobotics.reboundrumble.commands.LazySusanRight;
-import com.slidellrobotics.reboundrumble.commands.LowGear;
-import com.slidellrobotics.reboundrumble.commands.SetFeedBelt;
-import com.slidellrobotics.reboundrumble.commands.StowBridgeMounter;
+import com.slidellrobotics.reboundrumble.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -32,6 +26,10 @@ public class OI {
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
     private Button arcadeMode = new JoystickButton(rightJoystick, RobotMap.arcadeModeButton);
     
+    //SmartDashBoard Buttons
+    private InternalButton smartDashboardButton1 = new InternalButton();
+    
+    
     public OI() {
         arcadeMode.whileHeld(new ArcadeDrive());
         shiftHighGear.whenPressed(new HighGear());
@@ -42,6 +40,10 @@ public class OI {
         stowBridge.whileHeld(new StowBridgeMounter());
         turnSusanLeft.whileHeld(new LazySusanLeft());
         turnSusanRight.whileHeld(new LazySusanRight());
+        
+        //SmartDashboard Buttons
+        SmartDashboard.putData("SetFiringMotors",smartDashboardButton1);
+        smartDashboardButton1.whenPressed(new SetFiringMotors(1) );
     }
     
     /**

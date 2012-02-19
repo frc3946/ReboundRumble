@@ -41,6 +41,8 @@ public class RobotMap {
         //Third Joystick
     
     
+    
+    
     //Digital IO
     public static final int leftFireEncoder = 1;
     public static final int rightFireEncoder = 2;

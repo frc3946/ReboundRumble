@@ -12,19 +12,20 @@ public class SetFiringMotors extends CommandBase {
     int setup;
     
     public SetFiringMotors(int num) {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+      
         setup = num;
+        requires(leftShootingMotors);
+        requires(rightShootingMotors);
         
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if(setup == 1) {
-            leftShootingMotors.setSetpoint(1000);
-        } else {
-            leftShootingMotors.setSetpoint(2000);
-        }
+//        if(setup == 1) {
+//            leftShootingMotors.setSetpoint(1000);
+//        } else {
+//            leftShootingMotors.setSetpoint(2000);
+//        }
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -33,7 +34,7 @@ public class SetFiringMotors extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return false;
     }
 
     // Called once after isFinished returns true

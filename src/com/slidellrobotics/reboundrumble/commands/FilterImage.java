@@ -38,9 +38,9 @@ public class FilterImage extends CommandBase {
     protected void execute() {
         try{
         getImage();                 //loops getting a fresh image
-        selectGoal();
-        findDistance();
-        findAngle();
+        //selectGoal();
+        //findDistance();
+        //findAngle();
         }
         catch (Exception ex){}
 

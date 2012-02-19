@@ -4,119 +4,195 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import com.slidellrobotics.reboundrumble.RobotMap;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
-import edu.wpi.first.wpilibj.image.CriteriaCollection;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
+ * @author Allister Wright
  */
 public class FilterImage extends CommandBase {
-    private ColorImage pic;                     //
-    private BinaryImage thresholdHSL = null;    //
-    private int remove  = 0;                    //
-    private BinaryImage bigObjectsImage = null; //
-    private BinaryImage convexHullImage = null; //  Variable Constructors
-    private BinaryImage filteredImage = null;   //
-    CriteriaCollection cc;                      //
-    boolean freePic = false;                    //
-    private BinaryImage partReport = null;      //
-    private int i;                              //
+
+    double totalWidth = 0;
+    double totalHeight = 0;//
+    ParticleAnalysisReport[] reports = null;
+    ParticleAnalysisReport targetGoal=null;
 
     public FilterImage() {
         requires(camera);
         requires(lazySusan);
+        requires(leftShootingMotors);
+        //todo: enable this line
+        //requires(rightShootingMotors);
         System.out.println("Filter image Init");    //States that the camera initialized
     }
-    
-    protected void initialize(){
+
+    protected void initialize() {
     }
-    
-    protected void execute(){
+
+    protected void execute() {
+        try{
         getImage();                 //loops getting a fresh image
-    }    
-    
-    protected boolean isFinished() {
-       return false;                //never ends
+        selectGoal();
+        findDistance();
+        findAngle();
+        }
+        catch (Exception ex){}
+
     }
-    
+
+    protected boolean isFinished() {
+        return false;                //never ends
+    }
+
     protected void end() {
     }
-    
+
     protected void interrupted() {
     }
 
-    
-    public ColorImage getImage() {
-        freePic = false;            //States that the camera's picture is still held
-        ParticleAnalysisReport[] reports = null;    //Creates an array of Analysis Reports
-        i=0;
-        
+    public void getImage() {
+
+        ColorImage pic;
         try {
+            //camera.camera.wrieBrightness(7);       //Sets the camera to only accept very bright light
             pic = camera.getImageFromCamera();      //Declares pic variable
-            BinaryImage thresholdHSL = pic.thresholdHSL(145,220,179,255,0,19);      //Sets a Blue light threshold
-            int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
-            BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all bu tthe largest particle
-            BinaryImage convexHullImage = bigObjectsImage.convexHull(false);        //Reduces camera edge/perspective distortion
-            BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the criteria from RobotInit
-            reports = filteredImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
-            for (int i=0; i<reports.length; i++) {                          //Systematically
-                ParticleAnalysisReport r = reports[i];                      //prints the 
-                System.out.println("Particle: "+i+": Center of mass x:"+    //geometric center
-                    r.center_mass_x);                                       //of mass per particle.
+            totalWidth = pic.getWidth();
+            totalHeight = pic.getHeight();
+            BinaryImage thresholdHSL = pic.thresholdHSL(165, 185, 50, 90, 95, 110);      //Sets a Blue light threshold
+            ///int remove = thresholdHSL.getNumberParticles() - 1;                     //Forms to leave 1 particle
+            //BinaryImage bigObjectsImage = thresholdHSL.removeSmallObjects(false, remove);   //Removes all but the largest particle
+            BinaryImage convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets
+            // BinaryImage filteredImage = convexHullImage.particleFilter(cc);     //Applies the criteria from RobotInit
+            reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
+            for (int i = 0; i < reports.length; i++) {                          //Systematically
+                //ParticleAnalysisReport r = reports[i];                      //prints the 
+                System.out.println("Particle: " + i + ": Center of mass x:" + //geometric center
+                        reports[i].center_mass_x);                                       //of mass per particle.
             }
-            System.out.println(filteredImage.getNumberParticles()+" "+  //Prints the number of particles
+            System.out.println(convexHullImage.getNumberParticles() + " " + //Prints the number of particles
                     Timer.getFPGATimestamp());                          //per elapsed robot time.
-            
-            filteredImage.free();       //
+
+            //filteredImage.free();       //
             convexHullImage.free();     //
-            bigObjectsImage.free();     //Memory leak
+            //bigObjectsImage.free();     //Memory leak
             thresholdHSL.free();        //preventions.
+            SmartDashboard.putInt("Pic Height", pic.getHeight());
             pic.free();                 //
-            freePic = true;         //Sets off the FilterImage command's idFinished
-        } 
-        catch (NIVisionException ex) {      //
-        }                                   //Catches both possible exceptions
-        catch (Exception ex){               //that could be caused from above code
+
+        } catch (NIVisionException ex) {      //
+        } //Catches both possible exceptions
+        catch (Exception ex) {               //that could be caused from above code
         }                                   //
-        
-        return pic;             //Returns the camera's most recent picture.
     }
-}
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void findAngle() {
+                       //  
+        double targetLocale;                //  Variable Constructors
+        double horCenter;                   //  
+        
+        horCenter = (totalWidth / 2);     //Finds the pixel value of the horizontal center
+        targetLocale = targetGoal.center_mass_x;        //Finds the center of our target
+        while (targetLocale != horCenter) {              //While we are not aimed at the goal
+            if (targetLocale > horCenter) {                  //and if we are facing right
+                lazySusan.setRelay(Relay.Value.kReverse);   //turn left
+                SmartDashboard.putString("LazySusan", "Reverse");
+            } else {                                        //if we face left
+                lazySusan.setRelay(Relay.Value.kForward);   //turn right
+                SmartDashboard.putString("LazySusan", "Forward");
+
+            }
+        }
+        
+    
+    } 
+    
+  
+    public void selectGoal() {
+        ParticleAnalysisReport leftGoal;    //
+        ParticleAnalysisReport rightGoal;   //
+        //todo set to 4 for comp
+        if (reports == null){
+            return;
+        }
+        if (reports.length < 3)
+        {
+            System.out.println("not enough goals");
+            targetGoal = reports[0];
+        }
+        else{
+            leftGoal = reports[1];     //Recognizes the
+            rightGoal = reports[2];    //middle goals.
+            double leftWidth = leftGoal.boundingRectWidth;     //Finds the widths of
+            double rightWidth = rightGoal.boundingRectWidth;   //both middle goals.
+            if (leftWidth <= rightWidth) {        //
+                targetGoal = rightGoal;             //Decides which goal we are
+            }
+            if (rightWidth > leftWidth) {        //closer to and targets it.
+                targetGoal = leftGoal;              //
+            }
+        }
+    }
+
+    public void findDistance(){
+        double targetHeight = targetGoal.boundingRectHeight;   //Sets the height of our target.
+        double targetHeightFeet =1.5;
+        double vertFOV  = targetHeightFeet/targetHeight*totalHeight; // //Gets the foot equivalent of our vertical Field of View
+
+        double camearVerticalFOV=48;
+        double cameraHorizontalFOV=84;
+
+        double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
+        double targetWidthFeet =2.0;
+        double horFOV = targetWidthFeet/targetHeight*totalHeight; 
 
 
+        double d1 =  (vertFOV / 2) / Math.tan(camearVerticalFOV/2);
+        double d2 =  (horFOV / 2) / Math.tan(cameraHorizontalFOV/2);
+
+        double d = (d1+d2)/2;
+
+        SmartDashboard.putDouble("Distance", d);
+
+
+        double launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
+        leftShootingMotors.setSetpoint(launchSpeed);
+        SmartDashboard.putDouble("launchSpeed", launchSpeed);
+
+        //todo uncomment
+        //rightShootingMotors.setSetpoint(launchSpeed);
+    }
+
+
+} // end of class
 /*
- * 
+ *
  * check out Brad's example code from
  * http://firstforge.wpi.edu/sf/go/doc1209;jsessionid=DE1AA2AE5AA5396063CB73C1AE17456B?nav=1
- * 
+ *
  * package edu.wpi.first.wpilibj.templates;
-
-* // to remove the comments high light all the code and press ctrl+slash
-//import com.sun.squawk.util.Arrays;
-//import com.sun.squawk.util.Comparer;
-//import edu.wpi.first.wpilibj.SimpleRobot;
-//import edu.wpi.first.wpilibj.Timer;
-//import edu.wpi.first.wpilibj.camera.AxisCamera;
-//import edu.wpi.first.wpilibj.camera.AxisCameraException;
-//import edu.wpi.first.wpilibj.image.BinaryImage;
-//import edu.wpi.first.wpilibj.image.ColorImage;
-//import edu.wpi.first.wpilibj.image.NIVisionException;
-//import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
-//
-///**
-// *
-// * @author Greg Granito (Team 190)
-// * This sample program finds the top 3 camera images that are likely to be the goals
-// * when viewed by the axis camera. You would use this data to drive the robot towards
-// * the appropriate goal and score the tube.
-// */
+ *
+ * // to remove the comments high light all the code and press ctrl+slash
+ * //import com.sun.squawk.util.Arrays; //import com.sun.squawk.util.Comparer;
+ * //import edu.wpi.first.wpilibj.SimpleRobot; //import
+ * edu.wpi.first.wpilibj.Timer; //import
+ * edu.wpi.first.wpilibj.camera.AxisCamera; //import
+ * edu.wpi.first.wpilibj.camera.AxisCameraException; //import
+ * edu.wpi.first.wpilibj.image.BinaryImage; //import
+ * edu.wpi.first.wpilibj.image.ColorImage; //import
+ * edu.wpi.first.wpilibj.image.NIVisionException; //import
+ * edu.wpi.first.wpilibj.image.ParticleAnalysisReport; // ///** // * // *
+ * @author Greg Granito (Team 190) // * This sample program finds the top 3
+ * camera images that are likely to be the goals // * when viewed by the axis
+ * camera. You would use this data to drive the robot towards // * the
+ * appropriate goal and score the tube. //
+ */
 //
 ///*
 //public class CameraSample extends SimpleRobot {

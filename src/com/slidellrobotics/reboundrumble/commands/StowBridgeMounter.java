@@ -4,18 +4,16 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
 /**
  *
  * @author Gus Michel
  */
-public class LowGear extends CommandBase {
+public class StowBridgeMounter extends CommandBase {
     
-    public LowGear() {
+    public StowBridgeMounter() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(transmission);
+        requires(bridgeMounter);
     }
 
     // Called just before this Command runs the first time
@@ -24,16 +22,12 @@ public class LowGear extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        transmission.setLowGear();
+        bridgeMounter.stow();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(transmission.getGear().equals(Value.kReverse)) {
-            return(true);
-        } else {
-            return(false);
-        }
+        return false;
     }
 
     // Called once after isFinished returns true
@@ -43,5 +37,6 @@ public class LowGear extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        bridgeMounter.stop();
     }
 }

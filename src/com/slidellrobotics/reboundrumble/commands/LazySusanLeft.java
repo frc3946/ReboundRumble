@@ -4,42 +4,36 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
-public class LoadBall extends CommandBase {
+public class LazySusanLeft extends CommandBase {
     
-    public LoadBall() {
+    public LazySusanLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(loadPiston);
+        requires(lazySusan);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        lazySusan.setRelay(Value.kReverse);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        loadPiston.load();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(loadPiston.get() == Value.kForward) {
-            return true;
-        } else {
-            return false;
-        }
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        loadPiston.stow();
     }
 
     // Called when another command which requires one or more of the same

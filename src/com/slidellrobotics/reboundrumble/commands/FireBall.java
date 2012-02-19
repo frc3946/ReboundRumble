@@ -5,43 +5,43 @@
 package com.slidellrobotics.reboundrumble.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
  * @author Gus Michel
  */
-public class LowGear extends CommandBase {
+public class FireBall extends CommandBase {
     
-    public LowGear() {
+    public FireBall() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(transmission);
+        requires(firePiston);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+         firePiston.fire();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        transmission.setLowGear();
+       
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(transmission.getGear().equals(Value.kReverse)) {
-            return(true);
-        } else {
-            return(false);
-        }
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        firePiston.stow();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+        firePiston.stow();
     }
 }

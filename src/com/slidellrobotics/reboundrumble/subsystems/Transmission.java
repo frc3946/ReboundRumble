@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class Transmission extends Subsystem {
     private DoubleSolenoid gearShifter;

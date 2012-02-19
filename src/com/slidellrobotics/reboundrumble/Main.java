@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Main extends IterativeRobot {
-    CriteriaCollection cc;
+   
     
     Command autonomousCommand;
 
@@ -39,11 +39,7 @@ public class Main extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
-        cc = new CriteriaCollection();                              //Sets the
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, //criteria
-                20, 500, false);                                    //for height
-        cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, //and width
-                30, 400, false);                                    //thresholds.
+        //todo: Default IterativeRobot.disabledInit() method... Overload me!                            //thresholds.
     }
 
     public void autonomousInit() {

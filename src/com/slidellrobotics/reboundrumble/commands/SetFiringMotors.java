@@ -6,7 +6,7 @@ package com.slidellrobotics.reboundrumble.commands;
 
 /**
  *
- * @author programming
+ * @author Gus Michel
  */
 public class SetFiringMotors extends CommandBase {
     int setup;

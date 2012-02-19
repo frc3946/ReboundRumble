@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class FireMotors extends PIDSubsystem {
 
@@ -34,7 +34,7 @@ public class FireMotors extends PIDSubsystem {
         setSetpoint(1000); //rpms
         lastTime = Timer.getFPGATimestamp();
         counter.start();
-        getPIDController().setOutputRange(0, .1);
+        getPIDController().setOutputRange(-.1, .1);
         
     }
     
@@ -83,8 +83,5 @@ public class FireMotors extends PIDSubsystem {
         //this would update both left and right motors!!!
         //TODO: remove next line
         SmartDashboard.putDouble("PID Fire Motor", output);
-    }
-
-    private void setDefaultCommand(FireMotors fireMotors) {
     }
 }

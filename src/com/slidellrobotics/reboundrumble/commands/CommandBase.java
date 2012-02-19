@@ -1,23 +1,16 @@
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
 import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.RobotMap;
-import com.slidellrobotics.reboundrumble.subsystems.Camera;
-import com.slidellrobotics.reboundrumble.subsystems.DriveTrain;
-import com.slidellrobotics.reboundrumble.subsystems.FeedBelt;
-import com.slidellrobotics.reboundrumble.subsystems.LazySusan;
-import com.slidellrobotics.reboundrumble.subsystems.LoadPiston;
-import com.slidellrobotics.reboundrumble.subsystems.PositioningAccelerometer;
-import com.slidellrobotics.reboundrumble.subsystems.FireMotors;
-import com.slidellrobotics.reboundrumble.subsystems.Transmission;
+import com.slidellrobotics.reboundrumble.subsystems.*;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The base for all commands. All atomic commands should subclass CommandBase.
  * CommandBase stores creates and stores each control system. To access a
  * subsystem elsewhere in your code in your code use CommandBase.exampleSubsystem
- * @author Author
+ * @author 3946 Robotics
  */
 public abstract class CommandBase extends Command {
 
@@ -28,10 +21,11 @@ public abstract class CommandBase extends Command {
     public static FireMotors leftShootingMotors = new FireMotors(RobotMap.leftFireEncoder, RobotMap.leftShootingMotor);
     //public static FireMotors rightShootingMotors = new FireMotors(RobotMap.rightFireEncoder, RobotMap.rightShootingMotor);
     public static FeedBelt feedBelt = new FeedBelt();
-    public static LoadPiston loadPiston = new LoadPiston();
+    public static FirePiston firePiston = new FirePiston();
     public static PositioningAccelerometer pAccelerometer = new PositioningAccelerometer();
     public static LazySusan lazySusan = new LazySusan();
-    public static Camera camera = new Camera();
+    public static TrackingCamera camera = new TrackingCamera();
+    public static BridgeMounter bridgeMounter = new BridgeMounter();
 
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
@@ -42,7 +36,7 @@ public abstract class CommandBase extends Command {
         oi = new OI();
         SmartDashboard.putData(leftShootingMotors);
         // Show what command your subsystem is running on the TheDash
-        
+        System.out.println("CommandBase Init..");
     }
 
     public CommandBase(String name) {

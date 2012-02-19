@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class TurretGyro extends Subsystem {
     Gyro turretGyro;

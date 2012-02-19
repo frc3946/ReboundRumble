@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author gixxy
+ * @author Gus Michel
  */
 public class FeedBelt extends Subsystem {
     public Relay feedBeltSpike;
@@ -31,7 +31,7 @@ public class FeedBelt extends Subsystem {
      */
     public void setBelt(boolean state) {
         if(state == true) {
-            feedBeltSpike.set(Relay.Value.kForward);
+            feedBeltSpike.set(Relay.Value.kReverse);
             SmartDashboard.putBoolean("Feed Belt", true);
             //System.out.println("[FeedBelt] spike set to ON"); //uncomment for use with debugging
         } else {

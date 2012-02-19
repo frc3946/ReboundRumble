@@ -179,8 +179,8 @@ public class FilterImage extends CommandBase {
         double targetHeightFeet = 1.5;
         double vertFOV = targetHeightFeet / targetHeight * totalHeight; // //Gets the foot equivalent of our vertical Field of View
 
-        double camearVerticalFOV = 48;
-        double cameraHorizontalFOV = 84;
+        double camearVerticalFOV = 47;
+        double cameraHorizontalFOV = 47;
 
         double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
         double targetWidthFeet = 2.0;

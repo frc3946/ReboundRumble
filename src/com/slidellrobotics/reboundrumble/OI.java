@@ -5,6 +5,8 @@ import com.slidellrobotics.reboundrumble.commands.ArcadeDrive;
 import com.slidellrobotics.reboundrumble.commands.DropBridgeMounter;
 import com.slidellrobotics.reboundrumble.commands.HighGear;
 import com.slidellrobotics.reboundrumble.commands.FireBall;
+import com.slidellrobotics.reboundrumble.commands.LazySusanLeft;
+import com.slidellrobotics.reboundrumble.commands.LazySusanRight;
 import com.slidellrobotics.reboundrumble.commands.LowGear;
 import com.slidellrobotics.reboundrumble.commands.SetFeedBelt;
 import com.slidellrobotics.reboundrumble.commands.StowBridgeMounter;
@@ -18,14 +20,17 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
     private Joystick leftJoystick = new Joystick(RobotMap.leftJoystick); //Left Joystick
+    private Button changeFeedBelt = new JoystickButton(leftJoystick, RobotMap.changeFeedBeltButton);
+    private Button dropBridge = new JoystickButton(leftJoystick, RobotMap.dropBridgeButton);
+    private Button stowBridge = new JoystickButton(leftJoystick, RobotMap.stowBridgeButton);
+    private Button turnSusanLeft = new JoystickButton(leftJoystick, RobotMap.leftLazySusanButton);
+    private Button turnSusanRight = new JoystickButton(leftJoystick, RobotMap.rightLazySusanButton);
+    
     private Joystick rightJoystick = new Joystick(RobotMap.rightJoystick); //Right Joystick
     private Button fireBall = new JoystickButton(rightJoystick, RobotMap.fireButton); //Button to fire the ball
     private Button shiftHighGear = new JoystickButton(rightJoystick, RobotMap.highGearShiftButton); //Button to shift to High Gear
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
-    private Button changeFeedBelt = new JoystickButton(leftJoystick, RobotMap.changeFeedBeltButton);
     private Button arcadeMode = new JoystickButton(rightJoystick, RobotMap.arcadeModeButton);
-    private Button dropBridge = new JoystickButton(leftJoystick, RobotMap.dropBridgeButton);
-    private Button stowBridge = new JoystickButton(leftJoystick, RobotMap.stowBridgeButton);
     
     public OI() {
         arcadeMode.whileHeld(new ArcadeDrive());
@@ -35,6 +40,8 @@ public class OI {
         fireBall.whileHeld(new FireBall());
         dropBridge.whileHeld(new DropBridgeMounter());
         stowBridge.whileHeld(new StowBridgeMounter());
+        turnSusanLeft.whileHeld(new LazySusanLeft());
+        turnSusanRight.whileHeld(new LazySusanRight());
     }
     
     /**

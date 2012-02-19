@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author Gus Michel
+ * @author Allister Wright
  */
 public class TrackingCamera extends Subsystem {
     // Put methods for controlling this subsystem
@@ -32,7 +32,7 @@ public class TrackingCamera extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FilterImage());
+        //setDefaultCommand(new FilterImage());
     }
 
     public ColorImage getImageFromCamera() throws NIVisionException {

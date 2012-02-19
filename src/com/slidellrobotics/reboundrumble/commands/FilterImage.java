@@ -36,10 +36,13 @@ public class FilterImage extends CommandBase {
     }
 
     protected void execute() {
+        try{
         getImage();                 //loops getting a fresh image
         selectGoal();
         findDistance();
         findAngle();
+        }
+        catch (Exception ex){}
 
     }
 
@@ -115,6 +118,9 @@ public class FilterImage extends CommandBase {
         ParticleAnalysisReport leftGoal;    //
         ParticleAnalysisReport rightGoal;   //
         //todo set to 4 for comp
+        if (reports == null){
+            return;
+        }
         if (reports.length < 3)
         {
             System.out.println("not enough goals");

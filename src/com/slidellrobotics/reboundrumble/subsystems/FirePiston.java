@@ -41,7 +41,7 @@ public class FirePiston extends Subsystem {
      */
     public void stow() {
         pistonSolenoid.set(DoubleSolenoid.Value.kReverse);
-        Timer.delay(4); //allows time for SmartDashboard to register the piston was infact launched (basicly for nice appearences)
+        //Timer.delay(4); //allows time for SmartDashboard to register the piston was infact launched (basicly for nice appearences)
         SmartDashboard.putBoolean("Load Piston", false);
         //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging
     }

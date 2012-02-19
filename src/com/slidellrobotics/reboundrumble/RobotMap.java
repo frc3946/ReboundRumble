@@ -36,6 +36,8 @@ public class RobotMap {
     public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
     public static final int dropBridgeButton = 4; //Button to drop BridgeMounter
     public static final int stowBridgeButton = 5; //Button to stow BridgeMounter
+    public static final int leftLazySusanButton = 8; //Button to turn Lazy Susan Turret Left
+    public static final int rightLazySusanButton = 9; //Button to turn Lazy Susan Turret Right
         //Third Joystick
     
     

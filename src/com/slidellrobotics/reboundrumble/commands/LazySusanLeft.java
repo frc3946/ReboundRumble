@@ -4,29 +4,27 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
  *
  * @author Gus Michel
  */
-public class FireBall extends CommandBase {
+public class LazySusanLeft extends CommandBase {
     
-    public FireBall() {
+    public LazySusanLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(firePiston);
+        requires(lazySusan);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-         firePiston.fire();
+        lazySusan.setRelay(Value.kReverse);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-       
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -36,12 +34,10 @@ public class FireBall extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        firePiston.stow();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        firePiston.stow();
     }
 }

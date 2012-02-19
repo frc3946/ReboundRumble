@@ -191,6 +191,10 @@ public class FilterImage extends CommandBase {
         double d2 = (horFOV / 2) / Math.tan(cameraHorizontalFOV / 2);
 
         distanceToTarget = (d1 + d2) / 2;  //take the average to try get a more accurate measurement
+        //if distance to target is invalid, justset it to some number
+        if (distanceToTarget > 60 || distanceToTarget <= 0)
+            distanceToTarget = 60;
+        
         double d = distanceToTarget;
 
         launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
@@ -235,28 +239,27 @@ public class FilterImage extends CommandBase {
 
 
         //load the test data when practing with the real launcher
+        // points MUST be inorder of closest to furthest away
         CalibrationPoint calibrationPoints[] = {new CalibrationPoint(5, 100),
             new CalibrationPoint(10, 200),
             new CalibrationPoint(15, 500),
             new CalibrationPoint(40, 1500)};
 
-        //find the two calibration points were the input distance is between
+        //find the two calibration points were the input distance is between them
         int upperIndex;
-        for (upperIndex = 0; upperIndex < calibrationPoints.length; upperIndex++) {
-            if (distance > calibrationPoints[upperIndex].distance) {
+        for (upperIndex = 1; upperIndex < calibrationPoints.length; upperIndex++) {
+            if (distance <= calibrationPoints[upperIndex].distance &&
+                distance > calibrationPoints[upperIndex-1].distance) {
                 break;
             }
         }
+        
+        //interpolate the point
+        double slope =  (calibrationPoints[upperIndex].rpms - calibrationPoints[upperIndex - 1].rpms)
+                      / (calibrationPoints[upperIndex].distance - calibrationPoints[upperIndex - 1].distance);
+        double intercept = calibrationPoints[upperIndex].rpms - slope * calibrationPoints[upperIndex].distance;
+        return slope * distance + intercept;
 
-        //do a linear interpolation between the two calibration points
-        if (upperIndex == 0) {
-            return calibrationPoints[0].rpms;
-        } else {
-            double slope = (calibrationPoints[upperIndex].rpms - calibrationPoints[upperIndex - 1].rpms)
-                    / (calibrationPoints[upperIndex].distance - calibrationPoints[upperIndex - 1].distance);
-            double intercept = calibrationPoints[upperIndex].rpms - slope * calibrationPoints[upperIndex].distance;
-            return slope * distance + intercept;
-
-        }
+        
     }
 } // end of class

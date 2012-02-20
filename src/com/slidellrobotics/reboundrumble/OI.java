@@ -1,16 +1,7 @@
 
 package com.slidellrobotics.reboundrumble;
 
-import com.slidellrobotics.reboundrumble.commands.ArcadeDrive;
-import com.slidellrobotics.reboundrumble.commands.DropBridgeMounter;
-import com.slidellrobotics.reboundrumble.commands.HighGear;
-import com.slidellrobotics.reboundrumble.commands.FireBall;
-import com.slidellrobotics.reboundrumble.commands.LazySusanLeft;
-import com.slidellrobotics.reboundrumble.commands.LazySusanRight;
-import com.slidellrobotics.reboundrumble.commands.LowGear;
-import com.slidellrobotics.reboundrumble.commands.SetFeedBeltIntake;
-import com.slidellrobotics.reboundrumble.commands.StowBridgeMounter;
-import com.slidellrobotics.reboundrumble.commands.SetFeedBeltOuttake;
+import com.slidellrobotics.reboundrumble.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;

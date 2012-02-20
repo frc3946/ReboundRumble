@@ -8,8 +8,9 @@ import com.slidellrobotics.reboundrumble.commands.FireBall;
 import com.slidellrobotics.reboundrumble.commands.LazySusanLeft;
 import com.slidellrobotics.reboundrumble.commands.LazySusanRight;
 import com.slidellrobotics.reboundrumble.commands.LowGear;
-import com.slidellrobotics.reboundrumble.commands.SetFeedBelt;
+import com.slidellrobotics.reboundrumble.commands.SetFeedBeltIntake;
 import com.slidellrobotics.reboundrumble.commands.StowBridgeMounter;
+import com.slidellrobotics.reboundrumble.commands.SetFeedBeltOuttake;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -20,7 +21,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI {
     private Joystick leftJoystick = new Joystick(RobotMap.leftJoystick); //Left Joystick
-    private Button changeFeedBelt = new JoystickButton(leftJoystick, RobotMap.changeFeedBeltButton);
+    private Button intakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.intakeFeedBeltButton);
+    private Button outtakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.outtakeFeedBeltButton);
     private Button dropBridge = new JoystickButton(leftJoystick, RobotMap.dropBridgeButton);
     private Button stowBridge = new JoystickButton(leftJoystick, RobotMap.stowBridgeButton);
     private Button turnSusanLeft = new JoystickButton(leftJoystick, RobotMap.leftLazySusanButton);
@@ -36,7 +38,8 @@ public class OI {
         arcadeMode.whileHeld(new ArcadeDrive());
         shiftHighGear.whenPressed(new HighGear());
         shiftLowGear.whenPressed(new LowGear());
-        changeFeedBelt.whenPressed(new SetFeedBelt());
+        intakeFeedBelt.whenPressed(new SetFeedBeltIntake());
+        outtakeFeedBelt.whenPressed(new SetFeedBeltOuttake());
         fireBall.whileHeld(new FireBall());
         dropBridge.whileHeld(new DropBridgeMounter());
         stowBridge.whileHeld(new StowBridgeMounter());

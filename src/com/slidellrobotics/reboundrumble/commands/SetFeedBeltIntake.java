@@ -4,19 +4,21 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import edu.wpi.first.wpilibj.Relay.Value;
+
 /**
  *
  * @author Gus Michel
  */
-public class SetFeedBelt extends CommandBase {
-    private boolean state = false;
-    private boolean previousState = true;
+public class SetFeedBeltIntake extends CommandBase {
+    private Value startState;
     
     
-    public SetFeedBelt() {
+    public SetFeedBeltIntake() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(feedBelt);
+        startState = feedBelt.getState();
     }
 
     // Called just before this Command runs the first time
@@ -25,13 +27,17 @@ public class SetFeedBelt extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        state = !state;
-        feedBelt.setBelt(state);
+        startState = feedBelt.getState();
+        if(startState.equals(Value.kOff)) {
+            feedBelt.setIntake();
+        } else {
+            feedBelt.setStopped();
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        if(state != previousState) {
+        if(!feedBelt.getState().equals(startState)) {
             return true;
         } else {
             return false;
@@ -40,7 +46,7 @@ public class SetFeedBelt extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        previousState = state;
+        
     }
 
     // Called when another command which requires one or more of the same

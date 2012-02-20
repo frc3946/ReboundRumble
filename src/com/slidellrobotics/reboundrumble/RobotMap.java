@@ -33,7 +33,8 @@ public class RobotMap {
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
     public static final int highGearShiftButton = 5; //Button to shift into High Gear
         //Left Joystick
-    public static final int changeFeedBeltButton = 2; //Button to turn Ball Feed Belt on and off.
+    public static final int intakeFeedBeltButton = 2; //Button to set Ball Feed to load balls
+    public static final int outtakeFeedBeltButton = 3; //Button to set Ball Feed to remove balls
     public static final int dropBridgeButton = 4; //Button to drop BridgeMounter
     public static final int stowBridgeButton = 5; //Button to stow BridgeMounter
     public static final int leftLazySusanButton = 8; //Button to turn Lazy Susan Turret Left

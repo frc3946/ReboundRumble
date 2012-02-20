@@ -120,7 +120,7 @@ public class FilterImage extends CommandBase {
         targetLocale = targetGoal.center_mass_x;        //Finds the center of our target
         double targetDiff = Math.abs(targetLocale - horCenter); // see how far away we are
 
-        //todo: tune the 10 pixels to the right number
+        //TODO: tune the 10 pixels to the right number
         //there is always going to be a little error, but we want some small window
         //where the lazy suzan stops moving to we can make an accurate shot.
 
@@ -143,7 +143,7 @@ public class FilterImage extends CommandBase {
         //reset target goal
         targetGoal = null;
         
-        //todo set to 4 for comp
+        //TODO set to 4 for comp
         if (reports == null) {
             return;
         }

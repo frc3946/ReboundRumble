@@ -33,11 +33,11 @@ public class Main extends IterativeRobot {
     public void robotInit() {
         // instantiate the command used for the autonomous period
         //autonomousCommand = new ExampleCommand();
-
+        //TODO make default IterativeRobot.disabledInit() method... Overload me!      
         // Initialize all subsystems
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
-        //todo: Default IterativeRobot.disabledInit() method... Overload me!                            //thresholds.
+        
     }
 
     public void autonomousInit() {

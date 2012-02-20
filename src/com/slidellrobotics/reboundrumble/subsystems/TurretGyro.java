@@ -6,6 +6,7 @@ package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
 import edu.wpi.first.wpilibj.Gyro;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -35,5 +36,6 @@ public class TurretGyro extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+        
     }
 }

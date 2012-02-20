@@ -6,6 +6,7 @@ package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,13 +15,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Gus Michel
  */
 public class FeedBelt extends Subsystem {
-    public Relay feedBeltSpike;
+    private Relay feedBeltSpike;
+    private Value state;
+    
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public FeedBelt() {
         System.out.println("[FeedBelt] Starting");
         feedBeltSpike = new Relay(RobotMap.feedBeltSpike);
+        state = Value.kOff;
         System.out.println("[FeedBelt] feedBeltSpike  initialized");
         System.out.println("[FeedBelt] Started");
     }
@@ -29,20 +33,28 @@ public class FeedBelt extends Subsystem {
      * Set the State of the Ball intake belt.
      * @param state Boolean value of the state (on=true, off=false)
      */
-    public void setBelt(boolean state) {
-        if(state == true) {
-            feedBeltSpike.set(Relay.Value.kReverse);
-            SmartDashboard.putBoolean("Feed Belt", true);
-            //System.out.println("[FeedBelt] spike set to ON"); //uncomment for use with debugging
-        } else {
-            feedBeltSpike.set(Relay.Value.kOff);
-            SmartDashboard.putBoolean("Feed Belt", false);
-            //System.out.println("[FeedBelt] spike set to OFF"); //uncomment for use with debugging
-        }
-    }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+    
+    public void setIntake() {
+        feedBeltSpike.set(Relay.Value.kReverse);
+        state = Value.kReverse;
+    }
+    
+    public void setOuttake() {
+        feedBeltSpike.set(Relay.Value.kForward);
+        state = Value.kForward;
+    }
+    
+    public void setStopped() {
+        feedBeltSpike.set(Relay.Value.kOff);
+        state = Value.kOff;
+    }
+    
+    public Value getState() {
+        return state;
     }
 }

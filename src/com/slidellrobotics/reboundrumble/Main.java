@@ -10,6 +10,7 @@ package com.slidellrobotics.reboundrumble;
 
 import com.slidellrobotics.reboundrumble.commands.CommandBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -25,7 +26,7 @@ public class Main extends IterativeRobot {
    
     
     Command autonomousCommand;
-
+    Relay compressor = new Relay(RobotMap.compressorSpike);
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -37,7 +38,7 @@ public class Main extends IterativeRobot {
         // Initialize all subsystems
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
-        
+        compressor.set(Relay.Value.kForward);
     }
 
     public void autonomousInit() {

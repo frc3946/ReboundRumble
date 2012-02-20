@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Allister Wright
  */
 public class FilterImage extends CommandBase {
-
+    private final double timeDelay = 1;
+    
     double totalWidth = 0;
     double totalHeight = 0;
     double launchSpeed;
@@ -41,7 +42,7 @@ public class FilterImage extends CommandBase {
     protected void execute() {
         try {
             //run this at a slower pace to not eat up all the processor time
-            if (Timer.getFPGATimestamp() - lastTime > 3) {
+            if (Timer.getFPGATimestamp() - lastTime > timeDelay) {
 
                 lastTime = Timer.getFPGATimestamp();
                 getImage();                 //loops getting a fresh image
@@ -80,7 +81,9 @@ public class FilterImage extends CommandBase {
             convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
             reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
         } catch (NIVisionException ex) {
+            System.out.println(ex);
         } catch (Exception ex) {
+            System.out.println(ex);
         }
 
 
@@ -150,8 +153,10 @@ public class FilterImage extends CommandBase {
         
         
         if (reports.length < 3) {
-            System.out.println("Not enough goals");
-            targetGoal = reports[0];
+            if(reports.length > 0) {
+                System.out.println("Not enough goals");
+                targetGoal = reports[0];
+            }
         } else {
             //we we have four goals in view index 1 is the left and index 2 is right
             leftGoal = reports[1];     //Recognizes the
@@ -197,7 +202,7 @@ public class FilterImage extends CommandBase {
         
         double d = distanceToTarget;
 
-        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
+        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16.1) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(launchSpeed);
         rightShootingMotors.setSetpoint(launchSpeed);
     }
@@ -240,10 +245,12 @@ public class FilterImage extends CommandBase {
 
         //load the test data when practing with the real launcher
         // points MUST be inorder of closest to furthest away
-        CalibrationPoint calibrationPoints[] = {new CalibrationPoint(5, 100),
+        CalibrationPoint calibrationPoints[] = {
+            new CalibrationPoint(5, 100),
             new CalibrationPoint(10, 200),
             new CalibrationPoint(15, 500),
-            new CalibrationPoint(40, 1500)};
+            new CalibrationPoint(40, 1500)
+        };
 
         //find the two calibration points were the input distance is between them
         int upperIndex;

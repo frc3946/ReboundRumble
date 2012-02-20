@@ -29,7 +29,7 @@ public class SetFeedBeltOuttake extends CommandBase {
     protected void execute() {
         startState = feedBelt.getState();
         if(startState.equals(Value.kOff)) {
-            feedBelt.setIntake();
+            feedBelt.setOuttake();
         } else {
             feedBelt.setStopped();
         }

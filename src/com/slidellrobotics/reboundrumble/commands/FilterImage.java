@@ -41,15 +41,15 @@ public class FilterImage extends CommandBase {
     protected void execute() {
         try {
             //run this at a slower pace to not eat up all the processor time
-            if (Timer.getFPGATimestamp() - lastTime > 0.5) {
+            if (Timer.getFPGATimestamp() - lastTime > 3) {
 
-
+                lastTime = Timer.getFPGATimestamp();
                 getImage();                 //loops getting a fresh image
                 selectGoal();
                 findDistance();
                 findAngle();
                 updateStatus();
-                lastTime = Timer.getFPGATimestamp();
+                
             }
         } catch (Exception ex) {
         }

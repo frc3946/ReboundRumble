@@ -27,7 +27,7 @@ public class AutoStowArm extends CommandBase {
     protected void execute() {
         bridgeMounter.stow();
         Timer.delay(.35);
-        bridgeMounter.off();
+        bridgeMounter.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()

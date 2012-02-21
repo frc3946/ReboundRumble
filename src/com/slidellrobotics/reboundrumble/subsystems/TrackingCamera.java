@@ -32,7 +32,6 @@ public class TrackingCamera extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         
-        //TODO: create a command group that allows for simultaneous use of the Lazy Susan and Camera
         setDefaultCommand(new FilterImage());
     }
 

@@ -17,12 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Allister Wright
  */
 public class FilterImage extends CommandBase {
-
+    private final double timeDelay = 1;
+    
     double totalWidth = 0;
     double totalHeight = 0;
-    double launchSpeed;
-    double distanceToTarget;
-    double lastTime;
+    double launchSpeed=0;
+    double distanceToTarget=0;
+    double lastTime=0;
     ParticleAnalysisReport[] reports = null;
     ParticleAnalysisReport targetGoal = null;
 
@@ -41,17 +42,18 @@ public class FilterImage extends CommandBase {
     protected void execute() {
         try {
             //run this at a slower pace to not eat up all the processor time
-            if (Timer.getFPGATimestamp() - lastTime > 0.5) {
+            if (Timer.getFPGATimestamp() - lastTime > timeDelay) {
 
-
+                lastTime = Timer.getFPGATimestamp();
                 getImage();                 //loops getting a fresh image
                 selectGoal();
                 findDistance();
                 findAngle();
                 updateStatus();
-                lastTime = Timer.getFPGATimestamp();
+                
             }
         } catch (Exception ex) {
+             System.out.println("Image loop failure.");
         }
 
     }
@@ -72,15 +74,24 @@ public class FilterImage extends CommandBase {
         BinaryImage thresholdHSL = null;
         BinaryImage convexHullImage = null;
         
+        
         try {
             pic = camera.getImageFromCamera();      //Declares pic variable
+             System.out.println("got image");
             totalWidth = pic.getWidth();
             totalHeight = pic.getHeight();
+            System.out.println("threshold");
+
             thresholdHSL = pic.thresholdHSL(165, 185, 50, 90, 95, 110);      //Sets a Blue light threshold
+            System.out.println("Convex");
+
             convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
             reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
+             System.out.println("Reports:"+reports.length);
         } catch (NIVisionException ex) {
+            System.out.println(ex);
         } catch (Exception ex) {
+            System.out.println(ex);
         }
 
 
@@ -145,13 +156,16 @@ public class FilterImage extends CommandBase {
         
         //TODO set to 4 for comp
         if (reports == null) {
+             System.out.println("No image reports");
             return;
         }
         
         
-        if (reports.length < 1) {
-            System.out.println("Not enough goals");
-            targetGoal = reports[0];
+        if (reports.length < 3) {
+            if(reports.length > 0) {
+                System.out.println("Not enough goals");
+                targetGoal = reports[0];
+            }
         } else {
             //we we have four goals in view index 1 is the left and index 2 is right
             leftGoal = reports[1];     //Recognizes the
@@ -171,6 +185,7 @@ public class FilterImage extends CommandBase {
         if (targetGoal == null){
             leftShootingMotors.setSetpoint(100);
             rightShootingMotors.setSetpoint(100);
+            System.out.println("Setpoint is: " + rightShootingMotors.getSetpoint());
             System.out.println("No target set");
             return;
         }
@@ -197,7 +212,7 @@ public class FilterImage extends CommandBase {
         
         double d = distanceToTarget;
 
-        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
+        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16.1) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(launchSpeed);
         rightShootingMotors.setSetpoint(launchSpeed);
     }
@@ -240,10 +255,12 @@ public class FilterImage extends CommandBase {
 
         //load the test data when practing with the real launcher
         // points MUST be inorder of closest to furthest away
-        CalibrationPoint calibrationPoints[] = {new CalibrationPoint(5, 100),
+        CalibrationPoint calibrationPoints[] = {
+            new CalibrationPoint(5, 100),
             new CalibrationPoint(10, 200),
             new CalibrationPoint(15, 500),
-            new CalibrationPoint(40, 1500)};
+            new CalibrationPoint(40, 1500)
+        };
 
         //find the two calibration points were the input distance is between them
         int upperIndex;

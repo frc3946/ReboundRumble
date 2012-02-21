@@ -12,10 +12,13 @@ public class SetFiringMotors extends CommandBase {
     int setup;
     
     public SetFiringMotors(int num) {
-      
+        System.out.println("SetFiringMotors INIT");
         setup = num;
         requires(leftShootingMotors);
         requires(rightShootingMotors);
+        requires(camera);
+        requires(lazySusan);
+        
         
     }
 
@@ -30,6 +33,7 @@ public class SetFiringMotors extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        System.out.println("SetFiringMotors");
     }
 
     // Make this return true when this Command no longer needs to run execute()

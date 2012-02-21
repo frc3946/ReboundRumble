@@ -27,6 +27,7 @@ public class FireMotors extends PIDSubsystem {
     double lastTime;
     double newtime;
     double rpms=0;
+    double victorSetting=0;
     
     String Name;
     
@@ -80,15 +81,22 @@ public class FireMotors extends PIDSubsystem {
         //When the PID system thinks there is no error then
         //set point is equal to rpms and output = 0        
         //soft start if we not moving, only set power to 10%
-        if (rpms < 100)
-            victor.set(.1);
-        else
-            victor.set(victor.get()+output);
+        if (rpms <= 100){
+            victorSetting=.1; 
+        } else{
+             victorSetting=victor.get()+output;
+        }
+         
+        //victor.set(victorSetting);
+        victor.set(.3);
+
         
     }
     
     public void updateStatus(){
         SmartDashboard.putDouble(Name + " RPMS",rpms);   
         SmartDashboard.putDouble(Name + " victor",victor.get()); 
+        SmartDashboard.putDouble(Name + " victor Setting",victorSetting); 
+        
     }
 }

@@ -17,12 +17,6 @@ public class RobotMap {
     // public static final int rangefinderPort = 1;
     // public static final int rangefinderModule = 1;
     
-    //Motors
-    public static final int leftDriveMotor = 1; //Left Jaguar's Port
-    public static final int rightDriveMotor = 2; //Right Jaguar's Port
-    public static final int leftShootingMotor = 3; //Left Shooting Victor Port
-    public static final int rightShootingMotor = 4; //Right Shooting Victor Port
-    
     //Controls
     public static final int rightJoystick = 1; //Main Driver Right Joystick
     public static final int leftJoystick = 2; //Main Driver Left Joystick
@@ -44,9 +38,12 @@ public class RobotMap {
     
     //Third Joystick
     
-    
-    
-    
+    //Motors
+    public static final int leftDriveMotor = 1; //Left Jaguar's Port
+    public static final int rightDriveMotor = 2; //Right Jaguar's Port
+    public static final int leftShootingMotor = 3; //Left Shooting Victor Port
+    public static final int rightShootingMotor = 4; //Right Shooting Victor Port
+
     //Digital IO
     public static final int leftFireEncoder = 1;
     public static final int rightFireEncoder = 2;

@@ -149,7 +149,7 @@ public class FilterImage extends CommandBase {
         }
         
         
-        if (reports.length < 3) {
+        if (reports.length < 1) {
             System.out.println("Not enough goals");
             targetGoal = reports[0];
         } else {

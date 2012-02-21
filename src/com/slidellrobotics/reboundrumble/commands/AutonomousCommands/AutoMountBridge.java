@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  * @author 10491477
  */
-public class AutoCircleBridge extends CommandGroup {
+public class AutoMountBridge extends CommandGroup {
     
-    public AutoCircleBridge() {
+    public AutoMountBridge() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -32,14 +32,13 @@ public class AutoCircleBridge extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
         
-        addSequential(new AutoMountBridge());
-        addSequential(new AutoTankDrive(.365, .9));
-        addSequential(new AutoTimer(6.2));
-        addSequential(new AutoMountBridge());
-        addSequential(new AutoTankDrive(.9, .365));
-        addSequential(new AutoMountBridge());
-        addSequential(new AutoTankDrive(.9, .365));
-        addSequential(new AutoMountBridge());
-        addSequential(new AutoTankDrive(.365, .9));
+        addSequential(new AutoDropArm());
+        addSequential(new AutoTimer(.3));
+        addSequential(new LowGear());
+        addParallel(new AutoTankDrive(.9, .9));
+        addSequential(new AutoTimer(.65));
+        addSequential(new AutoStowArm());
+        addSequential(new AutoTimer(6.8));
+        addSequential(new HighGear());
     }
 }

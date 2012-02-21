@@ -5,6 +5,7 @@
 package com.slidellrobotics.reboundrumble.commands.AutonomousCommands;
 
 import com.slidellrobotics.reboundrumble.commands.CommandBase;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.Timer;
 
@@ -12,13 +13,15 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author 10491477
  */
-public class AutoDropBridge extends CommandBase {
-    private Value drop, stow;
+public class AutoSusanRight extends CommandBase {
+    private Value right, stop;   
     
-    public AutoDropBridge() {
+    public AutoSusanRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(bridgeMounter);
+        requires(lazySusan);
+        right = Relay.Value.kForward;
+        stop = Relay.Value.kOff;
     }
 
     // Called just before this Command runs the first time
@@ -27,9 +30,9 @@ public class AutoDropBridge extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        bridgeMounter.drop();
-        Timer.delay(2.35);
-        bridgeMounter.stop();
+        lazySusan.setRelay(right);
+        Timer.delay(4);
+        lazySusan.setRelay(stop);
     }
 
     // Make this return true when this Command no longer needs to run execute()

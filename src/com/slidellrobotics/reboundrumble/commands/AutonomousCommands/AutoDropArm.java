@@ -5,17 +5,20 @@
 package com.slidellrobotics.reboundrumble.commands.AutonomousCommands;
 
 import com.slidellrobotics.reboundrumble.commands.CommandBase;
+import edu.wpi.first.wpilibj.Relay.Value;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  *
  * @author 10491477
  */
-public class AutoAim extends CommandBase {
+public class AutoDropArm extends CommandBase {
+    private Value drop, stow;
     
-    public AutoAim() {
+    public AutoDropArm() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(lazySusan);
+        requires(bridgeMounter);
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +27,9 @@ public class AutoAim extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        camera.initDefaultCommand();
+        bridgeMounter.drop();
+        Timer.delay(2.35);
+        bridgeMounter.stop();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,10 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Main extends IterativeRobot {
-   
-    
+    private double startTime;
     Command autonomousCommand;
     Relay compressor = new Relay(RobotMap.compressorSpike);
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -58,7 +59,7 @@ public class Main extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        //autonomousCommand.cancel();
+        autonomousCommand.cancel();
     }
 
     /**

@@ -44,6 +44,5 @@ public class Autonomous extends CommandGroup {
         addSequential(new AutoTimer(1.8));
         addSequential(new AutoTankDrive(0, 0));
         addSequential(new AutoCircleBridge());
-        
     }   
 }

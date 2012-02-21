@@ -4,273 +4,35 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.image.BinaryImage;
-import edu.wpi.first.wpilibj.image.ColorImage;
-import edu.wpi.first.wpilibj.image.NIVisionException;
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
- * @author Allister Wright
+ * @author 10491477
  */
-public class FilterImage extends CommandBase {
-    private final double timeDelay = 1;
+public class FilterImage extends CommandGroup {
     
-    double totalWidth = 0;
-    double totalHeight = 0;
-    double launchSpeed=0;
-    double distanceToTarget=0;
-    double lastTime=0;
-    ParticleAnalysisReport[] reports = null;
-    ParticleAnalysisReport targetGoal = null;
-
     public FilterImage() {
-        requires(camera);
-        requires(lazySusan);
-        requires(leftShootingMotors);
-        requires(rightShootingMotors);
-        System.out.println("Filter image Init");    //States that the camera initialized
-        lastTime = Timer.getFPGATimestamp();
-    }
+        // Add Commands here:
+        // e.g. addSequential(new Command1());
+        //      addSequential(new Command2());
+        // these will run in order.
 
-    protected void initialize() {
-    }
+        // To run multiple commands at the same time,
+        // use addParallel()
+        // e.g. addParallel(new Command1());
+        //      addSequential(new Command2());
+        // Command1 and Command2 will run in parallel.
 
-    protected void execute() {
-        try {
-            //run this at a slower pace to not eat up all the processor time
-            if (Timer.getFPGATimestamp() - lastTime > timeDelay) {
-
-                lastTime = Timer.getFPGATimestamp();
-                getImage();                 //loops getting a fresh image
-                selectGoal();
-                findDistance();
-                findAngle();
-                updateStatus();    
-            }
-        } catch (Exception ex) {
-             System.out.println("Image loop failure.");
-        }
-
-    }
-
-    protected boolean isFinished() {
-        return false;                //never ends
-    }
-
-    protected void end() {
-    }
-
-    protected void interrupted() {
-    }
-
-    public void getImage() {
-
-        ColorImage pic = null;
-        BinaryImage thresholdHSL = null;
-        BinaryImage convexHullImage = null;
+        // A command group will require all of the subsystems that each member
+        // would require.
+        // e.g. if Command1 requires chassis, and Command2 requires arm,
+        // a CommandGroup containing them would require both the chassis and the
+        // arm.
         
-        
-        try {
-            pic = camera.getImageFromCamera();      //Declares pic variable
-            System.out.println("got image");
-            totalWidth = pic.getWidth();
-            totalHeight = pic.getHeight();
-            System.out.println("threshold");
-
-            thresholdHSL = pic.thresholdHSL(165, 185, 30, 120, 60, 110);      //Sets a Blue light threshold
-            System.out.println("Convex");
-
-            convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
-            reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
-             System.out.println("Reports:"+reports.length);
-        } catch (NIVisionException ex) {
-            System.out.println(ex);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
-
-        //need to free memory on all pic variables
-        try {
-            if (pic != null) {
-                pic.free();
-            }
-            if (convexHullImage != null) {
-                convexHullImage.free();
-            }
-            if (thresholdHSL != null) {
-                thresholdHSL.free();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+        addParallel(new GetImage());
+        addParallel(new SelectGoal());
+        addParallel(new FindAngle());
+        addSequential(new FindDistance());
     }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void findAngle() {
-
-        if (targetGoal == null){
-            lazySusan.setRelay(Relay.Value.kOff);   //turn off
-            SmartDashboard.putString("LazySusan", "Off");
-            System.out.println("No target set");
-            return;
-        }
-        
-        double targetLocale;
-        double horCenter;
-        horCenter = (totalWidth / 2);     //Finds the pixel value of the horizontal center
-        targetLocale = targetGoal.center_mass_x;        //Finds the center of our target
-        double targetDiff = Math.abs(targetLocale - horCenter); // see how far away we are
-
-        //TODO: tune the 10 pixels to the right number
-        //there is always going to be a little error, but we want some small window
-        //where the lazy suzan stops moving to we can make an accurate shot.
-
-        if (targetDiff < 50) {
-            lazySusan.setRelay(Relay.Value.kOff);   //turn off
-            SmartDashboard.putString("LazySusan", "Off");
-        } else if (targetLocale > horCenter) {                  //and if we are facing right
-            lazySusan.setRelay(Relay.Value.kReverse);   //turn left
-            SmartDashboard.putString("LazySusan", "Reverse");
-        } else {                                        //if we face left
-            lazySusan.setRelay(Relay.Value.kForward);   //turn right
-            SmartDashboard.putString("LazySusan", "Forward");
-        }
-
-    }
-
-    public void selectGoal() {
-        ParticleAnalysisReport leftGoal;    
-        ParticleAnalysisReport rightGoal;  
-        //reset target goal
-        targetGoal = null;
-        
-        if (reports == null) {
-             System.out.println("No image reports");
-            return;
-        }
-        
-        //TODO set to 4 for comp
-        if (reports.length < 3) {
-            if(reports.length > 0) {
-                System.out.println("Not enough goals");
-                targetGoal = reports[0];
-            }
-        } else {
-            //we we have four goals in view index 1 is the left and index 2 is right
-            leftGoal = reports[1];     //Recognizes the
-            rightGoal = reports[2];    //middle goals.
-            double leftWidth = leftGoal.boundingRectWidth;     //Finds the widths of
-            double rightWidth = rightGoal.boundingRectWidth;   //both middle goals.
-            if (leftWidth <= rightWidth) {        //
-                targetGoal = rightGoal;             //Decides which goal we are
-            }
-            if (rightWidth > leftWidth) {        //closer to and targets it.
-                targetGoal = leftGoal;              //
-            }
-        }
-    }
-
-    public void findDistance() {
-        if (targetGoal == null){
-            leftShootingMotors.setSetpoint(100);
-            rightShootingMotors.setSetpoint(100);
-            System.out.println("Setpoint is: " + rightShootingMotors.getSetpoint());
-            System.out.println("No target set");
-            return;
-        }
-        
-        double targetHeight = targetGoal.boundingRectHeight;   //Sets the height of our target.
-        double targetHeightFeet = 1.5;
-        double vertFOV = targetHeightFeet / targetHeight * totalHeight; // //Gets the foot equivalent of our vertical Field of View
-
-        double camearVerticalFOV = 47;
-        double cameraHorizontalFOV = 47;
-
-        double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
-        double targetWidthFeet = 2.0;
-        double horFOV = targetWidthFeet / targetWidth * totalWidth;
-
-
-        double d1 = (vertFOV / 2) / Math.tan(camearVerticalFOV / 2);
-        double d2 = (horFOV / 2) / Math.tan(cameraHorizontalFOV / 2);
-
-        distanceToTarget = (d1 + d2) / 2;  //take the average to try get a more accurate measurement
-        //if distance to target is invalid, justset it to some number
-        if (distanceToTarget > 60 || distanceToTarget <= 0)
-            distanceToTarget = 60;
-        
-        double d = distanceToTarget;
-
-        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16.1) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
-        leftShootingMotors.setSetpoint(launchSpeed);
-        rightShootingMotors.setSetpoint(launchSpeed);
-    }
-
-    public void updateStatus() {
-        try {
-            SmartDashboard.putDouble("Pic Height", totalHeight);
-            SmartDashboard.putDouble("Pic Width", totalWidth);
-            SmartDashboard.putDouble("launchSpeed", launchSpeed);
-            SmartDashboard.putDouble("Distance", distanceToTarget);
-
-            if (reports != null) {
-                for (int i = 0; i < reports.length; i++) {                          //Systematically prints the                                   
-                    System.out.println("Particle: " + i + ": Center of mass x:" + //geometric center
-                            reports[i].center_mass_x);                                       //of mass per particle.
-                }
-            }
-
-
-        } catch (Exception ex) {
-        }
-
-    }
-
-    private class CalibrationPoint {
-
-        double distance;
-        double rpms;
-
-        public CalibrationPoint(double distance, double rpms) {
-            this.distance = distance;
-            this.rpms = rpms;
-        }
-    }
-
-    //just incase the formula doesn't work out here is a test based
-    //interpolation function
-    private double distanceToRMP(double distance) {
-
-
-        //load the test data when practing with the real launcher
-        // points MUST be inorder of closest to furthest away
-        CalibrationPoint calibrationPoints[] = {
-            new CalibrationPoint(5, 100),
-            new CalibrationPoint(10, 200),
-            new CalibrationPoint(15, 500),
-            new CalibrationPoint(40, 1500)
-        };
-
-        //find the two calibration points were the input distance is between them
-        int upperIndex;
-        for (upperIndex = 1; upperIndex < calibrationPoints.length; upperIndex++) {
-            if (distance <= calibrationPoints[upperIndex].distance &&
-                distance > calibrationPoints[upperIndex-1].distance) {
-                break;
-            }
-        }
-        
-        //interpolate the point
-        double slope =  (calibrationPoints[upperIndex].rpms - calibrationPoints[upperIndex - 1].rpms)
-                      / (calibrationPoints[upperIndex].distance - calibrationPoints[upperIndex - 1].distance);
-        double intercept = calibrationPoints[upperIndex].rpms - slope * calibrationPoints[upperIndex].distance;
-        return slope * distance + intercept;
-
-        
-    }
-} // end of class
+}

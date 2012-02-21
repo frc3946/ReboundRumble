@@ -49,8 +49,7 @@ public class FilterImage extends CommandBase {
                 selectGoal();
                 findDistance();
                 findAngle();
-                updateStatus();
-                
+                updateStatus();    
             }
         } catch (Exception ex) {
              System.out.println("Image loop failure.");
@@ -77,7 +76,7 @@ public class FilterImage extends CommandBase {
         
         try {
             pic = camera.getImageFromCamera();      //Declares pic variable
-             System.out.println("got image");
+            System.out.println("got image");
             totalWidth = pic.getWidth();
             totalHeight = pic.getHeight();
             System.out.println("threshold");
@@ -97,22 +96,18 @@ public class FilterImage extends CommandBase {
 
         //need to free memory on all pic variables
         try {
-
             if (pic != null) {
                 pic.free();
             }
-
             if (convexHullImage != null) {
                 convexHullImage.free();
             }
-
             if (thresholdHSL != null) {
                 thresholdHSL.free();
             }
         } catch (Exception ex) {
             System.out.println(ex);
         }
-
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -154,13 +149,12 @@ public class FilterImage extends CommandBase {
         //reset target goal
         targetGoal = null;
         
-        //TODO set to 4 for comp
         if (reports == null) {
              System.out.println("No image reports");
             return;
         }
         
-        
+        //TODO set to 4 for comp
         if (reports.length < 3) {
             if(reports.length > 0) {
                 System.out.println("Not enough goals");

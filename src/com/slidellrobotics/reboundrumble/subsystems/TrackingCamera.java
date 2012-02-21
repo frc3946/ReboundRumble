@@ -20,7 +20,7 @@ public class TrackingCamera extends Subsystem {
     // here. Call these from Commands.
 
     public AxisCamera camera;
-    private ColorImage pic;
+    //private ColorImage pic;
    
 
     public TrackingCamera() {
@@ -41,18 +41,19 @@ public class TrackingCamera extends Subsystem {
            
             if (camera.freshImage()) {
                 try {
-                     pic = camera.getImage();                  
+                    return camera.getImage();                  
                     
                 } catch (AxisCameraException ex) {
-                     System.out.println(ex);
+                     System.out.println("getImageFromCamera"+ex);
                 } catch (NIVisionException ex) {
                     System.out.println(ex);
                 }
+                
             }
         } catch (Exception ex) {
             //System.out.println(ex);
             //System.out.println("TrackingCamera Error");
         }
-        return pic;
+        return null;
     }
 }

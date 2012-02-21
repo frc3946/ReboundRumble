@@ -21,9 +21,9 @@ public class FilterImage extends CommandBase {
     
     double totalWidth = 0;
     double totalHeight = 0;
-    double launchSpeed;
-    double distanceToTarget;
-    double lastTime;
+    double launchSpeed=0;
+    double distanceToTarget=0;
+    double lastTime=0;
     ParticleAnalysisReport[] reports = null;
     ParticleAnalysisReport targetGoal = null;
 
@@ -53,6 +53,7 @@ public class FilterImage extends CommandBase {
                 
             }
         } catch (Exception ex) {
+             System.out.println("Image loop failure.");
         }
 
     }
@@ -73,13 +74,20 @@ public class FilterImage extends CommandBase {
         BinaryImage thresholdHSL = null;
         BinaryImage convexHullImage = null;
         
+        
         try {
             pic = camera.getImageFromCamera();      //Declares pic variable
+             System.out.println("got image");
             totalWidth = pic.getWidth();
             totalHeight = pic.getHeight();
+            System.out.println("threshold");
+
             thresholdHSL = pic.thresholdHSL(165, 185, 50, 90, 95, 110);      //Sets a Blue light threshold
+            System.out.println("Convex");
+
             convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
             reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
+             System.out.println("Reports:"+reports.length);
         } catch (NIVisionException ex) {
             System.out.println(ex);
         } catch (Exception ex) {
@@ -148,6 +156,7 @@ public class FilterImage extends CommandBase {
         
         //TODO set to 4 for comp
         if (reports == null) {
+             System.out.println("No image reports");
             return;
         }
         
@@ -176,6 +185,7 @@ public class FilterImage extends CommandBase {
         if (targetGoal == null){
             leftShootingMotors.setSetpoint(100);
             rightShootingMotors.setSetpoint(100);
+            System.out.println("Setpoint is: " + rightShootingMotors.getSetpoint());
             System.out.println("No target set");
             return;
         }

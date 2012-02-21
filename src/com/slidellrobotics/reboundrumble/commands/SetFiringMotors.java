@@ -16,7 +16,7 @@ public class SetFiringMotors extends CommandBase {
         setup = num;
         requires(leftShootingMotors);
         requires(rightShootingMotors);
-                requires(camera);
+        requires(camera);
         requires(lazySusan);
         
         

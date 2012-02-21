@@ -31,7 +31,7 @@ public class FirePiston extends Subsystem {
      * Extends piston
      */
     public void fire() {
-        pistonSolenoid.set(DoubleSolenoid.Value.kForward);
+        pistonSolenoid.set(DoubleSolenoid.Value.kReverse);
         SmartDashboard.putBoolean("Load Piston", true);
         //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging
     }
@@ -40,7 +40,7 @@ public class FirePiston extends Subsystem {
      * Retracks piston
      */
     public void stow() {
-        pistonSolenoid.set(DoubleSolenoid.Value.kReverse);
+        pistonSolenoid.set(DoubleSolenoid.Value.kForward);
         //Timer.delay(4); //allows time for SmartDashboard to register the piston was infact launched (basicly for nice appearences)
         SmartDashboard.putBoolean("Load Piston", false);
         //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging

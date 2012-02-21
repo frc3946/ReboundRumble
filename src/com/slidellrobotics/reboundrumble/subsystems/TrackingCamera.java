@@ -21,12 +21,10 @@ public class TrackingCamera extends Subsystem {
 
     public AxisCamera camera;
     //private ColorImage pic;
-   
-
+    
     public TrackingCamera() {
         camera = AxisCamera.getInstance("10.39.46.11");
-        System.out.println("Camera init");
-        
+        System.out.println("Camera init");        
     }
 
     public void initDefaultCommand() {
@@ -36,20 +34,15 @@ public class TrackingCamera extends Subsystem {
     }
 
     public ColorImage getImageFromCamera() throws NIVisionException {
-       
-        
         try {
-           
             if (camera.freshImage()) {
                 try {
-                    return camera.getImage();                  
-                    
+                    return camera.getImage();                      
                 } catch (AxisCameraException ex) {
                      System.out.println("getImageFromCamera"+ex);
                 } catch (NIVisionException ex) {
                     System.out.println(ex);
                 }
-                
             }
         } catch (Exception ex) {
             //System.out.println(ex);

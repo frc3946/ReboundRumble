@@ -17,7 +17,6 @@ public class SelectGoal extends CommandBase {
     public SelectGoal() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        
     }
 
     // Called just before this Command runs the first time
@@ -28,6 +27,7 @@ public class SelectGoal extends CommandBase {
     protected void execute() {
         ParticleAnalysisReport leftGoal;    
         ParticleAnalysisReport rightGoal;  
+        
         //reset target goal
         targetGoal = null;
         
@@ -50,8 +50,7 @@ public class SelectGoal extends CommandBase {
             double rightWidth = rightGoal.boundingRectWidth;   //both middle goals.
             if (leftWidth <= rightWidth) {        //
                 targetGoal = rightGoal;             //Decides which goal we are
-            }
-            if (rightWidth > leftWidth) {        //closer to and targets it.
+            } if (rightWidth > leftWidth) {        //closer to and targets it.
                 targetGoal = leftGoal;              //
             }
         }

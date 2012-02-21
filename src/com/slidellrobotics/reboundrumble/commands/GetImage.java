@@ -17,7 +17,6 @@ public class GetImage extends CommandBase {
     private double totalWidth = 0, totalHeight = 0;
     private ParticleAnalysisReport[] reports = null;
     
-    
     public GetImage() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -34,7 +33,6 @@ public class GetImage extends CommandBase {
         BinaryImage thresholdHSL = null;
         BinaryImage convexHullImage = null;
         
-        
         try {
             pic = camera.getImageFromCamera();      //Declares pic variable
             System.out.println("got image");
@@ -47,7 +45,7 @@ public class GetImage extends CommandBase {
 
             convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
             reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
-             System.out.println("Reports:"+reports.length);
+            System.out.println("Reports:"+reports.length);
         } catch (NIVisionException ex) {
             System.out.println(ex);
         } catch (Exception ex) {
@@ -59,11 +57,9 @@ public class GetImage extends CommandBase {
         try {
             if (pic != null) {
                 pic.free();
-            }
-            if (convexHullImage != null) {
+            } if (convexHullImage != null) {
                 convexHullImage.free();
-            }
-            if (thresholdHSL != null) {
+            } if (thresholdHSL != null) {
                 thresholdHSL.free();
             }
         } catch (Exception ex) {

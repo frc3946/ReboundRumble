@@ -4,11 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.image.BinaryImage;
-import edu.wpi.first.wpilibj.image.ColorImage;
-import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -24,8 +20,8 @@ public class CalibratePoints extends CommandBase {
     double launchSpeed=0;
     double distanceToTarget=0;
     double lastTime=0;
+    
     ParticleAnalysisReport[] reports = null;
-    ParticleAnalysisReport targetGoal = null;
 
     public CalibratePoints() {
         requires(camera);
@@ -43,18 +39,11 @@ public class CalibratePoints extends CommandBase {
         try {
             //run this at a slower pace to not eat up all the processor time
             if (Timer.getFPGATimestamp() - lastTime > timeDelay) {
-
-                lastTime = Timer.getFPGATimestamp();
-                getImage();                 //loops getting a fresh image
-                selectGoal();
-                findDistance();
-                findAngle();
                 updateStatus();    
             }
         } catch (Exception ex) {
              System.out.println("Image loop failure.");
         }
-
     }
 
     protected boolean isFinished() {
@@ -65,21 +54,6 @@ public class CalibratePoints extends CommandBase {
     }
 
     protected void interrupted() {
-    }
-
-    
-    
-    public void getImage() {  
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void findAngle() {
-    }
-
-    public void selectGoal() {
-    }
-
-    public void findDistance() {
     }
 
     public void updateStatus() {
@@ -95,11 +69,8 @@ public class CalibratePoints extends CommandBase {
                             reports[i].center_mass_x);                                       //of mass per particle.
                 }
             }
-
-
         } catch (Exception ex) {
         }
-
     }
 
     private class CalibrationPoint {
@@ -116,7 +87,6 @@ public class CalibratePoints extends CommandBase {
     //just incase the formula doesn't work out here is a test based
     //interpolation function
     private double distanceToRMP(double distance) {
-
 
         //load the test data when practing with the real launcher
         // points MUST be inorder of closest to furthest away
@@ -141,7 +111,5 @@ public class CalibratePoints extends CommandBase {
                       / (calibrationPoints[upperIndex].distance - calibrationPoints[upperIndex - 1].distance);
         double intercept = calibrationPoints[upperIndex].rpms - slope * calibrationPoints[upperIndex].distance;
         return slope * distance + intercept;
-
-        
     }
 } 

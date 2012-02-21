@@ -4,6 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.RobotMap;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -30,7 +31,8 @@ public class Autonomous extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
         
-        
-        
+        addSequential(new HighGear());
+        addParallel(new FilterImage());
+        //addParallel(RobotMap.leftDriveMotor.set(-1));
     }
 }

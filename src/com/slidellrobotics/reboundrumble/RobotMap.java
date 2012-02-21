@@ -27,19 +27,22 @@ public class RobotMap {
     public static final int rightJoystick = 1; //Main Driver Right Joystick
     public static final int leftJoystick = 2; //Main Driver Left Joystick
     public static final int thirdJoystick = 3; //Possible third Joystick for secondary Driver Control (maybe use this for ajusting the Lazy Susan and ball shooter/feed.)
-        //Right Joystick
+    
+    //Right Joystick
     public static final int fireButton = 1; //Button to fire Phumatic piston
     public static final int arcadeModeButton = 3; //Button that activates Arcade Drive Mode.
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
     public static final int highGearShiftButton = 5; //Button to shift into High Gear
-        //Left Joystick
+    
+    //Left Joystick
     public static final int outtakeFeedBeltButton = 2; //Button to set Ball Feed to remove balls
     public static final int intakeFeedBeltButton = 3; //Button to set Ball Feed to load balls
-    public static final int dropBridgeButton = 4; //Button to drop BridgeMounter
-    public static final int stowBridgeButton = 5; //Button to stow BridgeMounter
+    public static final int dropBridgeButton = 5; //Button to drop BridgeMounter
+    public static final int stowBridgeButton = 4; //Button to stow BridgeMounter
     public static final int leftLazySusanButton = 8; //Button to turn Lazy Susan Turret Left
     public static final int rightLazySusanButton = 9; //Button to turn Lazy Susan Turret Right
-        //Third Joystick
+    
+    //Third Joystick
     
     
     

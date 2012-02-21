@@ -82,7 +82,7 @@ public class FilterImage extends CommandBase {
             totalHeight = pic.getHeight();
             System.out.println("threshold");
 
-            thresholdHSL = pic.thresholdHSL(165, 185, 50, 90, 95, 110);      //Sets a Blue light threshold
+            thresholdHSL = pic.thresholdHSL(165, 185, 30, 120, 60, 110);      //Sets a Blue light threshold
             System.out.println("Convex");
 
             convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            

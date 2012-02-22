@@ -24,6 +24,7 @@ public class RobotMap {
     
     //Right Joystick
     public static final int fireButton = 1; //Button to fire Phumatic piston
+    public static final int balanceModeButton = 2; //Button that activates Balance Drive Mode.
     public static final int arcadeModeButton = 3; //Button that activates Arcade Drive Mode.
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
     public static final int highGearShiftButton = 5; //Button to shift into High Gear

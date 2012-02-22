@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -22,17 +23,21 @@ public class OI {
     private Button turnSusanRight = new JoystickButton(leftJoystick, RobotMap.rightLazySusanButton);
     
     private Joystick rightJoystick = new Joystick(RobotMap.rightJoystick); //Right Joystick
-    private Button fireBall = new JoystickButton(rightJoystick, RobotMap.fireButton); //Button to fire the ball
     private Button shiftHighGear = new JoystickButton(rightJoystick, RobotMap.highGearShiftButton); //Button to shift to High Gear
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
     private Button arcadeMode = new JoystickButton(rightJoystick, RobotMap.arcadeModeButton);
+    private Button balanceMode = new JoystickButton(rightJoystick, RobotMap.balanceModeButton);
     
+    private Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
+    private Command susanCommand;
+    private Button fireBall = new JoystickButton(thirdJoystick, RobotMap.fireButton); //Button to fire the ball
     //SmartDashBoard Buttons
     private InternalButton smartDashboardButton1 = new InternalButton();
     
     
     public OI() {
         arcadeMode.whileHeld(new ArcadeDrive());
+        balanceMode.whileHeld(new BalanceDrive());
         shiftHighGear.whenPressed(new HighGear());
         shiftLowGear.whenPressed(new LowGear());
         intakeFeedBelt.whenPressed(new SetFeedBeltIntake());
@@ -40,8 +45,17 @@ public class OI {
         fireBall.whileHeld(new FireBall());
         dropBridge.whileHeld(new DropBridgeMounter());
         stowBridge.whileHeld(new StowBridgeMounter());
-        turnSusanLeft.whileHeld(new LazySusanLeft());
-        turnSusanRight.whileHeld(new LazySusanRight());
+        //turnSusanLeft.whileHeld(new LazySusanLeft());
+        //turnSusanRight.whileHeld(new LazySusanRight());
+        if(thirdJoystick.getX() > .5) {
+            susanCommand = new LazySusanRight();
+            susanCommand.start();
+        } else if(thirdJoystick.getX() < -.5) {
+            susanCommand = new LazySusanLeft();
+            susanCommand.start();
+        } else {
+            //susanCommand.cancel();
+        }
         
         //SmartDashboard Buttons
         SmartDashboard.putData("SetFiringMotors",smartDashboardButton1);

@@ -8,13 +8,13 @@
 package com.slidellrobotics.reboundrumble;
 
 
+import com.slidellrobotics.reboundrumble.commands.Autonomous;
 import com.slidellrobotics.reboundrumble.commands.CommandBase;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Timer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Main extends IterativeRobot {
     private double startTime;
-    Command autonomousCommand;
+    Command autonomousCommand = new Autonomous();
     Relay compressor = new Relay(RobotMap.compressorSpike);
     
     /**

@@ -44,6 +44,7 @@ public class DriveTrain extends PIDSubsystem {
         System.out.println("[DriveTrain] balanceGyro initialized");
         System.out.println("[DriveTrain] Started");
         setSetpoint(0);
+        setSetpointRange(-1, 1);
         
     }
     
@@ -52,19 +53,23 @@ public class DriveTrain extends PIDSubsystem {
         //setDefaultCommand(new MySpecialCommand());
         System.out.println("[DriveTrain] TankDrive command started.");
         setDefaultCommand(new TankDrive());
+        
     }
     
     protected double returnPIDInput() {
-        return balanceGyro.getAngle();
+        SmartDashboard.putDouble("DRIVE PID INPUT: ", balanceGyro.pidGet());
+        return balanceGyro.pidGet();
+        
     }
     
     protected void usePIDOutput(double output) {
-        
+        SmartDashboard.putDouble("PID Output",output);
         //if we are within 5 degree, that should be balanced.
-        if (Math.abs(balanceGyro.getAngle()) < 5)
+        if (Math.abs(balanceGyro.getAngle()) < 5) {
             balanceDrive(0);
-        else
+        } else {
             balanceDrive(output);
+        }
     }
     
     /**

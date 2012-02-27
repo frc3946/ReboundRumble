@@ -8,8 +8,10 @@ import com.slidellrobotics.reboundrumble.commands.FilterImage;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
+import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
 /**
  *
@@ -18,8 +20,13 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 public class TrackingCamera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+    
     public AxisCamera camera;
+    public static ColorImage picture;
+    public static ParticleAnalysisReport[] reports;
+    public static BinaryImage thresholdHSL;
+    public static BinaryImage convexHullImage;
+    
     //private ColorImage pic;
     
     public TrackingCamera() {

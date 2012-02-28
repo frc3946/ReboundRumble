@@ -4,6 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
 import edu.wpi.first.wpilibj.image.NIVisionException;
@@ -14,9 +15,13 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
  * @author 10491477
  */
 public class GetImage extends CommandBase {
-    private double totalWidth = 0, totalHeight = 0;
-    private ParticleAnalysisReport[] reports = null;
     
+    double totalWidth, totalHeight;
+    ParticleAnalysisReport[] reports;
+    ColorImage pic;
+    BinaryImage thresholdHSL;
+    BinaryImage convexHullImage;
+        
     public GetImage() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -29,47 +34,34 @@ public class GetImage extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        ColorImage pic = null;
-        BinaryImage thresholdHSL = null;
-        BinaryImage convexHullImage = null;
-        
+        //TODO: move to initialize
         try {
             pic = camera.getImageFromCamera();      //Declares pic variable
             System.out.println("got image");
             totalWidth = pic.getWidth();
             totalHeight = pic.getHeight();
+            
             System.out.println("threshold");
-
             thresholdHSL = pic.thresholdHSL(165, 185, 30, 120, 60, 110);      //Sets a Blue light threshold
+            
             System.out.println("Convex");
-
             convexHullImage = thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
+            
+            //TODO: Ordered?
             reports = convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
-            System.out.println("Reports:"+reports.length);
+            System.out.println("Reports: "+reports.length);
         } catch (NIVisionException ex) {
             System.out.println(ex);
         } catch (Exception ex) {
             System.out.println(ex);
         }
-
-
-        //need to free memory on all pic variables
-        try {
-            if (pic != null) {
-                pic.free();
-            } if (convexHullImage != null) {
-                convexHullImage.free();
-            } if (thresholdHSL != null) {
-                thresholdHSL.free();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+        
+        //TODO: Pics not freed
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return false; //todo: this does not exit
     }
 
     // Called once after isFinished returns true

@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
  * @author 10491477
  */
 public class FindDistance extends CommandBase {
-    double totalWidth = 0;
-    double totalHeight = 0;
-    double launchSpeed=0;
-    double distanceToTarget=0;
-    ParticleAnalysisReport targetGoal = null;
+    double totalWidth, totalHeight, lauchSpeed, distanceToTarget;
+    double targetHeight, targetHeightFeet, horFOV, vertFOV; 
+    double cameraVertFOV, cameraHorizFOV, launchSpeed, d1, d2, d;
+    double targetWidth, targetWidthFeet;
+    ParticleAnalysisReport systemGoal;
         
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies
@@ -30,7 +30,7 @@ public class FindDistance extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (targetGoal == null){
+        if (systemGoal == null){
             leftShootingMotors.setSetpoint(100);
             rightShootingMotors.setSetpoint(100);
             System.out.println("Setpoint is: " + rightShootingMotors.getSetpoint());
@@ -38,27 +38,27 @@ public class FindDistance extends CommandBase {
             return;
         }
         
-        double targetHeight = targetGoal.boundingRectHeight;   //Sets the height of our target.
-        double targetHeightFeet = 1.5;
-        double vertFOV = targetHeightFeet / targetHeight * totalHeight; // //Gets the foot equivalent of our vertical Field of View
+        targetHeight = systemGoal.boundingRectHeight;   //Sets the height of our target.
+        targetHeightFeet = 1.5;
+        vertFOV = targetHeightFeet / targetHeight * totalHeight; // //Gets the foot equivalent of our vertical Field of View
 
-        double camearVerticalFOV = 47;
-        double cameraHorizontalFOV = 47;
+        cameraVertFOV = 47;
+        cameraHorizFOV = 47;
 
-        double targetWidth = targetGoal.boundingRectWidth;   //Sets the height of our target.
-        double targetWidthFeet = 2.0;
-        double horFOV = targetWidthFeet / targetWidth * totalWidth;
+        targetWidth = systemGoal.boundingRectWidth;   //Sets the height of our target.
+        targetWidthFeet = 2.0;
+        horFOV = targetWidthFeet / targetWidth * totalWidth;
 
 
-        double d1 = (vertFOV / 2) / Math.tan(camearVerticalFOV / 2);
-        double d2 = (horFOV / 2) / Math.tan(cameraHorizontalFOV / 2);
+        d1 = (vertFOV / 2) / Math.tan(cameraVertFOV / 2);
+        d2 = (horFOV / 2) / Math.tan(cameraHorizFOV / 2);
 
         distanceToTarget = (d1 + d2) / 2;  //take the average to try get a more accurate measurement
         //if distance to target is invalid, justset it to some number
         if (distanceToTarget > 60 || distanceToTarget <= 0)
             distanceToTarget = 60;
         
-        double d = distanceToTarget;
+        d = distanceToTarget;
 
         launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16.1) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(launchSpeed);

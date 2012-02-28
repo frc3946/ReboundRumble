@@ -11,9 +11,11 @@ import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
  * @author 10491477
  */
 public class SelectGoal extends CommandBase {
-    ParticleAnalysisReport targetGoal = null;
-    private ParticleAnalysisReport[] reports = null;
-    
+    ParticleAnalysisReport targetGoal;
+    ParticleAnalysisReport[] reports;
+    ParticleAnalysisReport leftGoal;    
+    ParticleAnalysisReport rightGoal;  
+        
     public SelectGoal() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -25,9 +27,7 @@ public class SelectGoal extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        ParticleAnalysisReport leftGoal;    
-        ParticleAnalysisReport rightGoal;  
-        
+        //TODO: this does not really need to execute over and over again. move to iniialize
         //reset target goal
         targetGoal = null;
         
@@ -58,6 +58,7 @@ public class SelectGoal extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+        //TODO: Does not exit, this should be true
         return false;
     }
 

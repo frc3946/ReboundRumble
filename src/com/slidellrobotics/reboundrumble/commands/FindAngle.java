@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author 10491477
  */
 public class FindAngle extends CommandBase {
-    double totalWidth = 0;
-    ParticleAnalysisReport targetGoal = null;
-       
+    double totalWidth, targetLocale, horCenter, targetDiff;
+    ParticleAnalysisReport targetGoal;
+    
     public FindAngle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -28,6 +28,7 @@ public class FindAngle extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        //TODO: this should get the systme goal from some where else
         if (targetGoal == null){
             lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
@@ -35,11 +36,10 @@ public class FindAngle extends CommandBase {
             return;
         }
         
-        double targetLocale;
-        double horCenter;
+        
         horCenter = (totalWidth / 2);     //Finds the pixel value of the horizontal center
         targetLocale = targetGoal.center_mass_x;        //Finds the center of our target
-        double targetDiff = Math.abs(targetLocale - horCenter); // see how far away we are
+        targetDiff = Math.abs(targetLocale - horCenter); // see how far away we are
 
         //TODO: tune the 10 pixels to the right number
         //there is always going to be a little error, but we want some small window
@@ -59,7 +59,7 @@ public class FindAngle extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return false; //TODO: does not exit
     }
 
     // Called once after isFinished returns true

@@ -22,12 +22,16 @@ public class TrackingCamera extends Subsystem {
     // here. Call these from Commands.
     
     public AxisCamera camera;
-    public static ColorImage picture;
+    public static ColorImage pic;
     public static ParticleAnalysisReport[] reports;
     public static BinaryImage thresholdHSL;
     public static BinaryImage convexHullImage;
-    
-    //private ColorImage pic;
+    public static double totalWidth = 640, totalHeight = 480;
+    public static ParticleAnalysisReport targetGoal, leftGoal, rightGoal;    
+    public static double targetLocale, horCenter, targetDiff, launchSpeed;
+    public static double distanceToTarget, targetHeight, targetHeightFeet = 1.5;
+    public static double horFOV, vertFOV, cameraVertFOV = 47, cameraHorizFOV = 47;
+    public static double d1, d2, d, targetWidth, targetWidthFeet = 2;
     
     public TrackingCamera() {
         camera = AxisCamera.getInstance("10.39.46.11");

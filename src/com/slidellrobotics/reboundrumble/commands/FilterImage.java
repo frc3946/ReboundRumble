@@ -34,5 +34,6 @@ public class FilterImage extends CommandGroup {
         addParallel(new SelectGoal());
         addParallel(new FindAngle());
         addSequential(new FindDistance());
+        addSequential(new ResetVariables());
     }
 }

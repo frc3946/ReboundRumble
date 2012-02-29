@@ -32,6 +32,8 @@ public class TrackingCamera extends Subsystem {
     public static double distanceToTarget, targetHeight, targetHeightFeet = 1.5;
     public static double horFOV, vertFOV, cameraVertFOV = 47, cameraHorizFOV = 47;
     public static double d1, d2, d, targetWidth, targetWidthFeet = 2;
+    public static boolean getFinished = false, selectFinished = false;
+    public static boolean angleFinished = false, distanceFinished = false;
     
     public TrackingCamera() {
         camera = AxisCamera.getInstance("10.39.46.11");

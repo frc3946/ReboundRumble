@@ -4,8 +4,8 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -13,9 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author 10491477
  */
 public class FindAngle extends CommandBase {
-    double totalWidth, targetLocale, horCenter, targetDiff;
-    ParticleAnalysisReport targetGoal;
-    
     public FindAngle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -28,38 +25,37 @@ public class FindAngle extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        //TODO: this should get the systme goal from some where else
-        if (targetGoal == null){
+        if (TrackingCamera.targetGoal == null){
             lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
             System.out.println("No target set");
             return;
         }
         
-        
-        horCenter = (totalWidth / 2);     //Finds the pixel value of the horizontal center
-        targetLocale = targetGoal.center_mass_x;        //Finds the center of our target
-        targetDiff = Math.abs(targetLocale - horCenter); // see how far away we are
+        TrackingCamera.horCenter = (TrackingCamera.totalWidth / 2);     //Finds the pixel value of the horizontal center
+        TrackingCamera.targetLocale = TrackingCamera.targetGoal.center_mass_x;        //Finds the center of our target
+        TrackingCamera.targetDiff = Math.abs(TrackingCamera.targetLocale - TrackingCamera.horCenter); // see how far away we are
 
         //TODO: tune the 10 pixels to the right number
         //there is always going to be a little error, but we want some small window
         //where the lazy suzan stops moving to we can make an accurate shot.
 
-        if (targetDiff < 50) {
+        if (TrackingCamera.targetDiff < 50) {
             lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
-        } else if (targetLocale > horCenter) {                  //and if we are facing right
+        } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
             lazySusan.setRelay(Relay.Value.kReverse);   //turn left
             SmartDashboard.putString("LazySusan", "Reverse");
         } else {                                        //if we face left
             lazySusan.setRelay(Relay.Value.kForward);   //turn right
             SmartDashboard.putString("LazySusan", "Forward");
         }
+        TrackingCamera.angleFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false; //TODO: does not exit
+        return true;
     }
 
     // Called once after isFinished returns true

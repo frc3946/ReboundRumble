@@ -4,19 +4,13 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 
 /**
  *
  * @author 10491477
  */
-public class FindDistance extends CommandBase {
-    double totalWidth, totalHeight, lauchSpeed, distanceToTarget;
-    double targetHeight, targetHeightFeet, horFOV, vertFOV; 
-    double cameraVertFOV, cameraHorizFOV, launchSpeed, d1, d2, d;
-    double targetWidth, targetWidthFeet;
-    ParticleAnalysisReport systemGoal;
-        
+public class FindDistance extends CommandBase {  
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -30,7 +24,7 @@ public class FindDistance extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        if (systemGoal == null){
+        if (TrackingCamera.targetGoal == null){
             leftShootingMotors.setSetpoint(100);
             rightShootingMotors.setSetpoint(100);
             System.out.println("Setpoint is: " + rightShootingMotors.getSetpoint());
@@ -38,36 +32,38 @@ public class FindDistance extends CommandBase {
             return;
         }
         
-        targetHeight = systemGoal.boundingRectHeight;   //Sets the height of our target.
-        targetHeightFeet = 1.5;
-        vertFOV = targetHeightFeet / targetHeight * totalHeight; // //Gets the foot equivalent of our vertical Field of View
+        TrackingCamera.targetHeight = TrackingCamera.targetGoal.boundingRectHeight;   //Sets the height of our target.
+        TrackingCamera.targetHeightFeet = 1.5;
+        TrackingCamera.vertFOV = TrackingCamera.targetHeightFeet / TrackingCamera.targetHeight * TrackingCamera.totalHeight; // //Gets the foot equivalent of our vertical Field of View
 
-        cameraVertFOV = 47;
-        cameraHorizFOV = 47;
+        TrackingCamera.cameraVertFOV = 47;
+        TrackingCamera.cameraHorizFOV = 47;
 
-        targetWidth = systemGoal.boundingRectWidth;   //Sets the height of our target.
-        targetWidthFeet = 2.0;
-        horFOV = targetWidthFeet / targetWidth * totalWidth;
+        TrackingCamera.targetWidth = TrackingCamera.targetGoal.boundingRectWidth;   //Sets the height of our target.
+        TrackingCamera.targetWidthFeet = 2.0;
+        TrackingCamera.horFOV = TrackingCamera.targetWidthFeet / TrackingCamera.targetWidth * TrackingCamera.totalWidth;
 
 
-        d1 = (vertFOV / 2) / Math.tan(cameraVertFOV / 2);
-        d2 = (horFOV / 2) / Math.tan(cameraHorizFOV / 2);
+        TrackingCamera.d1 = (TrackingCamera.vertFOV / 2) / Math.tan(TrackingCamera.cameraVertFOV / 2);
+        TrackingCamera.d2 = (TrackingCamera.horFOV / 2) / Math.tan(TrackingCamera.cameraHorizFOV / 2);
 
-        distanceToTarget = (d1 + d2) / 2;  //take the average to try get a more accurate measurement
+        TrackingCamera.distanceToTarget = (TrackingCamera.d1 + TrackingCamera.d2) / 2;  //take the average to try get a more accurate measurement
         //if distance to target is invalid, justset it to some number
-        if (distanceToTarget > 60 || distanceToTarget <= 0)
-            distanceToTarget = 60;
+        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0)
+            TrackingCamera.distanceToTarget = 60;
         
-        d = distanceToTarget;
+        TrackingCamera.d = TrackingCamera.distanceToTarget;
 
-        launchSpeed = 60 * (d / Math.sqrt(((11 / 6) - d) / -16.1) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
-        leftShootingMotors.setSetpoint(launchSpeed);
-        rightShootingMotors.setSetpoint(launchSpeed);
+        TrackingCamera.launchSpeed = 60 * (TrackingCamera.d / Math.sqrt(((11 / 6) - TrackingCamera.d) / -16.1) / ((2 / 3) * 3.1415926));  //Calcs the required rpms for firing
+        leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);
+        rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);
+        
+        TrackingCamera.distanceFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

@@ -4,6 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -11,6 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author 10491477
  */
 public class FilterImage extends CommandGroup {
+    private double lastTime = 0;
+    private double thisTime = Timer.getFPGATimestamp();
+    private double timeLapse = thisTime - lastTime;
     
     public FilterImage() {
         // Add Commands here:
@@ -29,11 +33,12 @@ public class FilterImage extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        
-        addParallel(new GetImage());
-        addParallel(new SelectGoal());
-        addParallel(new FindAngle());
-        addSequential(new FindDistance());
-        addSequential(new ResetVariables());
+        if(timeLapse >= 2.0) {
+            addParallel(new GetImage());
+            addParallel(new SelectGoal());
+            addParallel(new FindAngle());
+            addSequential(new FindDistance());
+            lastTime = Timer.getFPGATimestamp();
+        }
     }
 }

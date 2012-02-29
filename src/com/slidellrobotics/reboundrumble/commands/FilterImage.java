@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class FilterImage extends CommandGroup {
     private double lastTime = 0;
-    private double thisTime = Timer.getFPGATimestamp();
-    private double timeLapse = thisTime - lastTime;
+    private double thisTime;
+    private double timeLapse;
     
     public FilterImage() {
         // Add Commands here:
@@ -33,6 +33,8 @@ public class FilterImage extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+        thisTime = Timer.getFPGATimestamp();
+        timeLapse = thisTime - lastTime;
         if(timeLapse >= 2.0) {
             addParallel(new GetImage());
             addParallel(new SelectGoal());

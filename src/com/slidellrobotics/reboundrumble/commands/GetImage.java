@@ -27,13 +27,13 @@ public class GetImage extends CommandBase {
             TrackingCamera.totalHeight = TrackingCamera.pic.getHeight();
 
             System.out.println("Threshold");
-            TrackingCamera.thresholdHSL = TrackingCamera.pic.thresholdHSL(160, 180, 230, 255, 0, 15);      //Sets a Blue light threshold
+            TrackingCamera.thresholdHSL = TrackingCamera.pic.thresholdHSL(150, 185, 244, 255, 2, 20);      //Sets a Blue light threshold
 
-            System.out.println("Removing Small Objects");
-            TrackingCamera.bigObjectsImage = TrackingCamera.thresholdHSL.removeSmallObjects(false, 1);
+            //System.out.println("Removing Small Objects");
+            //TrackingCamera.bigObjectsImage = TrackingCamera.thresholdHSL.removeSmallObjects(false, 1);
             
             System.out.println("Convex");
-            TrackingCamera.convexHullImage = TrackingCamera.bigObjectsImage.convexHull(false);        //Fills in the bounding boxes for the targets            
+            TrackingCamera.convexHullImage = TrackingCamera.thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
 
             //TODO: Ordered?
             TrackingCamera.reports = TrackingCamera.convexHullImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles

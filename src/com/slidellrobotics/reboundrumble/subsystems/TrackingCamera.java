@@ -26,7 +26,7 @@ public class TrackingCamera extends Subsystem {
     public static ParticleAnalysisReport[] reports;
     public static BinaryImage thresholdHSL;
     public static BinaryImage convexHullImage;
-    public static BinaryImage bigObjectsImage;
+    //public static BinaryImage bigObjectsImage;
     public static double totalWidth = 640, totalHeight = 480;
     public static ParticleAnalysisReport targetGoal, leftGoal, rightGoal;    
     public static double targetLocale, horCenter, targetDiff, launchSpeed;

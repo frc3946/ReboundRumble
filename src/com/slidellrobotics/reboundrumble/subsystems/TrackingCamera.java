@@ -24,6 +24,8 @@ public class TrackingCamera extends Subsystem {
     public AxisCamera camera;
     public static ColorImage pic;
     public static ParticleAnalysisReport[] reports;
+    //public static int leftGoalIndex = 0, rightGoalIndex = 0;
+    
     public static BinaryImage thresholdHSL;
     public static BinaryImage convexHullImage;
     //public static BinaryImage bigObjectsImage;
@@ -33,8 +35,8 @@ public class TrackingCamera extends Subsystem {
     public static double distanceToTarget, targetHeight, targetHeightFeet = 1.5;
     public static double horFOV, vertFOV, cameraVertFOV = 47, cameraHorizFOV = 47;
     public static double d1, d2, d, targetWidth, targetWidthFeet = 2;
-    public static boolean getFinished = false, selectFinished = false;
-    public static boolean angleFinished = false, distanceFinished = false;
+    //public static boolean getFinished = false, selectFinished = false;
+    //public static boolean angleFinished = false, distanceFinished = false;
     
     public TrackingCamera() {
         camera = AxisCamera.getInstance("10.39.46.11");

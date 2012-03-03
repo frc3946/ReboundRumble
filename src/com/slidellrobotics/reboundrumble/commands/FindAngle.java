@@ -50,7 +50,7 @@ public class FindAngle extends CommandBase {
             lazySusan.setRelay(Relay.Value.kForward);   //turn right
             SmartDashboard.putString("LazySusan", "Forward");
         }
-        TrackingCamera.angleFinished = true;
+        //TrackingCamera.angleFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()

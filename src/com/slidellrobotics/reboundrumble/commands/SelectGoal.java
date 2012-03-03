@@ -16,6 +16,9 @@ public class SelectGoal extends CommandBase {
         // eg. requires(chassis);
     }
 
+    //int lgi = TrackingCamera.leftGoalIndex;
+    //int rgi = TrackingCamera.rightGoalIndex;
+    
     // Called just before this Command runs the first time
     protected void initialize() {
         TrackingCamera.targetGoal = null;
@@ -32,9 +35,20 @@ public class SelectGoal extends CommandBase {
                 TrackingCamera.targetGoal = TrackingCamera.reports[0];
             }
         } else {
+            TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
+            TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
+            
+            for(int i = 1; i < 4; i++) {
+                if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
+                    TrackingCamera.leftGoal = TrackingCamera.reports[i];
+                }
+                if(TrackingCamera.reports[i].center_mass_x > TrackingCamera.leftGoal.center_mass_x) {
+                    TrackingCamera.rightGoal = TrackingCamera.reports[i];
+                }
+            }
+            
             //we we have four goals in view index 1 is the left and index 2 is right
-            TrackingCamera.leftGoal = TrackingCamera.reports[1];     //Recognizes the
-            TrackingCamera.rightGoal = TrackingCamera.reports[2];    //middle goals.
+            
             double leftWidth = TrackingCamera.leftGoal.boundingRectWidth;     //Finds the widths of
             double rightWidth = TrackingCamera.rightGoal.boundingRectWidth;   //both middle goals.
             if (leftWidth <= rightWidth) {        //
@@ -43,7 +57,7 @@ public class SelectGoal extends CommandBase {
                 TrackingCamera.targetGoal = TrackingCamera.leftGoal;              //
             }
         }
-        TrackingCamera.selectFinished = true;
+        //TrackingCamera.selectFinished = true;
     }
 
     // Called repeatedly when this Command is scheduled to run

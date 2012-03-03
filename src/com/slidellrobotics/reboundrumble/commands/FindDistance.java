@@ -58,7 +58,7 @@ public class FindDistance extends CommandBase {
         leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);
         
-        TrackingCamera.distanceFinished = true;
+        //TrackingCamera.distanceFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()

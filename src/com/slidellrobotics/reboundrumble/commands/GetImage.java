@@ -57,6 +57,9 @@ public class GetImage extends CommandBase {
             if (TrackingCamera.thresholdHSL != null) {
                 TrackingCamera.thresholdHSL.free();
             }
+            if (TrackingCamera.boundImage != null) {
+                TrackingCamera.boundImage.free();
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }

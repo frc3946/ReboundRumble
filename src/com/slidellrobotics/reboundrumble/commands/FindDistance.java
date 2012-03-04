@@ -57,6 +57,13 @@ public class FindDistance extends CommandBase {
         leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);
         
+        System.out.println();
+        System.out.println("D1: "+TrackingCamera.d1);
+        System.out.println("D2: "+TrackingCamera.d2);
+        System.out.println("D: "+TrackingCamera.d);
+        System.out.println("Camera Launch Speed: "+TrackingCamera.launchSpeed);
+        System.out.println();
+        
         //TrackingCamera.distanceFinished = true;
     }
 

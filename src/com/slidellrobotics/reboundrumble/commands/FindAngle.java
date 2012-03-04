@@ -42,7 +42,8 @@ public class FindAngle extends CommandBase {
         //where the lazy suzan stops moving to we can make an accurate shot.
 
         lastTime = Timer.getFPGATimestamp();
-        if (TrackingCamera.targetDiff < 150) {
+        System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
+        if (TrackingCamera.targetDiff < 50) {
             lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
         } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right

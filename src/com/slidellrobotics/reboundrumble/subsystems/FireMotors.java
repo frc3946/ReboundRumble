@@ -75,21 +75,21 @@ public class FireMotors extends PIDSubsystem {
         }
          
         counts = counter.get(); //number of counts since last update
-        //counter.reset();        //reset counts ASAP so we don't miss any
+       counter.reset();        //reset counts ASAP so we don't miss any
        //  System.out.println("1");
               
         lastTime = newtime;
        
         //System.out.println("2");
         rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute  
-          System.out.println(Name + ": " +  rpms);
-          System.out.println("     Counts: "+counts);
-          System.out.println("          Timespan: "+timespan);
-          System.out.println();
+          //System.out.println(Name + ": " +  rpms);
+          //System.out.println("     Counts: "+counts);
+          //System.out.println("          Timespan: "+timespan);
+          //System.out.println();
         //sometimes the counter goes nuts
         //this deboundes it
-        if (rpms > 1600)
-            rpms = 1600;
+        if (rpms > 1750)
+            rpms = 1750;
         
         //    System.out.println("3");
         rpmsFilter[rpmsFilterIndex]=Double.valueOf(rpms);
@@ -114,20 +114,17 @@ public class FireMotors extends PIDSubsystem {
         //set point is equal to rpms and output = 0        
         //soft start if we not moving, only set power to 10%
        
-         victorSetting=victor.get()+output;
+         victorSetting=victor.get()-output;
         
         
         if (Math.abs(victorSetting) < .3){
-            if (victorSetting > 0) {
-                victorSetting = .3;
-            }
-            if (victorSetting <0) {
+           
                 victorSetting = -.3;
-            }
+            
         }
           //System.out.println("Use PID "+victorSetting);
         victor.set(victorSetting);
-        //victor.set(.3);
+        //victor.set(getSetpoint());
 
         
     }

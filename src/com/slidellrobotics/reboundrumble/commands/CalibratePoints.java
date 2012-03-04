@@ -4,6 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -15,9 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class CalibratePoints extends CommandBase {
     private final double timeDelay = 1;
     
-    double totalWidth = 0;
-    double totalHeight = 0;
-    double launchSpeed=0;
     double distanceToTarget=0;
     double lastTime=0;
     
@@ -58,10 +56,10 @@ public class CalibratePoints extends CommandBase {
 
     public void updateStatus() {
         try {
-            SmartDashboard.putDouble("Pic Height", totalHeight);
-            SmartDashboard.putDouble("Pic Width", totalWidth);
-            SmartDashboard.putDouble("launchSpeed", launchSpeed);
-            SmartDashboard.putDouble("Distance", distanceToTarget);
+            SmartDashboard.putDouble("Pic Height: ", TrackingCamera.totalHeight);
+            SmartDashboard.putDouble("Pic Width: ", TrackingCamera.totalWidth);
+            SmartDashboard.putDouble("launchSpeed: ", TrackingCamera.launchSpeed);
+            SmartDashboard.putDouble("Distance: ", TrackingCamera.distanceToTarget);
 
             if (reports != null) {
                 for (int i = 0; i < reports.length; i++) {                          //Systematically prints the                                   

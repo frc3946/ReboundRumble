@@ -27,9 +27,12 @@ public class SelectGoal extends CommandBase {
              System.out.println("No image reports");
             return;
         }
-        
+        if (TrackingCamera.reports.length == 0) {
+             System.out.println("No image reports");
+            return;
+        }
         //TODO set to 4 for comp
-        if (TrackingCamera.reports.length < 3) {
+        if (TrackingCamera.reports.length == 1) {
             if(TrackingCamera.reports.length > 0) {
                 System.out.println("Not enough goals");
                 TrackingCamera.targetGoal = TrackingCamera.reports[0];
@@ -37,11 +40,11 @@ public class SelectGoal extends CommandBase {
         } else {
             TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
             TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
-            
-            
-            
-            
-            for(int i = 1; i < 4; i++) {
+            int maxIndex = TrackingCamera.reports.length;
+            if (maxIndex > 4) {
+                    maxIndex=4;
+            }
+            for(int i = 1; i < maxIndex; i++) {
                 if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.leftGoal = TrackingCamera.reports[i];
                 }

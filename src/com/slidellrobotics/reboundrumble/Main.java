@@ -10,10 +10,12 @@ package com.slidellrobotics.reboundrumble;
 
 import com.slidellrobotics.reboundrumble.commands.Autonomous;
 import com.slidellrobotics.reboundrumble.commands.CommandBase;
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.image.NIVision.MeasurementType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -40,6 +42,8 @@ public class Main extends IterativeRobot {
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
         compressor.set(Relay.Value.kForward);
+        TrackingCamera.cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 480, false);
+        TrackingCamera.cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 20, 400, false);
     }
 
     public void autonomousInit() {

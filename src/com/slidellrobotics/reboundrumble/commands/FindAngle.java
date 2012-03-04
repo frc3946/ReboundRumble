@@ -6,6 +6,7 @@ package com.slidellrobotics.reboundrumble.commands;
 
 import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -13,6 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author 10491477
  */
 public class FindAngle extends CommandBase {
+    private static double lastTime = 0;
+    private static double thisTime;
+    private static double timeLapse;
+    
     public FindAngle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -21,10 +26,6 @@ public class FindAngle extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    }
-
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
         if (TrackingCamera.targetGoal == null){
             lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
@@ -40,26 +41,39 @@ public class FindAngle extends CommandBase {
         //there is always going to be a little error, but we want some small window
         //where the lazy suzan stops moving to we can make an accurate shot.
 
-        if (TrackingCamera.targetDiff < 50) {
+        lastTime = Timer.getFPGATimestamp();
+        if (TrackingCamera.targetDiff < 150) {
             lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
         } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
-            lazySusan.setRelay(Relay.Value.kReverse);   //turn left
-            SmartDashboard.putString("LazySusan", "Reverse");
+            lazySusan.setRelay(Relay.Value.kForward);   //turn left
+            SmartDashboard.putString("LazySusan", "Right");
+            
         } else {                                        //if we face left
-            lazySusan.setRelay(Relay.Value.kForward);   //turn right
-            SmartDashboard.putString("LazySusan", "Forward");
+            lazySusan.setRelay(Relay.Value.kReverse);   //turn right
+            SmartDashboard.putString("LazySusan", "Left");
         }
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
         //TrackingCamera.angleFinished = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        thisTime = Timer.getFPGATimestamp();
+        timeLapse = thisTime - lastTime;
+        if(timeLapse >= 0.01) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Called once after isFinished returns true
     protected void end() {
+        lazySusan.setRelay(Relay.Value.kOff);
     }
 
     // Called when another command which requires one or more of the same

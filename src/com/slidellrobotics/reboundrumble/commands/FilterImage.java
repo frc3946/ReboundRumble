@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author 10491477
  */
 public class FilterImage extends CommandGroup {
-    private double lastTime = 0;
-    private double thisTime;
-    private double timeLapse;
+    private static double lastTime = 0;
+    private static double thisTime;
+    private static double timeLapse;
     
     public FilterImage() {
         // Add Commands here:
@@ -35,12 +35,12 @@ public class FilterImage extends CommandGroup {
         // arm.
         thisTime = Timer.getFPGATimestamp();
         timeLapse = thisTime - lastTime;
-        if(timeLapse >= 2.0) {
+        if(timeLapse >= 0.3) {
             addParallel(new GetImage());
-            addParallel(new SelectGoal());
-            addParallel(new FindAngle());
+            addSequential(new SelectGoal());
+            addSequential(new FindAngle());
             addSequential(new FindDistance());
-            lastTime = Timer.getFPGATimestamp();
+            lastTime = thisTime;
         }
     }
 }

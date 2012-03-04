@@ -5,8 +5,8 @@
 package com.slidellrobotics.reboundrumble.subsystems;
 
 import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,9 +23,14 @@ public class FireMotors extends PIDSubsystem {
     private static  double Kd = 0.0;
     
     private Counter counter;
-    private Victor victor;
+    private Jaguar victor;
     double lastTime;
     double newtime;
+    
+    static final int rpmsFilterMax = 10;
+    Double[] rpmsFilter= new Double[rpmsFilterMax];
+    int rpmsFilterIndex = 0;
+    
     double rpms=0;
     double victorSetting=0;
     
@@ -35,14 +40,19 @@ public class FireMotors extends PIDSubsystem {
     public FireMotors(String Name,int counterChannel, int victorChannel) {
         super(Name, Kp, Ki, Kd);
         counter = new Counter(counterChannel);
-        victor = new Victor(victorChannel); 
+        victor = new Jaguar(victorChannel); 
         enable();
         setSetpoint(1000); //rpms
         lastTime = Timer.getFPGATimestamp();
         counter.start();
         getPIDController().setOutputRange(-.1, .1);
+        setSetpointRange(0,2000);
         this.Name = Name; //set class scope name to the Name passed in the constructor
-        
+        System.out.println(Name +  "Firemotor init");
+        for (int index =0;index < rpmsFilterMax;index++){
+             rpmsFilter[index]=Double.valueOf(0);
+            
+        }
     }
     
     public void initDefaultCommand() {
@@ -58,21 +68,43 @@ public class FireMotors extends PIDSubsystem {
         
         // these three lines are time critial
         newtime = Timer.getFPGATimestamp();
-        counts = counter.get(); //number of counts since last update
-        counter.reset();        //reset counts ASAP so we don't miss any
-        
-        timespan = newtime- lastTime; //number of seconds during counting        
-        lastTime = newtime;
-        if (timespan <= 0.0) 
+         timespan = newtime- lastTime; //number of seconds during counting 
+         if (timespan <= 0.250) {
+             //System.out.println("Firemotor return PID timspan 0");
             return rpms; //don't recalculate, just give what ever it was
+        }
+         
+        counts = counter.get(); //number of counts since last update
+        //counter.reset();        //reset counts ASAP so we don't miss any
+       //  System.out.println("1");
+              
+        lastTime = newtime;
        
+        //System.out.println("2");
         rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute  
-        
+          System.out.println(Name + ": " +  rpms);
+          System.out.println("     Counts: "+counts);
+          System.out.println("          Timespan: "+timespan);
+          System.out.println();
         //sometimes the counter goes nuts
         //this deboundes it
-        if (rpms > 7500)
-            rpms = 7500;
+        if (rpms > 1600)
+            rpms = 1600;
         
+        //    System.out.println("3");
+        rpmsFilter[rpmsFilterIndex]=Double.valueOf(rpms);
+        rpmsFilterIndex++;
+        if (rpmsFilterIndex >= rpmsFilterMax){
+            rpmsFilterIndex=0;
+        }
+        //System.out.println("4");
+       
+        for (int index =0;index < rpmsFilterMax;index++){
+             rpms = rpms + rpmsFilter[index].doubleValue();
+             //System.out.println(index);
+        }
+        rpms = rpms / rpmsFilterMax;
+      
         return rpms;
         
     }
@@ -81,14 +113,21 @@ public class FireMotors extends PIDSubsystem {
         //When the PID system thinks there is no error then
         //set point is equal to rpms and output = 0        
         //soft start if we not moving, only set power to 10%
-        if (rpms <= 100){
-            victorSetting=.1; 
-        } else{
-             victorSetting=victor.get()+output;
+       
+         victorSetting=victor.get()+output;
+        
+        
+        if (Math.abs(victorSetting) < .3){
+            if (victorSetting > 0) {
+                victorSetting = .3;
+            }
+            if (victorSetting <0) {
+                victorSetting = -.3;
+            }
         }
-         
-        //victor.set(victorSetting);
-        victor.set(.3);
+          //System.out.println("Use PID "+victorSetting);
+        victor.set(victorSetting);
+        //victor.set(.3);
 
         
     }

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.image.BinaryImage;
 import edu.wpi.first.wpilibj.image.ColorImage;
+import edu.wpi.first.wpilibj.image.CriteriaCollection;
 import edu.wpi.first.wpilibj.image.NIVisionException;
 import edu.wpi.first.wpilibj.image.ParticleAnalysisReport;
 
@@ -25,9 +26,10 @@ public class TrackingCamera extends Subsystem {
     public static ColorImage pic;
     public static ParticleAnalysisReport[] reports;
     //public static int leftGoalIndex = 0, rightGoalIndex = 0;
-    
+    public static CriteriaCollection cc = new CriteriaCollection();
     public static BinaryImage thresholdHSL;
     public static BinaryImage convexHullImage;
+    public static BinaryImage boundImage;
     //public static BinaryImage bigObjectsImage;
     public static double totalWidth = 640, totalHeight = 480;
     public static ParticleAnalysisReport targetGoal, leftGoal, rightGoal;    

@@ -38,6 +38,9 @@ public class SelectGoal extends CommandBase {
             TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
             TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
             
+            
+            
+            
             for(int i = 1; i < 4; i++) {
                 if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.leftGoal = TrackingCamera.reports[i];

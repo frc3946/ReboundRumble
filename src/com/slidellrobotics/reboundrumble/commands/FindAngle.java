@@ -44,15 +44,17 @@ public class FindAngle extends CommandBase {
         lastTime = Timer.getFPGATimestamp();
         System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
         if (TrackingCamera.targetDiff < 50) {
-            lazySusan.setRelay(Relay.Value.kOff);   //turn off
-            SmartDashboard.putString("LazySusan", "Off");
-        } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
-            lazySusan.setRelay(Relay.Value.kForward);   //turn left
-            SmartDashboard.putString("LazySusan", "Right");
-            
-        } else {                                        //if we face left
-            lazySusan.setRelay(Relay.Value.kReverse);   //turn right
-            SmartDashboard.putString("LazySusan", "Left");
+            if (TrackingCamera.targetDiff < 15) {
+                lazySusan.setRelay(Relay.Value.kOff);   //turn off
+                SmartDashboard.putString("LazySusan", "Off");
+            } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
+                lazySusan.setRelay(Relay.Value.kForward);   //turn left
+                SmartDashboard.putString("LazySusan", "Right");
+
+            } else {                                        //if we face left
+                lazySusan.setRelay(Relay.Value.kReverse);   //turn right
+                SmartDashboard.putString("LazySusan", "Left");
+            }
         }
     }
 

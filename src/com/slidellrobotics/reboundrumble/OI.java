@@ -3,6 +3,7 @@ package com.slidellrobotics.reboundrumble;
 
 import com.slidellrobotics.reboundrumble.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -14,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
+    //Left Joystick
     private Joystick leftJoystick = new Joystick(RobotMap.leftJoystick); //Left Joystick
     private Button intakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.intakeFeedBeltButton);
     private Button outtakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.outtakeFeedBeltButton);
@@ -22,14 +24,15 @@ public class OI {
     private Button turnSusanLeft = new JoystickButton(leftJoystick, RobotMap.leftLazySusanButton);
     private Button turnSusanRight = new JoystickButton(leftJoystick, RobotMap.rightLazySusanButton);
     
+    //Right Joystick
     private Joystick rightJoystick = new Joystick(RobotMap.rightJoystick); //Right Joystick
     private Button shiftHighGear = new JoystickButton(rightJoystick, RobotMap.highGearShiftButton); //Button to shift to High Gear
     private Button shiftLowGear = new JoystickButton(rightJoystick, RobotMap.lowGearShiftButton); //Button to shift to Low Gear
     private Button arcadeMode = new JoystickButton(rightJoystick, RobotMap.arcadeModeButton);
     private Button balanceMode = new JoystickButton(rightJoystick, RobotMap.balanceModeButton);
     
+    //Third Joystick
     private Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
-    private Command susanCommand;
     private Button fireBall = new JoystickButton(thirdJoystick, RobotMap.fireButton); //Button to fire the ball
     //SmartDashBoard Buttons
     private InternalButton smartDashboardButton1 = new InternalButton();
@@ -48,13 +51,11 @@ public class OI {
         //turnSusanLeft.whileHeld(new LazySusanLeft());
         //turnSusanRight.whileHeld(new LazySusanRight());
         if(thirdJoystick.getX() > .5) {
-            susanCommand = new LazySusanRight();
-            susanCommand.start();
+            CommandBase.lazySusan.setRelay(Value.kForward);
         } else if(thirdJoystick.getX() < -.5) {
-            susanCommand = new LazySusanLeft();
-            susanCommand.start();
+            CommandBase.lazySusan.setRelay(Value.kReverse);
         } else {
-            //susanCommand.cancel();
+            CommandBase.lazySusan.setRelay(Value.kOff);
         }
         
         //SmartDashboard Buttons

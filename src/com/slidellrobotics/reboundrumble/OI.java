@@ -32,8 +32,9 @@ public class OI {
     private Button balanceMode = new JoystickButton(rightJoystick, RobotMap.balanceModeButton);
     
     //Third Joystick
-    public Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
+    private Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
     private Button fireBall = new JoystickButton(thirdJoystick, RobotMap.fireButton); //Button to fire the ball
+    private Button manualTurret = new JoystickButton(thirdJoystick, RobotMap.manualTurretButton);
     //SmartDashBoard Buttons
     private InternalButton smartDashboardButton1 = new InternalButton();
     
@@ -48,8 +49,7 @@ public class OI {
         fireBall.whileHeld(new FireBall());
         dropBridge.whileHeld(new DropBridgeMounter());
         stowBridge.whileHeld(new StowBridgeMounter());
-        //turnSusanLeft.whileHeld(new LazySusanLeft());
-        //turnSusanRight.whileHeld(new LazySusanRight());
+        manualTurret.whileHeld(new ManualLazySusan());
        
         //SmartDashboard Buttons
         SmartDashboard.putData("SetFiringMotors",smartDashboardButton1);
@@ -76,24 +76,8 @@ public class OI {
      * get Fire Button Object
      * @return fire button object
      */
-    public Button getFireButton() {
-        return fireBall;
-    }
-    
-    /**
-     * get High Gear Shift Button
-     * @return high gear shift button
-     */
-    public Button getHighGearShift() {
-        return shiftHighGear;
-    }
-    
-    /**
-     * get Low Gear Shift Button
-     * @return low gear shift button 
-     */
-    public Button getLowGearShift() {
-        return shiftLowGear;
+    public Joystick getThirdJoystick() {
+        return thirdJoystick;
     }
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.

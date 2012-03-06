@@ -27,7 +27,6 @@ public abstract class CommandBase extends Command {
     public static LazySusan lazySusan = new LazySusan();
     public static TrackingCamera camera = new TrackingCamera();
     public static BridgeMounter bridgeMounter = new BridgeMounter();
-    public static Relay susanWindow = new Relay(RobotMap.susanSpike);
     
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely

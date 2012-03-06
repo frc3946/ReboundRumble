@@ -21,14 +21,14 @@ public class LazySusan extends PIDSubsystem {
     private static final double Ki = 0.0;
     private static final double Kd = 0.0;
     
-    //private Relay susanWindow;
+    private Relay susanWindow;
     private Gyro susanGyro;
 
     // Initialize your subsystem here
     public LazySusan() {
         super("LazySusan2", Kp, Ki, Kd);
         System.out.println("[LazySusan] Starting");
-        
+        susanWindow = new Relay(RobotMap.susanSpike);
         System.out.println("[LazySusan] susanWindow initalized");
         susanGyro = new Gyro(RobotMap.turretGyro);
         System.out.println("[LazySusan] susanGyro initalized");
@@ -36,7 +36,7 @@ public class LazySusan extends PIDSubsystem {
         setSetpoint(0);
         enable();
         getPIDController().setOutputRange(30, 30);
-          getPIDController().setInputRange(-360, 360);
+        getPIDController().setInputRange(-360, 360);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -62,19 +62,23 @@ public class LazySusan extends PIDSubsystem {
         output = getSetpoint()-susanGyro.getAngle();
         System.out.println("lazy output: "+output);
         if(output > 15.0) {
-          CommandBase.susanWindow.set(Relay.Value.kForward);
-          System.out.println("Forward, left");
+          susanWindow.set(RobotMap.susanLeft);
+          System.out.println("Left");
         } else if(output < -15.0) {
-          CommandBase.susanWindow.set(Relay.Value.kReverse);
-          System.out.println("Reserve, right");
+          susanWindow.set(RobotMap.susanRight);
+          System.out.println("Right");
         } else {
-           CommandBase.susanWindow.set(Relay.Value.kOff);
+           susanWindow.set(RobotMap.susanOff);
         }
     }
     
     public void setRelay(Value value) {
-        if (CommandBase.susanWindow != null){
-        CommandBase.susanWindow.set(value);
+        if (susanWindow != null){
+        susanWindow.set(value);
         }
+    }
+    
+    public Relay getSpike() {
+        return susanWindow;
     }
 }

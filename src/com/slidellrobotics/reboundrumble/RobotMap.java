@@ -1,5 +1,8 @@
 package com.slidellrobotics.reboundrumble;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.Relay;
+
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
  * to a variable name. This provides flexibility changing wiring, makes checking
@@ -23,7 +26,6 @@ public class RobotMap {
     public static final int thirdJoystick = 3; //Possible third Joystick for secondary Driver Control (maybe use this for ajusting the Lazy Susan and ball shooter/feed.)
     
     //Right Joystick
-    public static final int fireButton = 1; //Button to fire Phumatic piston
     public static final int balanceModeButton = 2; //Button that activates Balance Drive Mode.
     public static final int arcadeModeButton = 3; //Button that activates Arcade Drive Mode.
     public static final int lowGearShiftButton = 4; //Button to shift into Low Gear
@@ -38,6 +40,8 @@ public class RobotMap {
     public static final int rightLazySusanButton = 9; //Button to turn Lazy Susan Turret Right
     
     //Third Joystick
+    public static final int fireButton = 1; //Button to fire Phumatic piston
+    public static final int manualTurretButton = 2; //Button to override the LazySusan PID
     
     //Motors
     public static final int leftDriveMotor = 1; //Left Jaguar's Port
@@ -67,4 +71,9 @@ public class RobotMap {
     
     //Accelerometer I2C
     public static final int positioningAccelerometer = 1; //Positioning Accelerometer port on Sidecar
+    
+    //Lazy Susan Relay Map
+    public static final Relay.Value susanRight = Relay.Value.kForward;
+    public static final Relay.Value susanLeft = Relay.Value.kReverse;
+    public static final Relay.Value susanOff = Relay.Value.kOff;
 }

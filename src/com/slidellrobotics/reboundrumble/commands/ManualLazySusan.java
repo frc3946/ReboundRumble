@@ -4,30 +4,40 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.RobotMap;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
  *
  * @author Gus Michel
  */
-public class LazySusanRight extends CommandBase {
-    
-    public LazySusanRight() {
+public class ManualLazySusan extends CommandBase {
+    double joystickAxis;
+    public ManualLazySusan() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(leftShootingMotors);
-        requires(rightShootingMotors);
-        requires(camera);
-        //requires(lazySusan);
+       // requires(leftShootingMotors);
+        //requires(rightShootingMotors);
+        //requires(camera);
+       requires(lazySusan);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        //lazySusan.setRelay(Value.kReverse);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        lazySusan.setRelay(Value.kForward);
+        joystickAxis = oi.getThirdJoystick().getAxis(AxisType.kX);
+        if(joystickAxis > .5) {
+            lazySusan.getSpike().set(RobotMap.susanRight);
+        } else if(joystickAxis < -.5) {
+            lazySusan.getSpike().set(RobotMap.susanLeft);
+        } else {
+            lazySusan.getSpike().set(RobotMap.susanOff);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -42,6 +52,6 @@ public class LazySusanRight extends CommandBase {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        lazySusan.setRelay(Value.kOff);
+        lazySusan.getSpike().set(Value.kOff);
     }
 }

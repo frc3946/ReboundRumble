@@ -18,7 +18,7 @@ public class LazySusanRight extends CommandBase {
         requires(leftShootingMotors);
         requires(rightShootingMotors);
         requires(camera);
-        requires(lazySusan);
+        //requires(lazySusan);
     }
 
     // Called just before this Command runs the first time

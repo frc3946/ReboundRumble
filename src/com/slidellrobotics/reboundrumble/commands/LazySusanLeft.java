@@ -15,19 +15,32 @@ public class LazySusanLeft extends CommandBase {
     public LazySusanLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(leftShootingMotors);
-        requires(rightShootingMotors);
-        requires(camera);
-        requires(lazySusan);
+       // requires(leftShootingMotors);
+        //requires(rightShootingMotors);
+        //requires(camera);
+       // requires(lazySusan);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        lazySusan.setRelay(Value.kReverse);
+        //lazySusan.setRelay(Value.kReverse);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        System.out.println("third");
+         if(oi.thirdJoystick.getX() < -.5) {
+            CommandBase.lazySusan.disable();
+            CommandBase.lazySusan.setRelay(Value.kForward);
+            System.out.println("3rd lazy forward");
+        } else if(oi.thirdJoystick.getX() > .5) {
+            CommandBase.lazySusan.disable();
+            CommandBase.lazySusan.setRelay(Value.kReverse);
+            System.out.println("3rd lazy reverse");
+        } else {
+            CommandBase.lazySusan.enable();
+        }
+        
     }
 
     // Make this return true when this Command no longer needs to run execute()

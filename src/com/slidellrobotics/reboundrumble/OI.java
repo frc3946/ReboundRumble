@@ -32,7 +32,7 @@ public class OI {
     private Button balanceMode = new JoystickButton(rightJoystick, RobotMap.balanceModeButton);
     
     //Third Joystick
-    private Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
+    public Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
     private Button fireBall = new JoystickButton(thirdJoystick, RobotMap.fireButton); //Button to fire the ball
     //SmartDashBoard Buttons
     private InternalButton smartDashboardButton1 = new InternalButton();
@@ -50,14 +50,7 @@ public class OI {
         stowBridge.whileHeld(new StowBridgeMounter());
         //turnSusanLeft.whileHeld(new LazySusanLeft());
         //turnSusanRight.whileHeld(new LazySusanRight());
-        if(thirdJoystick.getX() > .5) {
-            CommandBase.lazySusan.setRelay(Value.kForward);
-        } else if(thirdJoystick.getX() < -.5) {
-            CommandBase.lazySusan.setRelay(Value.kReverse);
-        } else {
-            CommandBase.lazySusan.setRelay(Value.kOff);
-        }
-        
+       
         //SmartDashboard Buttons
         SmartDashboard.putData("SetFiringMotors",smartDashboardButton1);
         smartDashboardButton1.whenPressed(new SetFiringMotors(1) );

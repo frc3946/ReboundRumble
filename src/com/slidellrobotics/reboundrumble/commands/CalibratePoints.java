@@ -23,7 +23,7 @@ public class CalibratePoints extends CommandBase {
 
     public CalibratePoints() {
         requires(camera);
-        requires(lazySusan);
+        //requires(lazySusan);
         requires(leftShootingMotors);
         requires(rightShootingMotors);
         System.out.println("Filter image Init");    //States that the camera initialized

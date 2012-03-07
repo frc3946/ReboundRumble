@@ -92,7 +92,7 @@ public class FindDistance extends CommandBase {
         d = TrackingCamera.distanceToTarget;    //  Calc Conciseness
 
         TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * Math.PI));  //Calcs the required rpms for firing
-        leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
+        leftShootingMotors.setSetpoint(camera.distanceToRMP(TrackingCamera.distanceToTarget));     //  Sets the shooting Left Shooting Motors
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
         
         System.out.println();

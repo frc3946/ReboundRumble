@@ -70,8 +70,8 @@ public class FindDistance extends CommandBase {
         leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlHght/2));    //  Finds the horizontal off-centerness
         upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlWdth/2));   //  Finds the vertical off-ceneterness
         
-        wdth1Px = (ttlHght/2) - leftRight;  //  Defines the distance from the Horizontal Edge to center of Goal in Pixels
-        hght1Px = (ttlWdth/2) - upDown; //  Defines the distance from the Vertical Edge to center of Goal in Pixels
+        wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the Horizontal Edge to center of Goal in Pixels
+        hght1Px = (ttlHght/2) - upDown; //  Defines the distance from the Vertical Edge to center of Goal in Pixels
         
         horThet1 = horVA * wdth1Px/ttlWdth; //  Finds the angle from Horizontal Edge<>camera<>center of goal
         vertThet1 = vertVA * hght1Px/ttlHght;   //  Finds the angle from Vertical Edge<>camera<>center of goal

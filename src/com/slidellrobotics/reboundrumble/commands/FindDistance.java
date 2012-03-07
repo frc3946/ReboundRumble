@@ -11,26 +11,29 @@ import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
  * @author 10491477
  */
 public class FindDistance extends CommandBase {  
-    double tgtHght = TrackingCamera.targetHeight = 0;       //
-    double tgtWdth = TrackingCamera.targetWidth = 0;        //  Create a few local
-    double tgtHghtFt = TrackingCamera.targetHeightFeet = 0; //  variables for concise
-    double tgtWdthFt = TrackingCamera.targetWidthFeet = 0;  //  code and calcs.
-    double ttlHght = TrackingCamera.totalHeight = 0;        //
-    double ttlWdth = TrackingCamera.totalWidth = 0;         //
-                                                            //
-    double vertFOV = TrackingCamera.vertFOV = 0;            //
-    double horFOV = TrackingCamera.horFOV = 0;              //
-    double vertVA = TrackingCamera.cameraVertFOV = 0;       //
-    double horVA = TrackingCamera.cameraHorizFOV = 0;       //
+    double tgtHght = TrackingCamera.targetHeight;   //  Create a few necesarry local variables
+    double tgtWdth = TrackingCamera.targetWidth;    //  for concise code and calcs.
     
-    double leftRight = 0;   //
-    double upDown = 0;      //  A few newer 
-    double wdth1Px = 0;     //  variables to
-    double hght1Px = 0;     //  allow for more
-    double horThet1 = 0;    //  accurate distances
-    double vertThet1 = 0;   //
     
-    double d = 0;           //  A small calc variable
+    double tgtHghtFt;   //  Target Height in Feet
+    double tgtWdthFt;   //  Target Width in Feet
+    double ttlHght;     //  Total Height in Pixels
+    double ttlWdth;     //  Total Width imn Pixels
+                        //  
+    double vertFOV;     //  Vertical Field of View in Feet
+    double horFOV;      //  Horizontal Field of View in Feet
+    double vertVA;      //  Vertical Camera Viewing Angle
+    double horVA;       //  Horizontal Camera Viewing Angle
+    
+    double leftRight;   //  Horizontal off-centerness of center of goal
+    double upDown;      //  Vertical off-centerness of center of goal
+    double wdth1Px;     //  Distance from the center of a Goal to the nearest Horizontal edge
+    double hght1Px;     //  Distance from the center of a Goal to the nearest Vertical edge
+    double horThet1;    //  
+    double vertThet1;   //  
+    
+    double d = 0;           //  
+    double pi = Math.PI;    //  
     
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies
@@ -41,6 +44,8 @@ public class FindDistance extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        tgtHght = TrackingCamera.targetHeight;           //  Create a few necesarry local variables
+        tgtWdth = TrackingCamera.targetWidth;            //  for concise code and calcs.
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -56,15 +61,8 @@ public class FindDistance extends CommandBase {
         tgtHghtFt = 1.5;                                        //  Defines goal's constant ft height
         vertFOV = tgtHghtFt / tgtHght * ttlHght;                //  Gets the foot equivalent of our vertical Field of View
 
-        TrackingCamera.cameraVertFOV = 47*3.14/180;
-        TrackingCamera.cameraHorizFOV = 47*3.14/180;
-
-        TrackingCamera.targetWidth = TrackingCamera.targetGoal.boundingRectWidth;   //Sets the height of our target.
-        TrackingCamera.targetWidthFeet = 2.0;
-        TrackingCamera.horFOV = TrackingCamera.targetWidthFeet / TrackingCamera.targetWidth * TrackingCamera.totalWidth;
-        
-        vertVA = 47*Math.PI/180;    //  Defines the Viewing
-        horVA = 47*Math.PI/180;     //  Angles of our camera
+        vertVA = 47*pi/180;    //  Defines the Viewing
+        horVA = 47*pi/180;     //  Angles of our camera
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;                                        //  Defines goal's constant ft width
@@ -91,8 +89,8 @@ public class FindDistance extends CommandBase {
         
         d = TrackingCamera.distanceToTarget;    //  Calc Conciseness
 
-        TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * Math.PI));  //Calcs the required rpms for firing
-        leftShootingMotors.setSetpoint(camera.distanceToRMP(TrackingCamera.distanceToTarget));     //  Sets the shooting Left Shooting Motors
+        TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * pi));  //Calcs the required rpms for firing
+        leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
         
         System.out.println();

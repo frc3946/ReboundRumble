@@ -43,8 +43,8 @@ public class FindDistance extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        ttlHght = TrackingCamera.targetGoal.imageHeight;  //  Target Height from the Tracking Camera's static variable
-        ttlWdth = TrackingCamera.targetGoal.imageWidth;   //  Target Width from the Tracking Camera's static variable
+        ttlHght = TrackingCamera.totalHeight;  //  Target Height from the Tracking Camera's static variable
+        ttlWdth = TrackingCamera.totalWidth;   //  Target Width from the Tracking Camera's static variable
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -55,7 +55,8 @@ public class FindDistance extends CommandBase {
             System.out.println("No target set");    //  Debug Print Statement
             return;
         }
-        
+         ttlHght = TrackingCamera.totalHeight;  //  Target Height from the Tracking Camera's static variable
+        ttlWdth = TrackingCamera.totalWidth; 
         tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
         tgtHghtFt = 1.5;    //  Defines goal's constant ft height
         vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View

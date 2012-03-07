@@ -28,7 +28,7 @@ public class SelectGoal extends CommandBase {
             return;
         }
         if (TrackingCamera.reports.length == 0) {
-             System.out.println("No image reports");
+             System.out.println("No particles found");
             return;
         }
         //TODO set to 4 for comp
@@ -59,11 +59,11 @@ public class SelectGoal extends CommandBase {
             double rightWidth = TrackingCamera.rightGoal.boundingRectWidth;   //both middle goals.
             if (leftWidth <= rightWidth) {        //
                 TrackingCamera.targetGoal = TrackingCamera.rightGoal;             //Decides which goal we are
-            } if (rightWidth > leftWidth) {        //closer to and targets it.
+            } else {        //closer to and targets it.
                 TrackingCamera.targetGoal = TrackingCamera.leftGoal;              //
             }
+            System.out.println("Target Selected");
         }
-        //TrackingCamera.selectFinished = true;
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -30,8 +30,7 @@ public class FindDistance extends CommandBase {
     double horThet1 = 0;    //  accurate distances
     double vertThet1 = 0;   //
     
-    double d = 0;           //  A few
-    double pi = 3.1415926;  //  calc variables
+    double d = 0;           //  A small calc variable
     
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies
@@ -57,8 +56,8 @@ public class FindDistance extends CommandBase {
         tgtHghtFt = 1.5;                                        //  Defines goal's constant ft height
         vertFOV = tgtHghtFt / tgtHght * ttlHght;                //  Gets the foot equivalent of our vertical Field of View
 
-        vertVA = 47;    //  Defines the Viewing
-        horVA = 47;     //  Angles of our camera
+        vertVA = 47*Math.PI/180;    //  Defines the Viewing
+        horVA = 47*Math.PI/180;     //  Angles of our camera
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;                                        //  Defines goal's constant ft width
@@ -85,7 +84,7 @@ public class FindDistance extends CommandBase {
         
         d = TrackingCamera.distanceToTarget;    //  Calc Conciseness
 
-        TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * pi));  //Calcs the required rpms for firing
+        TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * Math.PI));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
         

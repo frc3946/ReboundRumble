@@ -40,19 +40,6 @@ public class TrackingCamera extends Subsystem {
         camera = AxisCamera.getInstance("10.39.46.11");
         System.out.println("Camera init");        
     }
-
-    public static class CalibrationPoint {
-        
-        public static double distance;
-        public static double rpms;
-                
-        private void Distance(double distance) {
-            this.distance = distance;
-        }
-        private void RpMs(double rpms) {
-            this.rpms = rpms;
-        }
-    }
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
@@ -76,5 +63,42 @@ public class TrackingCamera extends Subsystem {
             //System.out.println("TrackingCamera Error");
         }
         return null;
+    }
+    
+   private class CalibrationPoint {
+
+        double distance;
+        double rpms;
+
+        public CalibrationPoint(double distance, double rpms) {
+            this.distance = distance;
+            this.rpms = rpms;
+        }
+    }
+
+    //just incase the formula doesn't work out here is a test based
+    //interpolation function
+    public double distanceToRMP(double distance) {
+        //load the test data when practing with the real launcher
+        // points MUST be inorder of closest to furthest away
+        CalibrationPoint calibrationPoints[] = {new CalibrationPoint(5, 100),
+            new CalibrationPoint(10, 200),
+            new CalibrationPoint(15, 500),
+            new CalibrationPoint(40, 1500)};
+
+        //find the two calibration points were the input distance is between them
+        int upperIndex;
+        for (upperIndex = 1; upperIndex < calibrationPoints.length; upperIndex++) {
+            if (distance <= calibrationPoints[upperIndex].distance &&
+                distance > calibrationPoints[upperIndex-1].distance) {
+                break;
+            }
+        }
+        
+        //interpolate the point
+        double slope =  (calibrationPoints[upperIndex].rpms - calibrationPoints[upperIndex - 1].rpms)
+                      / (calibrationPoints[upperIndex].distance - calibrationPoints[upperIndex - 1].distance);
+        double intercept = calibrationPoints[upperIndex].rpms - slope * calibrationPoints[upperIndex].distance;
+        return slope * distance + intercept;
     }
 }

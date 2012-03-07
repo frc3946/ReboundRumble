@@ -52,7 +52,7 @@ public class LazySusan extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-         System.out.println("gyro: " + susanGyro.getAngle());
+        // System.out.println("gyro: " + susanGyro.getAngle());
         return susanGyro.getAngle();
     }
     
@@ -60,22 +60,20 @@ public class LazySusan extends PIDSubsystem {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
         output = getSetpoint()-susanGyro.getAngle();
-        System.out.println("lazy output: "+output);
+       // System.out.println("lazy output: "+output);
         if(output > 15.0) {
           susanWindow.set(RobotMap.susanLeft);
-          System.out.println("Left");
+          //System.out.println("Left");
         } else if(output < -15.0) {
           susanWindow.set(RobotMap.susanRight);
-          System.out.println("Right");
+          //System.out.println("Right");
         } else {
            susanWindow.set(RobotMap.susanOff);
         }
     }
     
     public void setRelay(Value value) {
-        if (susanWindow != null){
         susanWindow.set(value);
-        }
     }
     
     public Relay getSpike() {

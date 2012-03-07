@@ -3,6 +3,7 @@ package com.slidellrobotics.reboundrumble.commands;
 import com.slidellrobotics.reboundrumble.OI;
 import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.subsystems.*;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,7 +27,7 @@ public abstract class CommandBase extends Command {
     public static LazySusan lazySusan = new LazySusan();
     public static TrackingCamera camera = new TrackingCamera();
     public static BridgeMounter bridgeMounter = new BridgeMounter();
-
+    
     public static void init() {
         // This MUST be here. If the OI creates Commands (which it very likely
         // will), constructing it during the construction of CommandBase (from

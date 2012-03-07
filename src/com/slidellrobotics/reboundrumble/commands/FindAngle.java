@@ -21,13 +21,13 @@ public class FindAngle extends CommandBase {
     public FindAngle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(lazySusan);
+        //requires(lazySusan);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
         if (TrackingCamera.targetGoal == null){
-            lazySusan.setRelay(Relay.Value.kOff);   //turn off
+            //lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
             System.out.println("No target set");
             return;
@@ -43,17 +43,17 @@ public class FindAngle extends CommandBase {
 
         lastTime = Timer.getFPGATimestamp();
         System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
-        if (TrackingCamera.targetDiff < 50) {
+        if (TrackingCamera.targetDiff < 50 ) {
             if (TrackingCamera.targetDiff < 15) {
                 lazySusan.setRelay(Relay.Value.kOff);   //turn off
-                SmartDashboard.putString("LazySusan", "Off");
+               // SmartDashboard.putString("LazySusan", "Off");
             } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
                 lazySusan.setRelay(Relay.Value.kForward);   //turn left
-                SmartDashboard.putString("LazySusan", "Right");
+               // SmartDashboard.putString("LazySusan", "Right");
 
             } else {                                        //if we face left
                 lazySusan.setRelay(Relay.Value.kReverse);   //turn right
-                SmartDashboard.putString("LazySusan", "Left");
+               // SmartDashboard.putString("LazySusan", "Left");
             }
         }
     }
@@ -76,7 +76,7 @@ public class FindAngle extends CommandBase {
 
     // Called once after isFinished returns true
     protected void end() {
-        lazySusan.setRelay(Relay.Value.kOff);
+        //lazySusan.setRelay(Relay.Value.kOff);
     }
 
     // Called when another command which requires one or more of the same

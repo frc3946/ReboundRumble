@@ -5,6 +5,7 @@
 package com.slidellrobotics.reboundrumble.subsystems;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
+import com.slidellrobotics.reboundrumble.commands.CommandBase;
 import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
@@ -16,7 +17,7 @@ import edu.wpi.first.wpilibj.command.PIDSubsystem;
  */
 public class LazySusan extends PIDSubsystem {
 
-    private static final double Kp = 0.0;
+    private static final double Kp = 1.0;
     private static final double Ki = 0.0;
     private static final double Kd = 0.0;
     
@@ -32,6 +33,10 @@ public class LazySusan extends PIDSubsystem {
         susanGyro = new Gyro(RobotMap.turretGyro);
         System.out.println("[LazySusan] susanGyro initalized");
         System.out.println("[LazySusan] Started");
+        setSetpoint(0);
+        enable();
+        getPIDController().setOutputRange(30, 30);
+        getPIDController().setInputRange(-360, 360);
         // Use these to get going:
         // setSetpoint() -  Sets where the PID controller should move the system
         //                  to
@@ -47,15 +52,33 @@ public class LazySusan extends PIDSubsystem {
         // Return your input value for the PID loop
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
-        return 0.0;
+         System.out.println("gyro: " + susanGyro.getAngle());
+        return susanGyro.getAngle();
     }
     
     protected void usePIDOutput(double output) {
         // Use output to drive your system, like a motor
         // e.g. yourMotor.set(output);
+        output = getSetpoint()-susanGyro.getAngle();
+        System.out.println("lazy output: "+output);
+        if(output > 15.0) {
+          susanWindow.set(RobotMap.susanLeft);
+          System.out.println("Left");
+        } else if(output < -15.0) {
+          susanWindow.set(RobotMap.susanRight);
+          System.out.println("Right");
+        } else {
+           susanWindow.set(RobotMap.susanOff);
+        }
     }
     
     public void setRelay(Value value) {
+        if (susanWindow != null){
         susanWindow.set(value);
+        }
+    }
+    
+    public Relay getSpike() {
+        return susanWindow;
     }
 }

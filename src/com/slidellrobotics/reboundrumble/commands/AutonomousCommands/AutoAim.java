@@ -15,7 +15,7 @@ public class AutoAim extends CommandBase {
     public AutoAim() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(lazySusan);
+        //requires(lazySusan);
     }
 
     // Called just before this Command runs the first time

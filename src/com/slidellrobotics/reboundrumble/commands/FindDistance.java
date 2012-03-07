@@ -11,17 +11,17 @@ import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
  * @author 10491477
  */
 public class FindDistance extends CommandBase {  
-    double tgtHght = TrackingCamera.targetHeight = 0;       //
-    double tgtWdth = TrackingCamera.targetWidth = 0;        //  Create a few local
-    double tgtHghtFt = TrackingCamera.targetHeightFeet = 0; //  variables for concise
-    double tgtWdthFt = TrackingCamera.targetWidthFeet = 0;  //  code and calcs.
-    double ttlHght = TrackingCamera.totalHeight = 0;        //
-    double ttlWdth = TrackingCamera.totalWidth = 0;         //
-                                                            //
-    double vertFOV = TrackingCamera.vertFOV = 0;            //
-    double horFOV = TrackingCamera.horFOV = 0;              //
-    double vertVA = TrackingCamera.cameraVertFOV = 0;       //
-    double horVA = TrackingCamera.cameraHorizFOV = 0;       //
+    double tgtHght = TrackingCamera.targetHeight;           //  Create a few necesarry local variables
+    double tgtWdth = TrackingCamera.targetWidth;            //  for concise code and calcs.
+    double tgtHghtFt = TrackingCamera.targetHeightFeet; //  Create a few
+    double tgtWdthFt = TrackingCamera.targetWidthFeet;  //  lcoal variables
+    double ttlHght = TrackingCamera.totalHeight;        //  purely for
+    double ttlWdth = TrackingCamera.totalWidth;         //  more concise
+                                                        //  lines
+    double vertFOV = TrackingCamera.vertFOV;            //
+    double horFOV = TrackingCamera.horFOV;              //
+    double vertVA = TrackingCamera.cameraVertFOV;       //
+    double horVA = TrackingCamera.cameraHorizFOV;       //
     
     double leftRight = 0;   //
     double upDown = 0;      //  A few newer 
@@ -31,6 +31,7 @@ public class FindDistance extends CommandBase {
     double vertThet1 = 0;   //
     
     double d = 0;           //  A small calc variable
+    double pi = Math.PI;
     
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies
@@ -56,8 +57,8 @@ public class FindDistance extends CommandBase {
         tgtHghtFt = 1.5;                                        //  Defines goal's constant ft height
         vertFOV = tgtHghtFt / tgtHght * ttlHght;                //  Gets the foot equivalent of our vertical Field of View
 
-        vertVA = 47*Math.PI/180;    //  Defines the Viewing
-        horVA = 47*Math.PI/180;     //  Angles of our camera
+        vertVA = 47*pi/180;    //  Defines the Viewing
+        horVA = 47*pi/180;     //  Angles of our camera
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;                                        //  Defines goal's constant ft width
@@ -84,7 +85,7 @@ public class FindDistance extends CommandBase {
         
         d = TrackingCamera.distanceToTarget;    //  Calc Conciseness
 
-        TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * Math.PI));  //Calcs the required rpms for firing
+        TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * pi));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
         

@@ -98,15 +98,15 @@ public class PositioningAccelerometer extends Subsystem {
         
        
         
-        SmartDashboard.putDouble("Vx", velocityX);
-        SmartDashboard.putDouble("Vy", velocityY);
-        SmartDashboard.putDouble("Vz", velocityZ);
-        SmartDashboard.putDouble("Ax", allAxes.XAxis);
-        SmartDashboard.putDouble("Ay", allAxes.YAxis);
-        SmartDashboard.putDouble("Az", allAxes.ZAxis);
-        SmartDashboard.putDouble("Dx", distanceX);
-        SmartDashboard.putDouble("Dy", distanceY);
-        SmartDashboard.putDouble("Dz", distanceZ);
+        //SmartDashboard.putDouble("Vx", velocityX);
+        //SmartDashboard.putDouble("Vy", velocityY);
+        //SmartDashboard.putDouble("Vz", velocityZ);
+        //SmartDashboard.putDouble("Ax", allAxes.XAxis);
+        //SmartDashboard.putDouble("Ay", allAxes.YAxis);
+        //SmartDashboard.putDouble("Az", allAxes.ZAxis);
+        //SmartDashboard.putDouble("Dx", distanceX);
+        //SmartDashboard.putDouble("Dy", distanceY);
+        //SmartDashboard.putDouble("Dz", distanceZ);
         
         
 

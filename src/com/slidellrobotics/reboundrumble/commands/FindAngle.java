@@ -29,7 +29,7 @@ public class FindAngle extends CommandBase {
         if (TrackingCamera.targetGoal == null){
             //lazySusan.setRelay(Relay.Value.kOff);   //turn off
             SmartDashboard.putString("LazySusan", "Off");
-            System.out.println("No target set");
+            //System.out.println("No target set");
             return;
         }
         

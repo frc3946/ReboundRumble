@@ -25,15 +25,16 @@ public class ManualLazySusan extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        //lazySusan.setRelay(Value.kReverse);
+        lazySusan.disable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         joystickAxis = oi.getThirdJoystick().getAxis(AxisType.kX);
-        if(joystickAxis > .5) {
+        System.out.println("third joy: "+joystickAxis);
+        if(joystickAxis > .25) {
             lazySusan.getSpike().set(RobotMap.susanRight);
-        } else if(joystickAxis < -.5) {
+        } else if(joystickAxis < -.25) {
             lazySusan.getSpike().set(RobotMap.susanLeft);
         } else {
             lazySusan.getSpike().set(RobotMap.susanOff);
@@ -53,5 +54,6 @@ public class ManualLazySusan extends CommandBase {
     // subsystems is scheduled to run
     protected void interrupted() {
         lazySusan.getSpike().set(Value.kOff);
+        lazySusan.enable();
     }
 }

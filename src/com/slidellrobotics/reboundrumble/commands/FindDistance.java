@@ -35,13 +35,13 @@ public class FindDistance extends CommandBase {
         TrackingCamera.targetHeightFeet = 1.5;
         TrackingCamera.vertFOV = TrackingCamera.targetHeightFeet / TrackingCamera.targetHeight * TrackingCamera.totalHeight; // //Gets the foot equivalent of our vertical Field of View
 
-        TrackingCamera.cameraVertFOV = 47;
-        TrackingCamera.cameraHorizFOV = 47;
+        TrackingCamera.cameraVertFOV = 47*3.14/180;
+        TrackingCamera.cameraHorizFOV = 47*3.14/180;
 
         TrackingCamera.targetWidth = TrackingCamera.targetGoal.boundingRectWidth;   //Sets the height of our target.
         TrackingCamera.targetWidthFeet = 2.0;
         TrackingCamera.horFOV = TrackingCamera.targetWidthFeet / TrackingCamera.targetWidth * TrackingCamera.totalWidth;
-
+        
 
         TrackingCamera.d1 = (TrackingCamera.vertFOV / 2) / Math.tan(TrackingCamera.cameraVertFOV / 2);
         TrackingCamera.d2 = (TrackingCamera.horFOV / 2) / Math.tan(TrackingCamera.cameraHorizFOV / 2);

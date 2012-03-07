@@ -35,8 +35,8 @@ public class FilterImage extends CommandGroup {
         // arm.
         thisTime = Timer.getFPGATimestamp();
         timeLapse = thisTime - lastTime;
-        if(timeLapse >= 0.3) {
-            addParallel(new GetImage());
+        if(timeLapse >= 1.0) {
+            addSequential(new GetImage());
             addSequential(new SelectGoal());
             addSequential(new FindAngle());
             addSequential(new FindDistance());

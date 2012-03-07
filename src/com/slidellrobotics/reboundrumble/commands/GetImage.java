@@ -22,20 +22,20 @@ public class GetImage extends CommandBase {
     protected void initialize() {
         try {
             TrackingCamera.pic = camera.getImageFromCamera();      //Declares pic variable
-            System.out.println("Got image");
+            //System.out.println("Got image");
             TrackingCamera.totalWidth = TrackingCamera.pic.getWidth();
             TrackingCamera.totalHeight = TrackingCamera.pic.getHeight();
 
-            System.out.println("Threshold");
+            //System.out.println("Threshold");
             TrackingCamera.thresholdHSL = TrackingCamera.pic.thresholdHSL(150, 185, 244, 255, 2, 20);      //Sets a Blue light threshold
            
             //System.out.println("Removing Small Objects");
             //TrackingCamera.bigObjectsImage = TrackingCamera.thresholdHSL.removeSmallObjects(false, 1);
             
-            System.out.println("Convex");
+            //System.out.println("Convex");
             TrackingCamera.convexHullImage = TrackingCamera.thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
 
-            System.out.println("Bounding Box Criteria");
+           // System.out.println("Bounding Box Criteria");
             TrackingCamera.boundImage = TrackingCamera.convexHullImage.particleFilter(TrackingCamera.cc);
             
             //TODO: Ordered?

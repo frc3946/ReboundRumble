@@ -27,7 +27,7 @@ public class FireMotors extends PIDSubsystem {
     double lastTime;
     double newtime;
     
-    static final int rpmsFilterMax = 10;
+    static final int rpmsFilterMax = 5;
     Double[] rpmsFilter= new Double[rpmsFilterMax];
     int rpmsFilterIndex = 0;
     
@@ -69,7 +69,7 @@ public class FireMotors extends PIDSubsystem {
         // these three lines are time critial
         newtime = Timer.getFPGATimestamp();
          timespan = newtime- lastTime; //number of seconds during counting 
-         if (timespan <= 0.250) {
+         if (timespan <= 0.130) {
              //System.out.println("Firemotor return PID timspan 0");
             return rpms; //don't recalculate, just give what ever it was
         }
@@ -98,7 +98,7 @@ public class FireMotors extends PIDSubsystem {
             rpmsFilterIndex=0;
         }
         //System.out.println("4");
-       
+       rpms =0;
         for (int index =0;index < rpmsFilterMax;index++){
              rpms = rpms + rpmsFilter[index].doubleValue();
              //System.out.println(index);

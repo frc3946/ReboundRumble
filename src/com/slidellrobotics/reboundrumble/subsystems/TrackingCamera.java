@@ -41,6 +41,19 @@ public class TrackingCamera extends Subsystem {
         System.out.println("Camera init");        
     }
 
+    public static class CalibrationPoint {
+        
+        public static double distance;
+        public static double rpms;
+                
+        private void Distance(double distance) {
+            this.distance = distance;
+        }
+        private void RpMs(double rpms) {
+            this.rpms = rpms;
+        }
+    }
+    
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         

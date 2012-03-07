@@ -14,7 +14,6 @@ public class FindDistance extends CommandBase {
     double tgtHght = TrackingCamera.targetHeight;   //  Create a few necesarry local variables
     double tgtWdth = TrackingCamera.targetWidth;    //  for concise code and calcs.
     
-    
     double tgtHghtFt;   //  Target Height in Feet
     double tgtWdthFt;   //  Target Width in Feet
     double ttlHght; //  Total Height in Pixels
@@ -44,8 +43,8 @@ public class FindDistance extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        tgtHght = TrackingCamera.targetHeight;  //  Target Height from the Tracking Camera's static variable
-        tgtWdth = TrackingCamera.targetWidth;   //  Target Width from the Tracking Camera's static variable
+        ttlHght = TrackingCamera.targetGoal.imageHeight;  //  Target Height from the Tracking Camera's static variable
+        ttlWdth = TrackingCamera.targetGoal.imageWidth;   //  Target Width from the Tracking Camera's static variable
     }
 
     // Called repeatedly when this Command is scheduled to run

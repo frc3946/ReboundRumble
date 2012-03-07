@@ -11,27 +11,29 @@ import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
  * @author 10491477
  */
 public class FindDistance extends CommandBase {  
-    double tgtHght = TrackingCamera.targetHeight;           //  Create a few necesarry local variables
-    double tgtWdth = TrackingCamera.targetWidth;            //  for concise code and calcs.
-    double tgtHghtFt = TrackingCamera.targetHeightFeet; //  Create a few
-    double tgtWdthFt = TrackingCamera.targetWidthFeet;  //  lcoal variables
-    double ttlHght = TrackingCamera.totalHeight;        //  purely for
-    double ttlWdth = TrackingCamera.totalWidth;         //  more concise
-                                                        //  lines
-    double vertFOV = TrackingCamera.vertFOV;            //
-    double horFOV = TrackingCamera.horFOV;              //
-    double vertVA = TrackingCamera.cameraVertFOV;       //
-    double horVA = TrackingCamera.cameraHorizFOV;       //
+    double tgtHght = TrackingCamera.targetHeight;   //  Create a few necesarry local variables
+    double tgtWdth = TrackingCamera.targetWidth;    //  for concise code and calcs.
     
-    double leftRight = 0;   //
-    double upDown = 0;      //  A few newer 
-    double wdth1Px = 0;     //  variables to
-    double hght1Px = 0;     //  allow for more
-    double horThet1 = 0;    //  accurate distances
-    double vertThet1 = 0;   //
     
-    double d = 0;           //  A small calc variable
-    double pi = Math.PI;
+    double tgtHghtFt;   //  Target Height in Feet
+    double tgtWdthFt;   //  Target Width in Feet
+    double ttlHght;     //  Total Height in Pixels
+    double ttlWdth;     //  Total Width imn Pixels
+                        //  
+    double vertFOV;     //  Vertical Field of View in Feet
+    double horFOV;      //  Horizontal Field of View in Feet
+    double vertVA;      //  Vertical Camera Viewing Angle
+    double horVA;       //  Horizontal Camera Viewing Angle
+    
+    double leftRight;   //  Horizontal off-centerness of center of goal
+    double upDown;      //  Vertical off-centerness of center of goal
+    double wdth1Px;     //  Distance from the center of a Goal to the nearest Horizontal edge
+    double hght1Px;     //  Distance from the center of a Goal to the nearest Vertical edge
+    double horThet1;    //  
+    double vertThet1;   //  
+    
+    double d = 0;           //  
+    double pi = Math.PI;    //  
     
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies
@@ -42,6 +44,8 @@ public class FindDistance extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+        tgtHght = TrackingCamera.targetHeight;           //  Create a few necesarry local variables
+        tgtWdth = TrackingCamera.targetWidth;            //  for concise code and calcs.
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -76,8 +76,8 @@ public class FindDistance extends CommandBase {
         horThet1 = horVA * wdth1Px/ttlWdth; //  Finds the angle from Horizontal Edge<>camera<>center of goal
         vertThet1 = vertVA * hght1Px/ttlHght;   //  Finds the angle from Vertical Edge<>camera<>center of goal
         
-        TrackingCamera.d1 = (vertFOV / 2) / Math.tan(vertThet1);    //  Gets a distance from the center of our goal using Horizontal Theta
-        TrackingCamera.d2 = (horFOV / 2) / Math.tan(horThet1);  //  Double checks distance with a Vertcial Theta
+        TrackingCamera.d1 = (hght1Px) / Math.tan(vertThet1);    //  Gets a distance from the center of our goal using Horizontal Theta
+        TrackingCamera.d2 = (wdth1Px) / Math.tan(horThet1);  //  Double checks distance with a Vertcial Theta
 
         TrackingCamera.distanceToTarget = (TrackingCamera.d1 + TrackingCamera.d2) / 2;  //  Take the average to try get a more accurate measurement
         

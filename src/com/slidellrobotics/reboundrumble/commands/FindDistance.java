@@ -28,8 +28,8 @@ public class FindDistance extends CommandBase {
     double upDown;  //  Vertical off-centerness of center of goal
     double wdth1Px; //  Distance from the center of a Goal to the nearest Horizontal edge
     double hght1Px; //  Distance from the center of a Goal to the nearest Vertical edge
-    double horThet1;    //  Horizontal Angle from the Edge to Camera to center of Goal
-    double vertThet1;   //  Verticle Angle from the Edge to Camera to center of Goal
+    double horTheta1;    //  Horizontal Angle from the Edge to Camera to center of Goal
+    double vertTheta1;   //  Verticle Angle from the Edge to Camera to center of Goal
     
     double d = 0;   //  Distance Variable to be used in firing Calculation
     double pi = 3.1415926;  //  Slightly shorter version using Pi
@@ -55,18 +55,18 @@ public class FindDistance extends CommandBase {
             System.out.println("No target set");    //  Debug Print Statement
             return;
         }
-        ttlHght = 480;  //  Target Height
-        ttlWdth = 640;  //  Target Width
+        ttlHght = 480;  //  Image Height
+        ttlWdth = 640;  //  Image Width
         tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
         tgtHghtFt = 1.5;    //  Defines goal's constant ft height
-        vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View
+        //vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View
 
         vertVA = 47*180/pi; //  Defines the Viewing
         horVA = 47*180/pi;  //  Angles of our camera
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;    //  Defines goal's constant ft width
-        horFOV = tgtWdthFt / tgtWdth * ttlWdth; //  Gets the ft value of our horizontal Field of View
+        //horFOV = tgtWdthFt / tgtWdth * ttlWdth; //  Gets the ft value of our horizontal Field of View
 
         leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlWdth/2));    //  Finds the horizontal off-centerness
         upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlHght/2));   //  Finds the vertical off-ceneterness
@@ -74,17 +74,18 @@ public class FindDistance extends CommandBase {
         wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the Horizontal Edge to center of Goal in Pixels
         hght1Px = (ttlHght/2) - upDown; //  Defines the distance from the Vertical Edge to center of Goal in Pixels
         
-        horThet1 = horVA * wdth1Px/ttlWdth; //  Finds the angle from Horizontal Edge<>camera<>center of goal
-        vertThet1 = vertVA * hght1Px/ttlHght;   //  Finds the angle from Vertical Edge<>camera<>center of goal
+        horTheta1 = horVA * wdth1Px/ttlWdth; //  Finds the angle from Horizontal Edge<>camera<>center of goal
+        vertTheta1 = vertVA * hght1Px/ttlHght;   //  Finds the angle from Vertical Edge<>camera<>center of goal
         
-        TrackingCamera.d1 = (hght1Px) / Math.tan(vertThet1);    //  Gets a distance from the center of our goal using Horizontal Theta
-        TrackingCamera.d2 = (wdth1Px) / Math.tan(horThet1);  //  Double checks distance with a Vertcial Theta
+        TrackingCamera.d1 = (hght1Px) / Math.tan(vertTheta1);    //  Gets a distance from the center of our goal using Horizontal Theta
+        TrackingCamera.d2 = (wdth1Px) / Math.tan(horTheta1);  //  Double checks distance with a Vertcial Theta
 
         TrackingCamera.distanceToTarget = (TrackingCamera.d1 + TrackingCamera.d2) / 2;  //  Take the average to try get a more accurate measurement
         
-        //if distance to target is invalid, justset it to some number
-        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0)
+        //if distance to target is invalid, just set it to some number
+        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0) {
             TrackingCamera.distanceToTarget = 60;
+        }
         
         d = TrackingCamera.distanceToTarget;    //  See below Calculation for conciseness
 

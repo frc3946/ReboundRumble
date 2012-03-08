@@ -55,8 +55,8 @@ public class FindDistance extends CommandBase {
             System.out.println("No target set");    //  Debug Print Statement
             return;
         }
-         ttlHght = TrackingCamera.totalHeight;  //  Target Height from the Tracking Camera's static variable
-        ttlWdth = TrackingCamera.totalWidth; 
+        ttlHght = 480;  //  Target Height
+        ttlWdth = 640;  //  Target Width
         tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
         tgtHghtFt = 1.5;    //  Defines goal's constant ft height
         vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View
@@ -68,8 +68,8 @@ public class FindDistance extends CommandBase {
         tgtWdthFt = 2.0;    //  Defines goal's constant ft width
         horFOV = tgtWdthFt / tgtWdth * ttlWdth; //  Gets the ft value of our horizontal Field of View
 
-        leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlHght/2));    //  Finds the horizontal off-centerness
-        upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlWdth/2));   //  Finds the vertical off-ceneterness
+        leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlWdth/2));    //  Finds the horizontal off-centerness
+        upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlHght/2));   //  Finds the vertical off-ceneterness
         
         wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the Horizontal Edge to center of Goal in Pixels
         hght1Px = (ttlHght/2) - upDown; //  Defines the distance from the Vertical Edge to center of Goal in Pixels

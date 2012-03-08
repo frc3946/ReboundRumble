@@ -55,8 +55,8 @@ public class FindDistance extends CommandBase {
             System.out.println("No target set");    //  Debug Print Statement
             return;
         }
-         ttlHght = TrackingCamera.totalHeight;  //  Target Height from the Tracking Camera's static variable
-        ttlWdth = TrackingCamera.totalWidth; 
+        ttlHght = 480;  //  Target Height
+        ttlWdth = 640;  //  Target Width
         tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
         tgtHghtFt = 1.5;    //  Defines goal's constant ft height
         vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View

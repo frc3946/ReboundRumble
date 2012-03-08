@@ -4,6 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -37,9 +38,13 @@ public class FilterImage extends CommandGroup {
         timeLapse = thisTime - lastTime;
         if(timeLapse >= 1.0) {
             addSequential(new GetImage());
-            addSequential(new SelectGoal());
-            addSequential(new FindAngle());
-            addSequential(new FindDistance());
+            if (TrackingCamera.reports != null) {
+                addSequential(new SelectGoal());
+                addSequential(new FindAngle());
+                addSequential(new FindDistance());
+            } else {
+                System.out.println("Goal Selection and Analysis Aborted");
+            }
             lastTime = thisTime;
         }
     }

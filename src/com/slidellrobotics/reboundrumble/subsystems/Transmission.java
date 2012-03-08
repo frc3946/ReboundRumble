@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Transmission extends Subsystem {
     private DoubleSolenoid gearShifter;
     
+    private final String dashName = "Transmission";
+    
     public Transmission() {
         System.out.println("[Transmission] Starting");
         gearShifter = new DoubleSolenoid(RobotMap.highGear,RobotMap.lowGear);
@@ -27,13 +29,13 @@ public class Transmission extends Subsystem {
     public void setHighGear() {
         gearShifter.set(DoubleSolenoid.Value.kForward);
         //System.out.println("[Transmission] High Gear Set"); //uncomment for use with debugging
-        SmartDashboard.putString("Transmission", "High Gear");
+        SmartDashboard.putString(dashName, "High Gear");
     }
     
     public void setLowGear() {
         gearShifter.set(DoubleSolenoid.Value.kReverse);
         //System.out.println("[Transmission] Low Gear Set"); //uncomment for use with debugging
-        SmartDashboard.putString("Transmission", "Low Gear");
+        SmartDashboard.putString(dashName, "Low Gear");
     }
     
     public Value getGear() {

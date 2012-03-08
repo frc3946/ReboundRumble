@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class FirePiston extends Subsystem {
     private DoubleSolenoid pistonSolenoid;
+    
+    private final String dashName = "Fire Piston";
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
@@ -32,7 +34,7 @@ public class FirePiston extends Subsystem {
      */
     public void fire() {
         pistonSolenoid.set(DoubleSolenoid.Value.kReverse);
-        SmartDashboard.putBoolean("Load Piston", true);
+        SmartDashboard.putBoolean(dashName, true);
         //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging
     }
     
@@ -42,7 +44,7 @@ public class FirePiston extends Subsystem {
     public void stow() {
         pistonSolenoid.set(DoubleSolenoid.Value.kForward);
         //Timer.delay(4); //allows time for SmartDashboard to register the piston was infact launched (basicly for nice appearences)
-        SmartDashboard.putBoolean("Load Piston", false);
+        SmartDashboard.putBoolean(dashName, false);
         //System.out.println("[FirePiston] Fired"); //uncomment for use with debugging
     }
     

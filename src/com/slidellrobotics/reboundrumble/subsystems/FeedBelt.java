@@ -18,6 +18,7 @@ public class FeedBelt extends Subsystem {
     private Relay feedBeltSpike;
     private Value state;
     
+    private final String dashName = "Feed Belt";
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -26,6 +27,7 @@ public class FeedBelt extends Subsystem {
         feedBeltSpike = new Relay(RobotMap.feedBeltSpike);
         state = Value.kOff;
         System.out.println("[FeedBelt] feedBeltSpike  initialized");
+        SmartDashboard.putString(dashName, "Off");
         System.out.println("[FeedBelt] Started");
     }
     
@@ -42,16 +44,19 @@ public class FeedBelt extends Subsystem {
     public void setIntake() {
         feedBeltSpike.set(Relay.Value.kReverse);
         state = Value.kReverse;
+        SmartDashboard.putString(dashName, "Intake");
     }
     
     public void setOuttake() {
         feedBeltSpike.set(Relay.Value.kForward);
         state = Value.kForward;
+        SmartDashboard.putString(dashName, "Outtake");
     }
     
     public void setStopped() {
         feedBeltSpike.set(Relay.Value.kOff);
         state = Value.kOff;
+        SmartDashboard.putString(dashName, "Off");
     }
     
     public Value getState() {

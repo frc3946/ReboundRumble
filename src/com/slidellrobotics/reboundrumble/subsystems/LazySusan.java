@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -23,6 +24,8 @@ public class LazySusan extends PIDSubsystem {
     
     private Relay susanWindow;
     private Gyro susanGyro;
+    
+    private final String dashName = "Lazy Susan";
 
     // Initialize your subsystem here
     public LazySusan() {
@@ -62,18 +65,25 @@ public class LazySusan extends PIDSubsystem {
         output = getSetpoint()-susanGyro.getAngle();
        // System.out.println("lazy output: "+output);
         if(output > 15.0) {
-          susanWindow.set(RobotMap.susanLeft);
+          this.setRelay(RobotMap.susanLeft);
           //System.out.println("Left");
         } else if(output < -15.0) {
-          susanWindow.set(RobotMap.susanRight);
+          this.setRelay(RobotMap.susanRight);
           //System.out.println("Right");
         } else {
-           susanWindow.set(RobotMap.susanOff);
+           this.setRelay(RobotMap.susanOff);
         }
     }
     
     public void setRelay(Value value) {
         susanWindow.set(value);
+        if(value.equals(RobotMap.susanRight)) {
+            SmartDashboard.putString(dashName, "Right");
+        } else if(value.equals(RobotMap.susanLeft)) {
+            SmartDashboard.putString(dashName, "Left");
+        } else {
+            SmartDashboard.putString(dashName, "Off");
+        }
     }
     
     public Relay getSpike() {

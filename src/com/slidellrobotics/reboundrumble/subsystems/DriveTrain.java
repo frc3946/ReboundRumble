@@ -29,6 +29,10 @@ public class DriveTrain extends PIDSubsystem {
     private Gyro balanceGyro;
     private double gyroSpeed;
     private double gyroAngle;
+    
+    private final String dashSpace = "Drive Train";
+    private final String dashLeft = "Left Speed";
+    private final String dashRight = "Right Speed";
     // Initialize your subsystem here
     public DriveTrain() {
         super("DriveTrain", Kp, Ki, Kd);
@@ -42,6 +46,7 @@ public class DriveTrain extends PIDSubsystem {
         System.out.println("[DriveTrain] robotDrive initialized");
         balanceGyro = new Gyro(RobotMap.balanceGyro);
         System.out.println("[DriveTrain] balanceGyro initialized");
+        SmartDashboard.putString(dashSpace, "Unknown");
         System.out.println("[DriveTrain] Started");
         setSetpoint(0);
         setSetpointRange(-1, 1);
@@ -51,7 +56,6 @@ public class DriveTrain extends PIDSubsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-        System.out.println("[DriveTrain] TankDrive command started.");
         setDefaultCommand(new TankDrive());
         
     }
@@ -79,10 +83,11 @@ public class DriveTrain extends PIDSubsystem {
      */
     public void tankDrive(double leftSpeed, double rightSpeed) {
         robotDrive.tankDrive(leftSpeed,rightSpeed);
-        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
+        SmartDashboard.putDouble(dashLeft, leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
         //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
-        SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        SmartDashboard.putDouble("dashRight", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
+        SmartDashboard.putString(dashSpace,"Tank Drive");
     }
     
     /**
@@ -92,10 +97,11 @@ public class DriveTrain extends PIDSubsystem {
      */
     public void arcadeDrive(double forward, double turn) {
         robotDrive.arcadeDrive(forward, turn);
-        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
+        SmartDashboard.putDouble(dashLeft, leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
         //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
-        SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        SmartDashboard.putDouble(dashRight, rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
+        SmartDashboard.putString(dashSpace, "Arcade Drive");
     }
     
     /**
@@ -104,9 +110,10 @@ public class DriveTrain extends PIDSubsystem {
      */
     public void balanceDrive(double speed) {
         robotDrive.tankDrive(speed, speed);
-        SmartDashboard.putDouble("Left Speed", leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
+        SmartDashboard.putDouble(dashLeft, leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
         //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
-        SmartDashboard.putDouble("Right Speed", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        SmartDashboard.putDouble(dashRight, rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
+        SmartDashboard.putString(dashSpace, "Balance Drive");
     }
 }

@@ -85,7 +85,7 @@ public class DriveTrain extends PIDSubsystem {
         robotDrive.tankDrive(leftSpeed,rightSpeed);
         SmartDashboard.putDouble(dashLeft, leftJaguars.getSpeed()*-10); //Speed Multipled by 10 for clarity (negative for direction)
         //System.out.println("[DriveTrain] Left Speed "+leftJaguars.getSpeed()); //uncomment for use with debugging
-        SmartDashboard.putDouble("dashRight", rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
+        SmartDashboard.putDouble(dashRight, rightJaguars.getSpeed()*10); //Speed Multipled by 10 for clarity
         //System.out.println("[DriveTrain] Right Speed "+rightJaguars.getSpeed()); //uncomment for use with debugging
         SmartDashboard.putString(dashSpace,"Tank Drive");
     }

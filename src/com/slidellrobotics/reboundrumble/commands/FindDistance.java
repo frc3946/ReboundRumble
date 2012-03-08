@@ -32,7 +32,7 @@ public class FindDistance extends CommandBase {
     double vertThet1;   //  Verticle Angle from the Edge to Camera to center of Goal
     
     double d = 0;   //  Distance Variable to be used in firing Calculation
-    double pi = Math.PI;    //  Slightly shorter version using Pi
+    double pi = 3.1415926;  //  Slightly shorter version using Pi
     
     public FindDistance() {
         // Use requires() here to declare subsystem dependencies

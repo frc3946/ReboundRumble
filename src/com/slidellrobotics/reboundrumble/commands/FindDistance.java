@@ -61,8 +61,8 @@ public class FindDistance extends CommandBase {
         tgtHghtFt = 1.5;    //  Defines goal's constant ft height
         //vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View
 
-        vertVA = 47*180/pi; //  Defines the Viewing
-        horVA = 47*180/pi;  //  Angles of our camera
+        vertVA = 47;    //  Defines the Viewing
+        horVA = 47;     //  Angles of our camera
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;    //  Defines goal's constant ft width

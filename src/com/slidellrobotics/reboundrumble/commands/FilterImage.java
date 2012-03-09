@@ -34,18 +34,22 @@ public class FilterImage extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
+        
+        /* Sets a Counter to Delay Processing to Reduce Lag */
         thisTime = Timer.getFPGATimestamp();
         timeLapse = thisTime - lastTime;
-        if(timeLapse >= 1.0) {
-            addSequential(new GetImage());
-            if (TrackingCamera.reports != null) {
+        
+        if(timeLapse >= 1.0) {  //  If one second has passed since the last picture processing
+            addSequential(new GetImage());  //  Get a picture and filter to a Binary Image
+            if (TrackingCamera.reports.length > 0) {   //  If one or more goals are found
+                /* Perform the remaining three processes */
                 addSequential(new SelectGoal());
                 addSequential(new FindAngle());
                 addSequential(new FindDistance());
-            } else {
-                System.out.println("Goal Selection and Analysis Aborted");
+            } else {    //  If no goals are found
+                System.out.println("Goal Selection and Analysis Aborted");  //  Print a notifier
             }
-            lastTime = thisTime;
+            lastTime = thisTime;    //  Reset the Counter for the Delay
         }
     }
 }

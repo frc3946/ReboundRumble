@@ -24,18 +24,30 @@ public class SelectGoal extends CommandBase {
         TrackingCamera.targetGoal = null;
         
         if (TrackingCamera.reports.length == 0) {
-             System.out.println("No particles found");
+            System.out.println("No particles found");
+            
+            System.out.println("Checkpoint 4a");
+            
             return;
         } if (TrackingCamera.reports.length == 1) { //TODO set to 4 for comp
             System.out.println("Not enough goals");
+            
+            System.out.println("Checkpoint 4b");
+            
             TrackingCamera.targetGoal = TrackingCamera.reports[0];
         } else {
+            
+            System.out.println("Checkpoint 4c");
+            
             TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
             TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
             int maxIndex = TrackingCamera.reports.length;
             if (maxIndex > 4) {
                 maxIndex=4;
             }
+            
+            System.out.println("Checkpoint 5");
+            
             for(int i = 1; i <= maxIndex; i++) {
                 if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.leftGoal = TrackingCamera.reports[i];
@@ -43,6 +55,8 @@ public class SelectGoal extends CommandBase {
                     TrackingCamera.rightGoal = TrackingCamera.reports[i];
                 }
             }
+            
+            System.out.println("Checkpoint 6");
             
             /* We have four goals in view index 1 is the left and index 2 is right */
             double leftWidth = TrackingCamera.leftGoal.boundingRectWidth;     //Finds the widths of
@@ -53,6 +67,7 @@ public class SelectGoal extends CommandBase {
                 TrackingCamera.targetGoal = TrackingCamera.leftGoal;    //
             }
             System.out.println("Target Selected");
+            System.out.println("Checkpoint 7");
         }
     }
 

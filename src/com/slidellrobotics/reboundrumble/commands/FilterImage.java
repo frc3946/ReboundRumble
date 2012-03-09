@@ -49,6 +49,9 @@ public class FilterImage extends CommandGroup {
             } else {    //  If no goals are found
                 System.out.println("Goal Selection and Analysis Aborted");  //  Print a notifier
             }
+            
+            System.out.println("Checkpoint 15");
+            
             lastTime = thisTime;    //  Reset the Counter for the Delay
         }
     }

@@ -33,6 +33,8 @@ public class FindAngle extends CommandBase {
             return;
         }
         
+        System.out.println("Checkpoint 8");
+        
         TrackingCamera.horCenter = (TrackingCamera.totalWidth / 2);     //Finds the pixel value of the horizontal center
         TrackingCamera.targetLocale = TrackingCamera.targetGoal.center_mass_x;        //Finds the center of our target
         TrackingCamera.targetDiff = Math.abs(TrackingCamera.targetLocale - TrackingCamera.horCenter); // see how far away we are
@@ -46,13 +48,22 @@ public class FindAngle extends CommandBase {
         if (TrackingCamera.targetDiff < 50 ) {
             if (TrackingCamera.targetDiff < 15) {
                 lazySusan.setRelay(Relay.Value.kOff);   //turn off
+                
+                System.out.println("Checkpoint 9a");
+                
                // SmartDashboard.putString("LazySusan", "Off");
             } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
                 lazySusan.setRelay(Relay.Value.kForward);   //turn left
+                
+                System.out.println("Checkpoint 9b");
+                
                // SmartDashboard.putString("LazySusan", "Right");
 
             } else {                                        //if we face left
                 lazySusan.setRelay(Relay.Value.kReverse);   //turn right
+                
+                System.out.println("Checkpoint 9c");
+                
                // SmartDashboard.putString("LazySusan", "Left");
             }
         }
@@ -65,13 +76,7 @@ public class FindAngle extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        thisTime = Timer.getFPGATimestamp();
-        timeLapse = thisTime - lastTime;
-        if(timeLapse >= 0.01) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     // Called once after isFinished returns true

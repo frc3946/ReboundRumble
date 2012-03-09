@@ -53,6 +53,9 @@ public class FindDistance extends CommandBase {
             leftShootingMotors.setSetpoint(1000);   //  Set Left shooting Motors to Full Speed
             rightShootingMotors.setSetpoint(1000);  //  Set Right Shooting Motors to Full Speed
             System.out.println("No target set");    //  Debug Print Statement
+            
+            System.out.println("Checkpoint 10a");
+            
             return;
         }
         ttlHght = 480;  //  Image Height
@@ -63,6 +66,8 @@ public class FindDistance extends CommandBase {
 
         vertVA = 47;    //  Defines the Viewing
         horVA = 47;     //  Angles of our camera
+        
+        System.out.println("Checkpoint 10b");
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;    //  Defines goal's constant ft width
@@ -74,11 +79,15 @@ public class FindDistance extends CommandBase {
         wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the Horizontal Edge to center of Goal in Pixels
         hght1Px = (ttlHght/2) - upDown; //  Defines the distance from the Vertical Edge to center of Goal in Pixels
         
+        System.out.println("Checkpoint 11");
+        
         horTheta1 = Math.toDegrees(horVA/2 * wdth1Px/ttlWdth); //  Finds the angle from Horizontal Edge<>camera<>center of goal
         vertTheta1 = Math.toDegrees(vertVA/2 * hght1Px/ttlHght);   //  Finds the angle from Vertical Edge<>camera<>center of goal
         
         TrackingCamera.d1 = (hght1Px) / Math.tan(vertTheta1);    //  Gets a distance from the center of our goal using Horizontal Theta
         TrackingCamera.d2 = (wdth1Px) / Math.tan(horTheta1);  //  Double checks distance with a Vertcial Theta
+        
+        System.out.println("Checkpoint 12");
 
         TrackingCamera.distanceToTarget = (TrackingCamera.d1 + TrackingCamera.d2) / 2;  //  Take the average to try get a more accurate measurement
         
@@ -87,10 +96,14 @@ public class FindDistance extends CommandBase {
             TrackingCamera.distanceToTarget = 60;
         
         d = TrackingCamera.distanceToTarget;    //  See below Calculation for conciseness
+        
+        System.out.println("Checkpoint 13");
 
         TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * pi));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
+        
+        System.out.println("Checkpoint 14");
         
         /* A String of Debug Print Statements */
         System.out.println();

@@ -28,7 +28,9 @@ public class GetImage extends CommandBase {
 
             //System.out.println("Threshold");
             TrackingCamera.thresholdHSL = TrackingCamera.pic.thresholdHSL(150, 185, 244, 255, 2, 20);      //Sets a Blue light threshold
-           
+            
+            System.out.println("Checkpoint 1");
+            
             //System.out.println("Removing Small Objects");
             //TrackingCamera.bigObjectsImage = TrackingCamera.thresholdHSL.removeSmallObjects(false, 1);
             
@@ -47,6 +49,8 @@ public class GetImage extends CommandBase {
             System.out.println(ex);
         }
 
+        System.out.println("Checkpoint 2");
+        
         try {
             if (TrackingCamera.pic != null) {
                 TrackingCamera.pic.free();
@@ -63,6 +67,7 @@ public class GetImage extends CommandBase {
         } catch (Exception ex) {
             System.out.println(ex);
         }
+        System.out.println("Checkpoint 3");
     }
 
     // Called repeatedly when this Command is scheduled to run

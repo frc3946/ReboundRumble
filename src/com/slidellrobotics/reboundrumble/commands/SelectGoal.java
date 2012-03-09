@@ -23,44 +23,34 @@ public class SelectGoal extends CommandBase {
     protected void initialize() {
         TrackingCamera.targetGoal = null;
         
-        if (TrackingCamera.reports == null) {
-             System.out.println("No image reports");
-            return;
-        }
         if (TrackingCamera.reports.length == 0) {
              System.out.println("No particles found");
             return;
-        }
-        //TODO set to 4 for comp
-        if (TrackingCamera.reports.length == 1) {
-            if(TrackingCamera.reports.length > 0) {
-                System.out.println("Not enough goals");
-                TrackingCamera.targetGoal = TrackingCamera.reports[0];
-            }
+        } if (TrackingCamera.reports.length == 1) { //TODO set to 4 for comp
+            System.out.println("Not enough goals");
+            TrackingCamera.targetGoal = TrackingCamera.reports[0];
         } else {
             TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
             TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
             int maxIndex = TrackingCamera.reports.length;
             if (maxIndex > 4) {
-                    maxIndex=4;
+                maxIndex=4;
             }
-            for(int i = 1; i < maxIndex; i++) {
+            for(int i = 1; i <= maxIndex; i++) {
                 if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.leftGoal = TrackingCamera.reports[i];
-                }
-                if(TrackingCamera.reports[i].center_mass_x > TrackingCamera.leftGoal.center_mass_x) {
+                } if(TrackingCamera.reports[i].center_mass_x > TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.rightGoal = TrackingCamera.reports[i];
                 }
             }
             
-            //we we have four goals in view index 1 is the left and index 2 is right
-            
+            /* We have four goals in view index 1 is the left and index 2 is right */
             double leftWidth = TrackingCamera.leftGoal.boundingRectWidth;     //Finds the widths of
             double rightWidth = TrackingCamera.rightGoal.boundingRectWidth;   //both middle goals.
-            if (leftWidth <= rightWidth) {        //
-                TrackingCamera.targetGoal = TrackingCamera.rightGoal;             //Decides which goal we are
-            } else {        //closer to and targets it.
-                TrackingCamera.targetGoal = TrackingCamera.leftGoal;              //
+            if (leftWidth <= rightWidth) {  //
+                TrackingCamera.targetGoal = TrackingCamera.rightGoal;   //Decides which goal we are
+            } else {                                                    //closer to and targets it.
+                TrackingCamera.targetGoal = TrackingCamera.leftGoal;    //
             }
             System.out.println("Target Selected");
         }

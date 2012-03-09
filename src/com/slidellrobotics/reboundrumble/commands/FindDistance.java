@@ -19,17 +19,19 @@ public class FindDistance extends CommandBase {
     double ttlHght; //  Total Height in Pixels
     double ttlWdth; //  Total Width imn Pixels
                       
-    double vertFOV; //  Vertical Field of View in Feet
+    double vertFOV; //  Verticle Field of View in Feet
     double horFOV;  //  Horizontal Field of View in Feet
-    double vertVA;  //  Vertical Camera Viewing Angle
+    double vertVA;  //  Verticle Camera Viewing Angle
     double horVA;   //  Horizontal Camera Viewing Angle
     
     double leftRight;   //  Horizontal off-centerness of center of goal
-    double upDown;  //  Vertical off-centerness of center of goal
+    double upDown;  //  Verticle off-centerness of center of goal
     double wdth1Px; //  Distance from the center of a Goal to the nearest Horizontal edge
-    double hght1Px; //  Distance from the center of a Goal to the nearest Vertical edge
-    double horTheta1;    //  Horizontal Angle from the Edge to Camera to center of Goal
-    double vertTheta1;   //  Verticle Angle from the Edge to Camera to center of Goal
+    double hght1Px; //  Distance from the center of a Goal to the nearest Verticle edge
+    double horTheta1;   //  Horizontal Angle from the Edge to Camera to center of Goal
+    double vertTheta1;  //  Verticle Angle from the Edge to Camera to center of Goal
+    double horHypot;    //  Length in feet from camera to Horizontal Edge of Field of View
+    double vertHypot;   //  Length in feet from camera to Verticle Edge of Field of View
     
     double d = 0;   //  Distance Variable to be used in firing Calculation
     double pi = 3.1415926;  //  Slightly shorter version using Pi
@@ -62,7 +64,7 @@ public class FindDistance extends CommandBase {
         ttlWdth = 640;  //  Image Width
         tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
         tgtHghtFt = 1.5;    //  Defines goal's constant ft height
-        //vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Vertical Field of View
+        vertFOV = tgtHghtFt / tgtHght * ttlHght;    //  Gets the Foot Value of our Verticle Field of View
 
         vertVA = 47;    //  Defines the Viewing
         horVA = 47;     //  Angles of our camera
@@ -71,21 +73,24 @@ public class FindDistance extends CommandBase {
 
         tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
         tgtWdthFt = 2.0;    //  Defines goal's constant ft width
-        //horFOV = tgtWdthFt / tgtWdth * ttlWdth; //  Gets the ft value of our horizontal Field of View
+        horFOV = tgtWdthFt / tgtWdth * ttlWdth; //  Gets the ft value of our horizontal Field of View
 
         leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlWdth/2));    //  Finds the horizontal off-centerness
-        upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlHght/2));   //  Finds the vertical off-ceneterness
+        upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlHght/2));   //  Finds the Verticle off-ceneterness
         
         wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the Horizontal Edge to center of Goal in Pixels
-        hght1Px = (ttlHght/2) - upDown; //  Defines the distance from the Vertical Edge to center of Goal in Pixels
+        hght1Px = (ttlHght/2) - upDown; //  Defines the distance from the Verticle Edge to center of Goal in Pixels
         
         System.out.println("Checkpoint 11");
         
-        horTheta1 = (horVA/2 * wdth1Px/ttlWdth); //  Finds the angle from Horizontal Edge<>camera<>center of goal
-        vertTheta1 = (vertVA/2 * hght1Px/ttlHght);   //  Finds the angle from Vertical Edge<>camera<>center of goal
+        horHypot = (horFOV/2 /23.5);    //  Finds the Distance from our Camera to the Horizontal Edge of our Field of View
+        vertHypot = (vertFOV/2 /23.5);  //  Finds the Distance from our Camera to the Verticle Edge of our Field of View
         
-        TrackingCamera.d1 = (hght1Px) / Math.toDegrees(Math.tan(vertTheta1));    //  Gets a distance from the center of our goal using Horizontal Theta
-        TrackingCamera.d2 = (wdth1Px) / Math.toDegrees(Math.tan(horTheta1));  //  Double checks distance with a Vertcial Theta
+        horTheta1 = (wdth1Px / horHypot);   //  Finds the angle from Horizontal Edge<>camera<>center of goal
+        vertTheta1 = (hght1Px / vertHypot); //  Finds the angle from Verticle Edge<>camera<>center of goal
+        
+        TrackingCamera.d1 = (hght1Px) / Math.toDegrees(Math.tan(vertTheta1));   //  Gets a distance from the center of our goal using Horizontal Theta
+        TrackingCamera.d2 = (wdth1Px) / Math.toDegrees(Math.tan(horTheta1));    //  Double checks distance with a Vertcial Theta
         
         System.out.println("Checkpoint 12");
 

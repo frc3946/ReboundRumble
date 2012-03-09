@@ -37,11 +37,18 @@ public class GetImage extends CommandBase {
             //System.out.println("Convex");
             TrackingCamera.convexHullImage = TrackingCamera.thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
 
+            System.out.println("Checkpoint Alpha");
+            
            // System.out.println("Bounding Box Criteria");
             TrackingCamera.boundImage = TrackingCamera.convexHullImage.particleFilter(TrackingCamera.cc);
             
+            System.out.println("Checkpoint Bravo");
+            
             //TODO: Ordered?
             TrackingCamera.reports = TrackingCamera.boundImage.getOrderedParticleAnalysisReports();        //Sets "reports" to the nuber of particles
+            
+            System.out.println("Checkpoint Charlie");
+            
             System.out.println("Reports: "+TrackingCamera.reports.length);
         } catch (NIVisionException ex) {
             System.out.println(ex);

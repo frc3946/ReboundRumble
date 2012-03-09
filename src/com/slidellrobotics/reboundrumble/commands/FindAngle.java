@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Allister Wright
  */
 public class FindAngle extends CommandBase {
-    private static double lastTime = 0;
-    private static double thisTime;
-    private static double timeLapse;
+    private double lastTime = 0;
+    private double thisTime;
+    private double timeLapse;
     
     public FindAngle() {
         // Use requires() here to declare subsystem dependencies

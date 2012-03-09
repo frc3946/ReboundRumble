@@ -81,11 +81,11 @@ public class FindDistance extends CommandBase {
         
         System.out.println("Checkpoint 11");
         
-        horTheta1 = Math.toDegrees(horVA/2 * wdth1Px/ttlWdth); //  Finds the angle from Horizontal Edge<>camera<>center of goal
-        vertTheta1 = Math.toDegrees(vertVA/2 * hght1Px/ttlHght);   //  Finds the angle from Vertical Edge<>camera<>center of goal
+        horTheta1 = (horVA/2 * wdth1Px/ttlWdth); //  Finds the angle from Horizontal Edge<>camera<>center of goal
+        vertTheta1 = (vertVA/2 * hght1Px/ttlHght);   //  Finds the angle from Vertical Edge<>camera<>center of goal
         
-        TrackingCamera.d1 = (hght1Px) / Math.tan(vertTheta1);    //  Gets a distance from the center of our goal using Horizontal Theta
-        TrackingCamera.d2 = (wdth1Px) / Math.tan(horTheta1);  //  Double checks distance with a Vertcial Theta
+        TrackingCamera.d1 = (hght1Px) / Math.toDegrees(Math.tan(vertTheta1));    //  Gets a distance from the center of our goal using Horizontal Theta
+        TrackingCamera.d2 = (wdth1Px) / Math.toDegrees(Math.tan(horTheta1));  //  Double checks distance with a Vertcial Theta
         
         System.out.println("Checkpoint 12");
 

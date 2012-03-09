@@ -43,7 +43,6 @@ public class TrackingCamera extends Subsystem {
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        
         setDefaultCommand(new FilterImage());
     }
 

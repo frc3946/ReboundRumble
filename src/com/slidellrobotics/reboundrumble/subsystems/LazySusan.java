@@ -29,7 +29,7 @@ public class LazySusan extends PIDSubsystem {
 
     // Initialize your subsystem here
     public LazySusan() {
-        super("LazySusan2", Kp, Ki, Kd);
+        super("LazySusanPID", Kp, Ki, Kd);
         System.out.println("[LazySusan] Starting");
         susanWindow = new Relay(RobotMap.susanSpike);
         System.out.println("[LazySusan] susanWindow initalized");

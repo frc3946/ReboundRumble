@@ -4,6 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
+import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Timer;
@@ -47,20 +48,20 @@ public class FindAngle extends CommandBase {
         System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
         if (TrackingCamera.targetDiff < 280 ) {
             if (TrackingCamera.targetDiff < 15) {
-                lazySusan.setRelay(Relay.Value.kOff);   //turn off
+                lazySusan.setRelay(RobotMap.susanOff);   //turn off
                 
                 System.out.println("Checkpoint 9a");
                 
                // SmartDashboard.putString("LazySusan", "Off");
             } else if (TrackingCamera.targetLocale > TrackingCamera.horCenter) {                  //and if we are facing right
-                lazySusan.setRelay(Relay.Value.kForward);   //turn left
+                lazySusan.setRelay(RobotMap.susanLeft);   //turn left
                 
                 System.out.println("Checkpoint 9b");
                 
                // SmartDashboard.putString("LazySusan", "Left");
 
             } else {                                        //if we face left
-                lazySusan.setRelay(Relay.Value.kReverse);   //turn right
+                lazySusan.setRelay(RobotMap.susanRight);   //turn right
                 
                 System.out.println("Checkpoint 9c");
                 

@@ -28,7 +28,7 @@ public class FindAngle extends CommandBase {
     protected void initialize() {
         if (TrackingCamera.targetGoal == null){
             //lazySusan.setRelay(Relay.Value.kOff);   //turn off
-            SmartDashboard.putString("LazySusan", "Off");
+            //SmartDashboard.putString("LazySusan", "Off");
             //System.out.println("No target set");
             return;
         }
@@ -45,7 +45,7 @@ public class FindAngle extends CommandBase {
 
         lastTime = Timer.getFPGATimestamp();
         System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
-        if (TrackingCamera.targetDiff < 50 ) {
+        if (TrackingCamera.targetDiff < 280 ) {
             if (TrackingCamera.targetDiff < 15) {
                 lazySusan.setRelay(Relay.Value.kOff);   //turn off
                 
@@ -57,14 +57,14 @@ public class FindAngle extends CommandBase {
                 
                 System.out.println("Checkpoint 9b");
                 
-               // SmartDashboard.putString("LazySusan", "Right");
+               // SmartDashboard.putString("LazySusan", "Left");
 
             } else {                                        //if we face left
                 lazySusan.setRelay(Relay.Value.kReverse);   //turn right
                 
                 System.out.println("Checkpoint 9c");
                 
-               // SmartDashboard.putString("LazySusan", "Left");
+               // SmartDashboard.putString("LazySusan", "Right");
             }
         }
     }

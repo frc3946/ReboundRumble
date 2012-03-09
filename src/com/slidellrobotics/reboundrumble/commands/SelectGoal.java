@@ -29,7 +29,7 @@ public class SelectGoal extends CommandBase {
             System.out.println("Checkpoint 4a");
             
             return;
-        } if (TrackingCamera.reports.length == 1) { //TODO set to 4 for comp
+        } if (TrackingCamera.reports.length == 1) {
             System.out.println("Not enough goals");
             
             System.out.println("Checkpoint 4b");
@@ -61,13 +61,15 @@ public class SelectGoal extends CommandBase {
             /* We have four goals in view index 1 is the left and index 2 is right */
             double leftWidth = TrackingCamera.leftGoal.boundingRectWidth;     //Finds the widths of
             double rightWidth = TrackingCamera.rightGoal.boundingRectWidth;   //both middle goals.
-            if (leftWidth <= rightWidth) {  //
+            if (leftWidth <= rightWidth) {
                 TrackingCamera.targetGoal = TrackingCamera.rightGoal;   //Decides which goal we are
             } else {                                                    //closer to and targets it.
                 TrackingCamera.targetGoal = TrackingCamera.leftGoal;    //
             }
             System.out.println("Target Selected");
+            
             System.out.println("Checkpoint 7");
+            
         }
     }
 

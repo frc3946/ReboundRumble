@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.image.NIVisionException;
 
 /**
  *
- * @author 10491477
+ * @author Allister Wright
  */
 public class GetImage extends CommandBase {
     public GetImage() {

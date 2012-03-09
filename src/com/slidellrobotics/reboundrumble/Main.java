@@ -42,8 +42,8 @@ public class Main extends IterativeRobot {
         CommandBase.init();
         SmartDashboard.putData(Scheduler.getInstance());
         compressor.set(Relay.Value.kForward);
-        TrackingCamera.cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 480, false);
-        TrackingCamera.cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 20, 400, false);
+        TrackingCamera.cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_WIDTH, 30, 600, false);
+        TrackingCamera.cc.addCriteria(MeasurementType.IMAQ_MT_BOUNDING_RECT_HEIGHT, 20, 420, false);
     }
 
     public void autonomousInit() {

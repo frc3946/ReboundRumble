@@ -8,7 +8,7 @@ import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 
 /**
  *
- * @author 10491477
+ * @author Allister Wright
  */
 public class SelectGoal extends CommandBase {
     public SelectGoal() {

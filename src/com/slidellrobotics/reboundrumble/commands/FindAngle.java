@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
- * @author 10491477
+ * @author Allister Wright
  */
 public class FindAngle extends CommandBase {
     private static double lastTime = 0;

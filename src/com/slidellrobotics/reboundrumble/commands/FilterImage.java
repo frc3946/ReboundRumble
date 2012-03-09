@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
  *
- * @author 10491477
+ * @author Allister Wright
  */
 public class FilterImage extends CommandGroup {
     private static double lastTime = 0;

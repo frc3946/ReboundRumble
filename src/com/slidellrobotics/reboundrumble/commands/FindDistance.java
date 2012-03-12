@@ -52,8 +52,8 @@ public class FindDistance extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         if (TrackingCamera.targetGoal == null){ //  If no target is found
-            leftShootingMotors.setSetpoint(1000);   //  Set Left shooting Motors to Full Speed
-            rightShootingMotors.setSetpoint(1000);  //  Set Right Shooting Motors to Full Speed
+            leftShootingMotors.setSetpoint(1000);   //  Set Left shooting Motors to about Half Speed
+            rightShootingMotors.setSetpoint(1000);  //  Set Right Shooting Motors to about Half Speed
             System.out.println("No target set");    //  Debug Print Statement
             
             System.out.println("Checkpoint 10a");

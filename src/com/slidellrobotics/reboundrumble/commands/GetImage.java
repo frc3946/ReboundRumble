@@ -72,7 +72,7 @@ public class GetImage extends CommandBase {
                 TrackingCamera.boundImage.free();
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println("Memory: "+ex);
         }
         System.out.println("Checkpoint 3");
     }

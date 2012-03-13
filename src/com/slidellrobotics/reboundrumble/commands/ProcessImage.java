@@ -193,22 +193,27 @@ public class ProcessImage extends CommandBase {
             case 2:
                 System.out.println("Running Case: 2");
                 TrackingCamera.thresholdHSL = TrackingCamera.pic.thresholdHSL(150, 185, 244, 255, 2, 20);      //Sets a Blue light threshold
+                System.out.println("Ran Case: 2.1");
                 stepNo++;
                 break;
             case 3:
                 System.out.println("Running Case: 3");
                 TrackingCamera.convexHullImage = TrackingCamera.thresholdHSL.convexHull(false);        //Fills in the bounding boxes for the targets            
+                System.out.println("Ran Case: 3.1");
                 stepNo++;
                 break;
             case 4:
                 System.out.println("Running Case: 4");
                 TrackingCamera.boundImage = TrackingCamera.convexHullImage.particleFilter(TrackingCamera.cc);
+                System.out.println("Ran Case: 4.1");
                 stepNo++;
                 break;
             case 5:
                 System.out.println("Running Case: 5");
                 TrackingCamera.reports = TrackingCamera.boundImage.getOrderedParticleAnalysisReports();
+                System.out.println("Ran Case: 5.1");
                 System.out.println("Reports: "+TrackingCamera.reports.length);
+                System.out.println("Ran Case: 5.2");
                 stepNo++;
                 break;
             }

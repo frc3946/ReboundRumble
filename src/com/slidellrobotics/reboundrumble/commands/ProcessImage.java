@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  *
  * @author Allister Wright
  */
-public class GetImage extends CommandBase {
+public class ProcessImage extends CommandBase {
     static int stepNo =1;
     
     private static double lastTime = 0;
@@ -46,7 +46,7 @@ public class GetImage extends CommandBase {
     double d = 0;
     double pi = 3.14159262;
     
-    public GetImage() {
+    public ProcessImage() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(camera);
@@ -57,7 +57,6 @@ public class GetImage extends CommandBase {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        stepNo = 1;
         /*try {
             TrackingCamera.pic = camera.getImageFromCamera();
             //Declares pic variable
@@ -119,13 +118,11 @@ public class GetImage extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        thisTime = Timer.getFPGATimestamp();
-        timeLapse = thisTime - lastTime;
+        //thisTime = Timer.getFPGATimestamp();
+        //timeLapse = thisTime - lastTime;
         
-        if(timeLapse >= 1.0) {
-            System.out.println("case: "+stepNo);
+        //if(timeLapse >= 1.0) {
             getImage();
-            
             if(stepNo == 6) {
                 if(TrackingCamera.reports != null) {
                     selectGoal();
@@ -134,15 +131,16 @@ public class GetImage extends CommandBase {
                 } else {    //  If no goals are found
                 System.out.println("Goal Selection and Analysis Aborted");  //  Print a notifier
                 }
+                stepNo = 7;
             }
-        }
-        lastTime = thisTime;
+        //}
+        //lastTime = thisTime;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         //todo this can just be set to true
-        if(stepNo == 6) {
+        if(stepNo == 7) {
             return true;
         } else if(stepNo > 6) {
             System.out.println("Error Exit");
@@ -285,8 +283,6 @@ public class GetImage extends CommandBase {
     
     private void findDistance() {
         System.out.println("findDistance");
-        imageHeight = TrackingCamera.totalHeight;  //  Target Height from the Tracking Camera's static variable
-        imageWidth = TrackingCamera.totalWidth;   //  Target Width from the Tracking Camera's static variable
         if (TrackingCamera.targetGoal == null){ //  If no target is found
             leftShootingMotors.setSetpoint(1000);   //  Set Left shooting Motors to about Half Speed
             rightShootingMotors.setSetpoint(1000);  //  Set Right Shooting Motors to about Half Speed
@@ -311,8 +307,8 @@ public class GetImage extends CommandBase {
         verticalFOV = imageHeight*(targetHeightFt/targetHeight);    //  Gets the Foot Value of our Vertical Field of View.
         horizontalFOV = imageWidth*(targetWidthFt/targetWidth); //  Gets the ft value of our horizontal Field of View.
         
-        horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
         verticalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_y - (imageHeight/2));   //  Finds the vertical off-ceneterness.
+        horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
         
         verticalDistanceResult = Math.sqrt(4/3)*(verticalFOV/2)/Math.tan(verticalViewingAngle/2);   //  Provides the Result of our Vertically-Based Calculation.
         horizontalDistanceResult = Math.sqrt(3/4)*(horizontalFOV/2)/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.
@@ -327,19 +323,16 @@ public class GetImage extends CommandBase {
         
         
         //if distance to target is invalid, just set it to some number
-        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0)
+        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0) {
             TrackingCamera.distanceToTarget = 60;
+        }
         
         d = trueDistance;    //  See below Calculation for conciseness
         
-        System.out.println("Checkpoint 13");
-
         TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * pi));  //Calcs the required rpms for firing
         leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
         rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
-        
-        System.out.println("Checkpoint 14");
-        
+
         /* A String of Debug Print Statements */
         System.out.println();
         System.out.println("Vertcal Distance Result: "+verticalDistanceResult);

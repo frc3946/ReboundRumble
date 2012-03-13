@@ -240,6 +240,7 @@ public class ProcessImage extends CommandBase {
             System.out.println("Not enough goals");
             TrackingCamera.targetGoal = TrackingCamera.reports[0];
         } else {
+            //Gus says: is this right. it doesn't look right to me...
             TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
             TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
             int maxIndex = TrackingCamera.reports.length;

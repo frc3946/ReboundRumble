@@ -76,8 +76,8 @@ public class FindDistance extends CommandBase {
         verticalFOV = imageHeight*(targetHeightFt/targetHeight);    //  Gets the Foot Value of our Vertical Field of View.
         horizontalFOV = imageWidth*(targetWidthFt/targetWidth); //  Gets the ft value of our horizontal Field of View.
         
-        horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
         verticalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_y - (imageHeight/2));   //  Finds the vertical off-ceneterness.
+        horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
         
         verticalDistanceResult = Math.sqrt(4/3)*(verticalFOV/2)/Math.tan(verticalViewingAngle/2);   //  Provides the Result of our Vertically-Based Calculation.
         horizontalDistanceResult = Math.sqrt(3/4)*(horizontalFOV/2)/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.

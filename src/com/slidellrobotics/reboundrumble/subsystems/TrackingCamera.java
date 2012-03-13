@@ -37,8 +37,12 @@ public class TrackingCamera extends Subsystem {
     //public static boolean angleFinished = false, distanceFinished = false;
     
     public TrackingCamera() {
-        camera = AxisCamera.getInstance("10.39.46.11");
-        System.out.println("Camera init");        
+            camera = AxisCamera.getInstance("10.39.46.11");
+        if(camera != null) {
+            System.out.println("Camera init");     
+        } else {
+            System.out.println("Camera Failure");  
+        }
     }
     
     public void initDefaultCommand() {

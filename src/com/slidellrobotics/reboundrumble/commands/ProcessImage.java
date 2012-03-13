@@ -18,8 +18,8 @@ public class ProcessImage extends CommandBase {
     static int stepNo =1;
     
     private static double lastTime = 0;
-    private static double thisTime;
-    private static double timeLapse;
+    private static double thisTime = 0;
+    private static double timeLapse = 0;
     
     double targetHeight = TrackingCamera.targetHeight;   //  Create a few necesarry local variables
     double targetWidth = TrackingCamera.targetWidth;    //  for concise code and calcs.
@@ -118,10 +118,10 @@ public class ProcessImage extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        //thisTime = Timer.getFPGATimestamp();
-        //timeLapse = thisTime - lastTime;
+        thisTime = Timer.getFPGATimestamp();
+        timeLapse = thisTime - lastTime;
         
-        //if(timeLapse >= 1.0) {
+        if(timeLapse >= 1.0) {
             getImage();
             if(stepNo == 6) {
                 if(TrackingCamera.reports != null) {
@@ -131,10 +131,9 @@ public class ProcessImage extends CommandBase {
                 } else {    //  If no goals are found
                 System.out.println("Goal Selection and Analysis Aborted");  //  Print a notifier
                 }
-                stepNo = 7;
+                stepNo++;
             }
-        //}
-        //lastTime = thisTime;
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -142,7 +141,7 @@ public class ProcessImage extends CommandBase {
         //todo this can just be set to true
         if(stepNo == 7) {
             return true;
-        } else if(stepNo > 6) {
+        } else if(stepNo > 7) {
             System.out.println("Error Exit");
             return true;
         } else {
@@ -168,6 +167,7 @@ public class ProcessImage extends CommandBase {
         } catch (Exception ex) {
             System.out.println("Memory: "+ex);
         }
+        lastTime = thisTime;
     }
 
     // Called when another command which requires one or more of the same
@@ -184,10 +184,14 @@ public class ProcessImage extends CommandBase {
                 System.out.println("Running Case: 1");
                 TrackingCamera.pic = camera.getImageFromCamera();
                 System.out.println("Ran Case: 1.1");
-                TrackingCamera.totalWidth = TrackingCamera.pic.getWidth();
+                if(TrackingCamera.pic != null) {
+                    TrackingCamera.totalWidth = TrackingCamera.pic.getWidth();
                 System.out.println("Ran Case: 1.2");
                 TrackingCamera.totalHeight = TrackingCamera.pic.getHeight();
                 System.out.println("Ran Case: 1.3");
+                } else {
+                    break;
+                }
                 stepNo++;
                 break;
             case 2:

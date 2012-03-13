@@ -5,6 +5,7 @@
 package com.slidellrobotics.reboundrumble.commands;
 
 import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -112,6 +113,12 @@ public class FindDistance extends CommandBase {
         System.out.println("True Distance: "+d);
         System.out.println("Camera Launch Speed: "+TrackingCamera.launchSpeed);
         System.out.println();
+        
+        SmartDashboard.putDouble("Vertical Distance Result", verticalDistanceResult);
+        SmartDashboard.putDouble("Horizontal Distance Result", horizontalDistanceResult);
+        SmartDashboard.putDouble("Center Point Distance", centerDistance);
+        SmartDashboard.putDouble("Distance", d);
+        SmartDashboard.putDouble("Camera Launch Speed", TrackingCamera.launchSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

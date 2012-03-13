@@ -4,7 +4,7 @@
  */
 package com.slidellrobotics.reboundrumble.subsystems;
 
-import com.slidellrobotics.reboundrumble.commands.FilterImage;
+import com.slidellrobotics.reboundrumble.commands.GetImage;
 import edu.wpi.first.wpilibj.camera.AxisCamera;
 import edu.wpi.first.wpilibj.camera.AxisCameraException;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -43,16 +43,16 @@ public class TrackingCamera extends Subsystem {
     
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new FilterImage());
+        setDefaultCommand(new GetImage());
     }
 
     public ColorImage getImageFromCamera() throws NIVisionException {
         try {
-            if (camera.freshImage()) {
+            if (!camera.freshImage()) {
                 try {
                     return camera.getImage();                      
                 } catch (AxisCameraException ex) {
-                     System.out.println("getImageFromCamera"+ex);
+                    System.out.println("getImageFromCamera"+ex);
                 } catch (NIVisionException ex) {
                     System.out.println(ex);
                 }

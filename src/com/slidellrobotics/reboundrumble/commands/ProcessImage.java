@@ -325,23 +325,28 @@ public class ProcessImage extends CommandBase {
             return;
         }
         
-        tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
-        tgtHghtFt = 1.5;                                        //  Defines goal's constant ft height
-        vertFOV = tgtHghtFt / tgtHght * ttlHght;                //  Gets the foot equivalent of our vertical Field of View
-
-        vertVA = 47*Math.PI/180;    //  Defines the Viewing
-        horVA = 47*Math.PI/180;     //  Angles of our camera
-
-        tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
-        tgtWdthFt = 2.0;                                        //  Defines goal's constant ft width
-        horFOV = tgtWdthFt / tgtWdth * ttlWdth;                 //  Gets the ft value of our horizontal Field of View
-
-        leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlHght/2));    //  Finds the horizontal off-centerness
-        upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlWdth/2));       //  Finds the vertical off-ceneterness
+        verticalViewingAngle = 47;      //  Defines the Viewing
+        horizontalViewingAngle = 47;    //  Angles of our camera
+        imageHeight = 480;  //  Image Height
+        targetHeight = TrackingCamera.targetGoal.boundingRectHeight;    //  Sets the height of our target.
+        targetHeightFt = 1.5;   //  Defines goal's constant ft height
+        imageWidth = 640;   //  Image Width
+        targetWidth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
+        targetWidthFt = 2.0;    //  Defines goal's constant ft width
+        verticalFOV = imageHeight*(targetHeightFt/targetHeight);    //  Gets the Foot Value of our Vertical Field of View.
+        horizontalFOV = imageWidth*(targetWidthFt/targetWidth); //  Gets the ft value of our horizontal Field of View.
+        verticalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_y - (imageHeight/2));   //  Finds the vertical off-ceneterness.
+        horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
+        verticalDistanceResult = Math.sqrt(4/3)*(verticalFOV/2)/Math.tan(verticalViewingAngle/2);   //  Provides the Result of our Vertically-Based Calculation.
+        horizontalDistanceResult = Math.sqrt(3/4)*(horizontalFOV/2)/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.
+        centerDistance = (verticalDistanceResult + horizontalDistanceResult) / 2;   //  Take the average to try get a more accurate measurement.        
         
+        offCenterPixels = Math.sqrt((verticalRattle*verticalRattle) + (horizontalRattle*horizontalRattle)); //  Finds the Linear Distance from the Center of the Image to the Center of the Goal.
+        offCenterFt = offCenterPixels*(Math.sqrt((verticalFOV*verticalFOV)+(horizontalFOV*horizontalFOV))); //  Converts the above Caluclated measurement into its proper Ft value.
         wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the sides of our view and the center of the goal
         hght1Px = (ttlHght/2) - upDown;     //  Defines the distance from the top / bottom of our view in Pixels.
         
+        trueDistance = Math.sqrt((centerDistance*centerDistance)+(offCenterFt*offCenterFt));    //  Find the Linear Distance form the Lens of our Camera to the Center of our Goal.
         horThet1 = horVA * wdth1Px/ttlWdth;     //  Finds the angle from Horizontal Edge<>camera<>center of goal
         vertThet1 = vertVA * hght1Px/ttlHght;   //  Finds the angle from Vertical Edge<>camera<>center of goal
         

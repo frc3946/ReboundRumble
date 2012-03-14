@@ -224,15 +224,16 @@ public class ProcessImage extends CommandBase {
         //where the lazy suzan stops moving to we can make an accurate shot.
 
         System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
-            if (TrackingCamera.targetDiff < 15) {
-                //lazySusan.setRelay(RobotMap.susanOff);   //turn off
-            } else if (TrackingCamera.targetLocale < TrackingCamera.horCenter) { //and if we are facing right
-                //lazySusan.setRelay(RobotMap.susanLeft);   //turn left
-                lazySusan.setSetpointRelative(-5);
-            } else {                                        //if we face left
-                //lazySusan.setRelay(RobotMap.susanRight);   //turn right
-                lazySusan.setSetpointRelative(+5);
-            }
+        if (TrackingCamera.targetDiff < 15) {
+            //lazySusan.setRelay(RobotMap.susanOff);   //turn off
+        } else if (TrackingCamera.targetLocale < TrackingCamera.horCenter) { //and if we are facing right
+            //lazySusan.setRelay(RobotMap.susanLeft);   //turn left
+            lazySusan.setSetpointRelative(-5);
+        } else {                                        //if we face left
+            //lazySusan.setRelay(RobotMap.susanRight);   //turn right
+            lazySusan.setSetpointRelative(+5);
+        }
+        SmartDashboard.putDouble("Angle",TrackingCamera.targetDiff);
     }
     
     private void findDistance() {
@@ -296,10 +297,10 @@ public class ProcessImage extends CommandBase {
         System.out.println("Camera Launch Speed: "+TrackingCamera.launchSpeed);
         System.out.println();
         
-        SmartDashboard.putDouble("Vertical Distance Result", verticalDistanceResult);
-        SmartDashboard.putDouble("Horizontal Distance Result", horizontalDistanceResult);
-        SmartDashboard.putDouble("Center Point Distance", centerDistance);
+        //SmartDashboard.putDouble("Vertical Distance Result", verticalDistanceResult);
+        //SmartDashboard.putDouble("Horizontal Distance Result", horizontalDistanceResult);
+        //SmartDashboard.putDouble("Center Point Distance", centerDistance);
         SmartDashboard.putDouble("Distance", d);
-        SmartDashboard.putDouble("Camera Launch Speed", TrackingCamera.launchSpeed);
+        SmartDashboard.putDouble("Launch", TrackingCamera.launchSpeed);
     }
 }

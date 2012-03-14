@@ -21,6 +21,26 @@ public class ProcessImage extends CommandBase {
     private static double thisTime = 0;
     private static double timeLapse = 0;
     
+    double tgtHght = TrackingCamera.targetHeight = 0;       //
+    double tgtWdth = TrackingCamera.targetWidth = 0;        //  Create a few local
+    double tgtHghtFt = TrackingCamera.targetHeightFeet = 0; //  variables for concise
+    double tgtWdthFt = TrackingCamera.targetWidthFeet = 0;  //  code and calcs.
+    double ttlHght = TrackingCamera.totalHeight = 0;        //
+    double ttlWdth = TrackingCamera.totalWidth = 0;         //
+                                                            //
+    double vertFOV = TrackingCamera.vertFOV = 0;            //
+    double horFOV = TrackingCamera.horFOV = 0;              //
+    double vertVA = TrackingCamera.cameraVertFOV = 0;       //
+    double horVA = TrackingCamera.cameraHorizFOV = 0;       //
+    
+    double leftRight = 0;   //
+    double upDown = 0;      //  A few newer 
+    double wdth1Px = 0;     //  variables to
+    double hght1Px = 0;     //  allow for more
+    double horThet1 = 0;    //  accurate distances
+    double vertThet1 = 0;   //
+    
+    double d = 0;           //  A small calc variable
     double targetHeight = TrackingCamera.targetHeight;   //  Create a few necesarry local variables
     double targetWidth = TrackingCamera.targetWidth;    //  for concise code and calcs.
     
@@ -43,7 +63,7 @@ public class ProcessImage extends CommandBase {
     double verticalDistanceResult = 0;
     double horizontalDistanceResult = 0;
     double trueDistance = 0;
-    double d = 0;
+    //double d = 0;
     double pi = 3.14159262;
     
     public ProcessImage() {
@@ -168,6 +188,7 @@ public class ProcessImage extends CommandBase {
             System.out.println("Memory: "+ex);
         }
         lastTime = thisTime;
+        stepNo = 1;
     }
 
     // Called when another command which requires one or more of the same
@@ -240,14 +261,14 @@ public class ProcessImage extends CommandBase {
             System.out.println("Not enough goals");
             TrackingCamera.targetGoal = TrackingCamera.reports[0];
         } else {
-            //Gus says: is this right. it doesn't look right to me...
+            //Set variables to a guess, the guess if revised in the loop
             TrackingCamera.leftGoal = TrackingCamera.reports[0];     //Recognizes the
             TrackingCamera.rightGoal = TrackingCamera.reports[0];    //middle goals.
             int maxIndex = TrackingCamera.reports.length;
             if (maxIndex > 4) {
                 maxIndex=4;
             }
-            for(int i = 1; i <= maxIndex; i++) {
+            for(int i = 1; i < maxIndex; i++) {
                 if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.leftGoal = TrackingCamera.reports[i];
                 } if(TrackingCamera.reports[i].center_mass_x > TrackingCamera.leftGoal.center_mass_x) {
@@ -280,22 +301,23 @@ public class ProcessImage extends CommandBase {
         //where the lazy suzan stops moving to we can make an accurate shot.
 
         System.out.println("Targe Diff: "+TrackingCamera.targetDiff);
-        if (TrackingCamera.targetDiff < 280 ) {
-            if (TrackingCamera.targetDiff < 15) {
-                lazySusan.setRelay(RobotMap.susanOff);   //turn off
-            } else if (TrackingCamera.targetLocale < TrackingCamera.horCenter) { //and if we are facing right
-                lazySusan.setRelay(RobotMap.susanLeft);   //turn left
-            } else {                                        //if we face left
-                lazySusan.setRelay(RobotMap.susanRight);   //turn right
-            }
+        if (TrackingCamera.targetDiff < 20) {
+            //lazySusan.setRelay(RobotMap.susanOff);   //turn off
+
+        } else if (TrackingCamera.targetLocale < TrackingCamera.horCenter) { //and if we are facing right
+            //lazySusan.setRelay(RobotMap.susanLeft);   //turn left
+            lazySusan.setSetpointRelative(-5);
+        } else {                                        //if we face left
+            //lazySusan.setRelay(RobotMap.susanRight);   //turn right
+            lazySusan.setSetpointRelative(+5);
         }
     }
     
     private void findDistance() {
         System.out.println("findDistance");
         if (TrackingCamera.targetGoal == null){ //  If no target is found
-            leftShootingMotors.setSetpoint(1000);   //  Set Left shooting Motors to about Half Speed
-            rightShootingMotors.setSetpoint(1000);  //  Set Right Shooting Motors to about Half Speed
+            //leftShootingMotors.setSetpoint(1000);   //  Set Left shooting Motors to about Half Speed
+            //rightShootingMotors.setSetpoint(1000);  //  Set Right Shooting Motors to about Half Speed
             System.out.println("No target set");    //  Debug Print Statement
             
             System.out.println("Checkpoint 10a");
@@ -303,51 +325,48 @@ public class ProcessImage extends CommandBase {
             return;
         }
         
-        verticalViewingAngle = 47;      //  Defines the Viewing
-        horizontalViewingAngle = 47;    //  Angles of our camera
+        tgtHght = TrackingCamera.targetGoal.boundingRectHeight; //  Sets the height of our target.
+        tgtHghtFt = 1.5;                                        //  Defines goal's constant ft height
+        vertFOV = tgtHghtFt / tgtHght * ttlHght;                //  Gets the foot equivalent of our vertical Field of View
+
+        vertVA = 47*Math.PI/180;    //  Defines the Viewing
+        horVA = 47*Math.PI/180;     //  Angles of our camera
+
+        tgtWdth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
+        tgtWdthFt = 2.0;                                        //  Defines goal's constant ft width
+        horFOV = tgtWdthFt / tgtWdth * ttlWdth;                 //  Gets the ft value of our horizontal Field of View
+
+        leftRight = Math.abs(TrackingCamera.targetGoal.center_mass_x - (ttlHght/2));    //  Finds the horizontal off-centerness
+        upDown = Math.abs(TrackingCamera.targetGoal.center_mass_y - (ttlWdth/2));       //  Finds the vertical off-ceneterness
         
-        imageHeight = 480;  //  Image Height
-        targetHeight = TrackingCamera.targetGoal.boundingRectHeight;    //  Sets the height of our target.
-        targetHeightFt = 1.5;   //  Defines goal's constant ft height
+        wdth1Px = (ttlWdth/2) - leftRight;  //  Defines the distance from the sides of our view and the center of the goal
+        hght1Px = (ttlHght/2) - upDown;     //  Defines the distance from the top / bottom of our view in Pixels.
         
-        imageWidth = 640;   //  Image Width
-        targetWidth = TrackingCamera.targetGoal.boundingRectWidth;  //  Sets the width of our target.
-        targetWidthFt = 2.0;    //  Defines goal's constant ft width
+        horThet1 = horVA * wdth1Px/ttlWdth;     //  Finds the angle from Horizontal Edge<>camera<>center of goal
+        vertThet1 = vertVA * hght1Px/ttlHght;   //  Finds the angle from Vertical Edge<>camera<>center of goal
         
-        verticalFOV = imageHeight*(targetHeightFt/targetHeight);    //  Gets the Foot Value of our Vertical Field of View.
-        horizontalFOV = imageWidth*(targetWidthFt/targetWidth); //  Gets the ft value of our horizontal Field of View.
+        //TrackingCamera.targetGoal.center_mass_x * TrackingCamera.horFOV / TrackingCamera.totalWidth;
         
-        verticalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_y - (imageHeight/2));   //  Finds the vertical off-ceneterness.
-        horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
-        
-        verticalDistanceResult = Math.sqrt(4/3)*(verticalFOV/2)/Math.tan(verticalViewingAngle/2);   //  Provides the Result of our Vertically-Based Calculation.
-        horizontalDistanceResult = Math.sqrt(3/4)*(horizontalFOV/2)/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.
-        
-        centerDistance = (verticalDistanceResult + horizontalDistanceResult) / 2;   //  Take the average to try get a more accurate measurement.
-        
-        
-        offCenterPixels = Math.sqrt((verticalRattle*verticalRattle) + (horizontalRattle*horizontalRattle)); //  Finds the Linear Distance from the Center of the Image to the Center of the Goal.
-        offCenterFt = offCenterPixels*(Math.sqrt((verticalFOV*verticalFOV)+(horizontalFOV*horizontalFOV))); //  Converts the above Caluclated measurement into its proper Ft value.
-        
-        trueDistance = Math.sqrt((centerDistance*centerDistance)+(offCenterFt*offCenterFt));    //  Find the Linear Distance form the Lens of our Camera to the Center of our Goal.
-        
-        
-        //if distance to target is invalid, just set it to some number
-        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0) {
+        TrackingCamera.d1 = (vertFOV / 2) / Math.tan(vertThet1);    //  Gets a distance from the center of our goal using Horizontal Theta
+        TrackingCamera.d2 = (horFOV / 2) / Math.tan(horThet1);      //  Double checks distance with a Vertcial Theta
+
+        TrackingCamera.distanceToTarget = (TrackingCamera.d1 + TrackingCamera.d2) / 2;  //  Take the average to try get a more accurate measurement
+        //if distance to target is invalid, justset it to some number
+        if (TrackingCamera.distanceToTarget > 60 || TrackingCamera.distanceToTarget <= 0)
             TrackingCamera.distanceToTarget = 60;
-        }
         
-        d = trueDistance;    //  See below Calculation for conciseness
+        d = TrackingCamera.distanceToTarget;    //  Calc Conciseness
         
         TrackingCamera.launchSpeed = 60 * (d / Math.sqrt((11 / 6 - d) / -16.1) / (2 / 3 * pi));  //Calcs the required rpms for firing
-        leftShootingMotors.setSetpoint(TrackingCamera.launchSpeed);     //  Sets the shooting Left Shooting Motors
-        rightShootingMotors.setSetpoint(TrackingCamera.launchSpeed);    //  Sets the Right Shooting Motors
+        
+        leftShootingMotors.setSetpoint(camera.distanceToRMP(d));     //  Sets the shooting Left Shooting Motors
+        rightShootingMotors.setSetpoint(camera.distanceToRMP(d));    //  Sets the Right Shooting Motors
 
         /* A String of Debug Print Statements */
         System.out.println();
         System.out.println("Vertcal Distance Result: "+verticalDistanceResult);
         System.out.println("Horizontal Distance Result: "+horizontalDistanceResult);
-        System.out.println("Central Distance: "+centerDistance);
+        System.out.println("Central Distance: "+TrackingCamera.centerDistance);
         System.out.println("True Distance: "+d);
         System.out.println("Camera Launch Speed: "+TrackingCamera.launchSpeed);
         System.out.println();

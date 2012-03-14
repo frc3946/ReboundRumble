@@ -3,11 +3,9 @@ package com.slidellrobotics.reboundrumble;
 
 import com.slidellrobotics.reboundrumble.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Relay.Value;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.InternalButton;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -21,8 +19,6 @@ public class OI {
     private Button outtakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.outtakeFeedBeltButton);
     private Button dropBridge = new JoystickButton(leftJoystick, RobotMap.dropBridgeButton);
     private Button stowBridge = new JoystickButton(leftJoystick, RobotMap.stowBridgeButton);
-    private Button turnSusanLeft = new JoystickButton(leftJoystick, RobotMap.leftLazySusanButton);
-    private Button turnSusanRight = new JoystickButton(leftJoystick, RobotMap.rightLazySusanButton);
     
     //Right Joystick
     private Joystick rightJoystick = new Joystick(RobotMap.rightJoystick); //Right Joystick
@@ -34,7 +30,8 @@ public class OI {
     //Third Joystick
     private Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
     private Button fireBall = new JoystickButton(thirdJoystick, RobotMap.fireButton); //Button to fire the ball
-    private Button manualTurret = new JoystickButton(thirdJoystick, RobotMap.manualTurretButton);
+    private Button turnSusanLeft = new JoystickButton(thirdJoystick, RobotMap.leftLazySusanButton);
+    private Button turnSusanRight = new JoystickButton(thirdJoystick, RobotMap.rightLazySusanButton);
     //SmartDashBoard Buttons
     private InternalButton smartDashboardButton1 = new InternalButton();
     
@@ -49,7 +46,8 @@ public class OI {
         fireBall.whileHeld(new FireBall());
         dropBridge.whileHeld(new DropBridgeMounter());
         stowBridge.whileHeld(new StowBridgeMounter());
-        manualTurret.whileHeld(new ManualLazySusan());
+        turnSusanLeft.whileHeld(new LazySusanLeft());
+        turnSusanRight.whileHeld(new LazySusanRight());
        
         //SmartDashboard Buttons
         SmartDashboard.putData("SetFiringMotors",smartDashboardButton1);

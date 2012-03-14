@@ -81,7 +81,12 @@ public class FireMotors extends PIDSubsystem {
         lastTime = newtime;
        
         //System.out.println("2");
-        rpms = counts/ 8.0 / timespan*60.0; //8 counts per revolution, 60 seconds per minute  
+        if(Name.equals("Left")) {
+            rpms = counts/ 8.0 / timespan*60.0;
+        } else {
+            rpms = counts/ 7.0 / timespan*60.0;
+        }
+        //8 counts per revolution, 60 seconds per minute  
           //System.out.println(Name + ": " +  rpms);
           //System.out.println("     Counts: "+counts);
           //System.out.println("          Timespan: "+timespan);
@@ -123,8 +128,8 @@ public class FireMotors extends PIDSubsystem {
             
         }
           //System.out.println("Use PID "+victorSetting);
-        victor.set(victorSetting);
-        //victor.set(getSetpoint());
+        //victor.set(victorSetting);
+        victor.set(getSetpoint());
 
         
     }

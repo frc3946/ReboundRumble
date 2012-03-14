@@ -56,6 +56,7 @@ public class LazySusan extends PIDSubsystem {
         // e.g. a sensor, like a potentiometer:
         // yourPot.getAverageVoltage() / kYourMaxVoltage;
         // System.out.println("gyro: " + susanGyro.getAngle());
+        SmartDashboard.putDouble("Gyro", susanGyro.getAngle());
         return susanGyro.getAngle();
     }
     
@@ -64,11 +65,11 @@ public class LazySusan extends PIDSubsystem {
         // e.g. yourMotor.set(output);
         output = getSetpoint()-susanGyro.getAngle();
        // System.out.println("lazy output: "+output);
-        if(output > 15.0) {
-          this.setRelay(RobotMap.susanLeft);
-          //System.out.println("Left");
-        } else if(output < -15.0) {
+        if(output > 5.0) {
           this.setRelay(RobotMap.susanRight);
+          //System.out.println("Left");
+        } else if(output < -5.0) {
+          this.setRelay(RobotMap.susanLeft);
           //System.out.println("Right");
         } else {
            this.setRelay(RobotMap.susanOff);
@@ -88,5 +89,9 @@ public class LazySusan extends PIDSubsystem {
     
     public Relay getSpike() {
         return susanWindow;
+    }
+    
+    public Gyro getGyro() {
+        return susanGyro;
     }
 }

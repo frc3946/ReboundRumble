@@ -18,7 +18,7 @@ public class TrackingCamera extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     
-    public AxisCamera camera;
+    public static AxisCamera camera;
     public static ColorImage pic;
     public static ParticleAnalysisReport[] reports;
     //public static int leftGoalIndex = 0, rightGoalIndex = 0;
@@ -30,6 +30,7 @@ public class TrackingCamera extends Subsystem {
     public static double totalWidth = 640, totalHeight = 480;
     public static ParticleAnalysisReport targetGoal, leftGoal, rightGoal;    
     public static double targetLocale, horCenter, targetDiff, launchSpeed;
+    public static double centerDistance;
     public static double distanceToTarget, targetHeight, targetHeightFeet = 1.5;
     public static double horFOV, vertFOV, cameraVertFOV = 47, cameraHorizFOV = 47;
     public static double d1, d2, d, targetWidth, targetWidthFeet = 2;
@@ -37,7 +38,9 @@ public class TrackingCamera extends Subsystem {
     //public static boolean angleFinished = false, distanceFinished = false;
     
     public TrackingCamera() {
-            camera = AxisCamera.getInstance("10.39.46.11");
+        if(camera == null) {
+            TrackingCamera.camera = AxisCamera.getInstance("10.39.46.11");
+        }
         if(camera != null) {
             System.out.println("Camera init");     
         } else {
@@ -52,19 +55,24 @@ public class TrackingCamera extends Subsystem {
 
     public ColorImage getImageFromCamera() throws NIVisionException {
         try {
-            if (!camera.freshImage()) {
-                try {
-                    return camera.getImage();                      
-                } catch (AxisCameraException ex) {
-                    System.out.println("getImageFromCamera"+ex);
-                } catch (NIVisionException ex) {
-                    System.out.println(ex);
+            if(camera!=null) {
+                if (camera.freshImage()) {
+                    try {
+                        System.out.println("sent image");
+                        return camera.getImage();                      
+                    } catch (AxisCameraException ex) {
+                        System.out.println("getImageFromCamera"+ex);
+                    } catch (NIVisionException ex) {
+                        System.out.println(ex);
+                    }
                 }
+            } else {
+                System.out.println("CAMERA IS STILL NULL!!!!");
             }
         } catch (Exception ex) {
-            //System.out.println(ex);
-            //System.out.println("TrackingCamera Error");
+            System.out.println("Get Image From Camera: "+ex);
         }
+        System.out.println("return null");
         return null;
     }
     
@@ -91,14 +99,24 @@ public class TrackingCamera extends Subsystem {
 
         //find the two calibration points were the input distance is between them
         int upperIndex;
-        for (upperIndex = 1; upperIndex < calibrationPoints.length; upperIndex++) {
+        
+        
+        upperIndex = 1;
+        while(upperIndex < calibrationPoints.length) {
             if (distance <= calibrationPoints[upperIndex].distance &&
                 distance > calibrationPoints[upperIndex-1].distance) {
                 break;
             }
+            upperIndex++;
         }
         
         //interpolate the point
+      
+        if (upperIndex >= calibrationPoints.length){
+        upperIndex=calibrationPoints.length-1;
+        System.out.println("Error calibration");
+        }
+        System.out.println("rpms "+calibrationPoints[upperIndex].rpms);
         double slope =  (calibrationPoints[upperIndex].rpms - calibrationPoints[upperIndex - 1].rpms)
                       / (calibrationPoints[upperIndex].distance - calibrationPoints[upperIndex - 1].distance);
         double intercept = calibrationPoints[upperIndex].rpms - slope * calibrationPoints[upperIndex].distance;

@@ -42,6 +42,10 @@ public class ProcessImage extends CommandBase {
     double offCenterFt = 0;
     double verticalDistanceResult = 0;
     double horizontalDistanceResult = 0;
+    double FOVFt = 0;
+    //double offCenterPixelsSqrt = 0;
+    //double offCenterFtSqrt = 0;
+    double trueDistanceSqrt = 0;
     double trueDistance = 0;
     double d = 0;
     double pi = 3.14159262;
@@ -191,7 +195,7 @@ public class ProcessImage extends CommandBase {
             if (maxIndex > 4) {
                 maxIndex=4;
             }
-            for(int i = 1; i <= maxIndex; i++) {
+            for(int i = 1; i < maxIndex; i++) {
                 if(TrackingCamera.reports[i].center_mass_x < TrackingCamera.leftGoal.center_mass_x) {
                     TrackingCamera.leftGoal = TrackingCamera.reports[i];
                 } if(TrackingCamera.reports[i].center_mass_x > TrackingCamera.leftGoal.center_mass_x) {
@@ -269,12 +273,16 @@ public class ProcessImage extends CommandBase {
         horizontalDistanceResult = Math.sqrt(3/4)*(horizontalFOV/2)/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.
         
         centerDistance = (verticalDistanceResult + horizontalDistanceResult) / 2;   //  Take the average to try get a more accurate measurement.
+
+        offCenterPixels = Math.abs(Math.sqrt((verticalRattle*verticalRattle)+(horizontalRattle*horizontalRattle)));
         
+        FOVFt = Math.abs(Math.sqrt(verticalFOV*verticalFOV + horizontalFOV*horizontalFOV));
         
-        offCenterPixels = Math.sqrt((verticalRattle*verticalRattle) + (horizontalRattle*horizontalRattle)); //  Finds the Linear Distance from the Center of the Image to the Center of the Goal.
-        offCenterFt = offCenterPixels*(Math.sqrt((verticalFOV*verticalFOV)+(horizontalFOV*horizontalFOV))); //  Converts the above Caluclated measurement into its proper Ft value.
+        offCenterFt = FOVFt * offCenterPixels / 800; //  Converts the above Caluclated measurement into its proper Ft value.
         
-        trueDistance = Math.sqrt((centerDistance*centerDistance)+(offCenterFt*offCenterFt));    //  Find the Linear Distance form the Lens of our Camera to the Center of our Goal.
+        trueDistanceSqrt = Math.abs(Math.sqrt((centerDistance*centerDistance)+(offCenterFt*offCenterFt)));
+        
+        trueDistance = trueDistanceSqrt/6.7;    //  Find the Linear Distance form the Lens of our Camera to the Center of our Goal.
         
         
         //if distance to target is invalid, just set it to some number

@@ -15,7 +15,7 @@ public class LazySusanRight extends CommandBase {
     public LazySusanRight() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(camera);
+       requires(camera);
        requires(lazySusan);
        requires(leftShootingMotors);
        requires(rightShootingMotors);

@@ -65,10 +65,10 @@ public class LazySusan extends PIDSubsystem {
         // e.g. yourMotor.set(output);
         output = getSetpoint()-susanGyro.getAngle();
        // System.out.println("lazy output: "+output);
-        if(output > 5.0) {
+        if(output > .5) {
           this.setRelay(RobotMap.susanRight);
           //System.out.println("Left");
-        } else if(output < -5.0) {
+        } else if(output < -.5) {
           this.setRelay(RobotMap.susanLeft);
           //System.out.println("Right");
         } else {

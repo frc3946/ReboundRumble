@@ -49,6 +49,7 @@ public class OI {
         stowBridge.whileHeld(new StowBridgeMounter());
         turnSusanLeft.whileHeld(new LazySusanLeft());
         turnSusanRight.whileHeld(new LazySusanRight());
+        toggleTurretPID.whenPressed(new SusanPIDToggle());
        
         //SmartDashboard Buttons
         SmartDashboard.putData("SetFiringMotors",smartDashboardButton1);

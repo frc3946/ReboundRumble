@@ -4,7 +4,6 @@
  */
 package com.slidellrobotics.reboundrumble.commands;
 
-import com.slidellrobotics.reboundrumble.RobotMap;
 import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.image.NIVisionException;

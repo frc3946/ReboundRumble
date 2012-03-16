@@ -29,6 +29,8 @@ public class SetFiringMotors extends CommandBase {
 //        } else {
 //            leftShootingMotors.setSetpoint(2000);
 //        }
+        leftShootingMotors.setSetpoint(0);
+        rightShootingMotors.setSetpoint(0);
     }
 
     // Called repeatedly when this Command is scheduled to run

@@ -42,9 +42,9 @@ public class ProcessImage extends CommandBase {
     double offCenterFt = 0;
     double verticalDistanceResult = 0;
     double horizontalDistanceResult = 0;
-    double FOVFt = 0;
-    //double offCenterPixelsSqrt = 0;
-    //double offCenterFtSqrt = 0;
+    double offCenter = 0;
+    double offCenterVertical = 0;
+    double offCenterHorizontal = 0;
     double trueDistanceSqrt = 0;
     double trueDistance = 0;
     double d = 0;
@@ -232,10 +232,10 @@ public class ProcessImage extends CommandBase {
             //lazySusan.setRelay(RobotMap.susanOff);   //turn off
         } else if (TrackingCamera.targetLocale < TrackingCamera.horCenter) { //and if we are facing right
             //lazySusan.setRelay(RobotMap.susanLeft);   //turn left
-            lazySusan.setSetpointRelative(-TrackingCamera.targetDiff/10);
+            lazySusan.setSetpointRelative(-5);
         } else {                                        //if we face left
             //lazySusan.setRelay(RobotMap.susanRight);   //turn right
-            lazySusan.setSetpointRelative(+TrackingCamera.targetDiff/10);
+            lazySusan.setSetpointRelative(+5);
         }
         SmartDashboard.putDouble("Angle",TrackingCamera.targetDiff);
     }
@@ -253,7 +253,7 @@ public class ProcessImage extends CommandBase {
         }
         
         verticalViewingAngle = 47;      //  Defines the Viewing
-        horizontalViewingAngle = 47;    //  Angles of our camera
+        horizontalViewingAngle = (188/3);    //  Angles of our camera
         
         imageHeight = 480;  //  Image Height
         targetHeight = TrackingCamera.targetGoal.boundingRectHeight;    //  Sets the height of our target.
@@ -269,20 +269,17 @@ public class ProcessImage extends CommandBase {
         verticalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_y - (imageHeight/2));   //  Finds the vertical off-ceneterness.
         horizontalRattle = Math.abs(TrackingCamera.targetGoal.center_mass_x - (imageWidth/2));  //  Finds the horizontal off-centerness.
         
-        verticalDistanceResult = Math.sqrt(4/3)*(verticalFOV/2)/Math.tan(verticalViewingAngle/2);   //  Provides the Result of our Vertically-Based Calculation.
-        horizontalDistanceResult = Math.sqrt(3/4)*(horizontalFOV/2)/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.
+        verticalDistanceResult = verticalFOV/Math.tan(verticalViewingAngle/2);   //  Provides the Result of our Vertically-Based Calculation.
+        horizontalDistanceResult = horizontalFOV/Math.tan(horizontalViewingAngle/2); //  Provides the Result of our Horizontally-Based Calculation.
         
         centerDistance = (verticalDistanceResult + horizontalDistanceResult) / 2;   //  Take the average to try get a more accurate measurement.
 
-        offCenterPixels = Math.abs(Math.sqrt((verticalRattle*verticalRattle)+(horizontalRattle*horizontalRattle)));
+        offCenterVertical = verticalRattle*(verticalFOV/imageHeight);
+        offCenterHorizontal = horizontalRattle*(horizontalFOV/imageWidth);
         
-        FOVFt = Math.abs(Math.sqrt(verticalFOV*verticalFOV + horizontalFOV*horizontalFOV));
+        offCenter = Math.abs(Math.sqrt((offCenterVertical*offCenterVertical)+(offCenterHorizontal*offCenterHorizontal)));
         
-        offCenterFt = FOVFt * offCenterPixels / 800; //  Converts the above Caluclated measurement into its proper Ft value.
-        
-        trueDistanceSqrt = Math.abs(Math.sqrt((centerDistance*centerDistance)+(offCenterFt*offCenterFt)));
-        
-        trueDistance = trueDistanceSqrt/6.7;    //  Find the Linear Distance form the Lens of our Camera to the Center of our Goal.
+        trueDistance = Math.abs(Math.sqrt((centerDistance*centerDistance)+(offCenter*offCenter)));    //  Find the Linear Distance form the Lens of our Camera to the Center of our Goal.
         
         
         //if distance to target is invalid, just set it to some number

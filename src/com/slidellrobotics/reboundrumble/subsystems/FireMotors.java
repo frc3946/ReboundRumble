@@ -128,8 +128,8 @@ public class FireMotors extends PIDSubsystem {
             
         }
           //System.out.println("Use PID "+victorSetting);
-        //victor.set(victorSetting);
-        victor.set(getSetpoint());
+        victor.set(victorSetting);
+        //victor.set(getSetpoint());
 
         
     }

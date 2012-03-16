@@ -5,6 +5,7 @@
 package com.slidellrobotics.reboundrumble.commands.AutonomousCommands;
 
 import com.slidellrobotics.reboundrumble.commands.CommandBase;
+import com.slidellrobotics.reboundrumble.subsystems.TrackingCamera;
 
 /**
  *
@@ -29,7 +30,11 @@ public class AutoAim extends CommandBase {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        if(TrackingCamera.targetDiff < 10) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // Called once after isFinished returns true

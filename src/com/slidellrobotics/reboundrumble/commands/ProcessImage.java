@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Allister Wright
  */
 public class ProcessImage extends CommandBase {
-    static int stepNo =1;
+    private static int stepNo =1;
     
     private static double lastTime = 0;
     private static double thisTime = 0;
@@ -214,7 +214,7 @@ public class ProcessImage extends CommandBase {
         }
     }
     
-    private void findAngle() {
+    public void findAngle() {
         System.out.println("findAngle");
         if (TrackingCamera.targetGoal == null){
             return;
@@ -307,5 +307,17 @@ public class ProcessImage extends CommandBase {
         //SmartDashboard.putDouble("Center Point Distance", centerDistance);
         SmartDashboard.putDouble("Distance", d);
         SmartDashboard.putDouble("Launch", TrackingCamera.launchSpeed);
+    }
+    
+    public static int getStepNo() {
+        return stepNo;
+    }
+    
+    public static void setStepNo(int stepNo) {
+        ProcessImage.stepNo = stepNo;
+    }
+    
+    public static double getAngle() {
+        return TrackingCamera.targetDiff;
     }
 }

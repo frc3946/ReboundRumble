@@ -28,13 +28,13 @@ public class AutoFire extends CommandBase {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
         firePiston.fire();
-        Timer.delay(.4);
+        Timer.delay(.5);
         firePiston.stow();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

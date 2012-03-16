@@ -5,7 +5,7 @@
 package com.slidellrobotics.reboundrumble.commands;
 
 import com.slidellrobotics.reboundrumble.commands.AutonomousCommands.*;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  * @author Gus Michel
  */
 public class Autonomous extends CommandGroup {
-    
+    Command processImage = new ProcessImage();
     public Autonomous() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
@@ -32,6 +32,12 @@ public class Autonomous extends CommandGroup {
         // a CommandGroup containing them would require both the chassis and the
         // arm.
         
+        addSequential(new AutoAim());
+        addSequential(new AutoFire());
+        addParallel(new AutoLoad());
+        addSequential(new AutoAim());
+        addSequential(new AutoFire());
+        /*
         addSequential(new HighGear());
         //addSequential(new AutoSusanRight());
         addParallel(new AutoAim());
@@ -48,5 +54,6 @@ public class Autonomous extends CommandGroup {
         addSequential(new AutoDropArm());
         Timer.delay(.4);
         addSequential(new AutoStowArm());
+         */
     }   
 }

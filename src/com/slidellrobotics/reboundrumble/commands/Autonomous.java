@@ -31,7 +31,8 @@ public class Autonomous extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-        /**@TODO Find out how many degrees it is from the turret side to about center. So that we can have the robot front face goal and not worry so much about hitting the side, even though we did fix the sprocket issue.
+        //**@TODO Find out how many degrees it is from the turret side to about center. So that we can have the robot front face goal and not worry so much about hitting the side, even though we did fix the sprocket issue.
+        addSequential(new AutoCenterSusan());
         addSequential(new AutoAim());
         addSequential(new AutoFire());
         addParallel(new AutoLoad());

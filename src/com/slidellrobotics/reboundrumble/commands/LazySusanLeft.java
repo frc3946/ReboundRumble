@@ -11,19 +11,27 @@ import com.slidellrobotics.reboundrumble.RobotMap;
  * @author Gus Michel
  */
 public class LazySusanLeft extends CommandBase {
+    private boolean wasEnabled;
     
     public LazySusanLeft() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-        requires(camera);
+       requires(camera);
        requires(lazySusan);
        requires(leftShootingMotors);
        requires(rightShootingMotors);
+       if(lazySusan.isEnabled()) {
+           wasEnabled = true;
+       } else {
+           wasEnabled = false;
+       }
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        lazySusan.disable();
+        if(lazySusan.isEnabled()) {
+            lazySusan.disable();
+        }
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -39,8 +47,10 @@ public class LazySusanLeft extends CommandBase {
     // Called once after isFinished returns true
     protected void end() {
         lazySusan.getSpike().set(RobotMap.susanOff);
-        lazySusan.enable();
         lazySusan.setSetpoint(lazySusan.getGyro().getAngle());
+        if(wasEnabled) {
+            lazySusan.enable();
+        }
     }
 
     // Called when another command which requires one or more of the same

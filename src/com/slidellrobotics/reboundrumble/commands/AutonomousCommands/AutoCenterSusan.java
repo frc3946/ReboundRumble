@@ -13,15 +13,14 @@ import edu.wpi.first.wpilibj.Timer;
  *
  * @author 10491477
  */
-public class AutoSusanRight extends CommandBase {
-    private Value right, stop;   
+public class AutoCenterSusan extends CommandBase {
+    //**TODO Put in Degrees to center of LazySusan from 0 at the side.
+    private final int CENTERANGLE = 40; 
     
-    public AutoSusanRight() {
+    public AutoCenterSusan() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
         requires(lazySusan);
-        right = Relay.Value.kForward;
-        stop = Relay.Value.kOff;
     }
 
     // Called just before this Command runs the first time
@@ -30,9 +29,7 @@ public class AutoSusanRight extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        lazySusan.setRelay(right);
-        Timer.delay(4);
-        lazySusan.setRelay(stop);
+        lazySusan.setSetpoint(CENTERANGLE);
     }
 
     // Make this return true when this Command no longer needs to run execute()

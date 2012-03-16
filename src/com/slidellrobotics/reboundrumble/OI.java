@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class OI {
     //Left Joystick
     private Joystick leftJoystick = new Joystick(RobotMap.leftJoystick); //Left Joystick
-    private Button intakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.intakeFeedBeltButton);
-    private Button outtakeFeedBelt = new JoystickButton(leftJoystick, RobotMap.outtakeFeedBeltButton);
     private Button dropBridge = new JoystickButton(leftJoystick, RobotMap.dropBridgeButton);
     private Button stowBridge = new JoystickButton(leftJoystick, RobotMap.stowBridgeButton);
     
@@ -30,6 +28,9 @@ public class OI {
     //Third Joystick
     private Joystick thirdJoystick = new Joystick(RobotMap.thirdJoystick); //2nd Driver's Joystick
     private Button fireBall = new JoystickButton(thirdJoystick, RobotMap.fireButton); //Button to fire the ball
+    private Button toggleTurretPID = new JoystickButton(thirdJoystick, RobotMap.ToggleTurretButton);
+    private Button outtakeFeedBelt = new JoystickButton(thirdJoystick, RobotMap.outtakeFeedBeltButton);
+    private Button intakeFeedBelt = new JoystickButton(thirdJoystick, RobotMap.intakeFeedBeltButton);
     private Button turnSusanLeft = new JoystickButton(thirdJoystick, RobotMap.leftLazySusanButton);
     private Button turnSusanRight = new JoystickButton(thirdJoystick, RobotMap.rightLazySusanButton);
     //SmartDashBoard Buttons

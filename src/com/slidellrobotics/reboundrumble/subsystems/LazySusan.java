@@ -26,6 +26,7 @@ public class LazySusan extends PIDSubsystem {
     private Gyro susanGyro;
     
     private final String dashName = "Lazy Susan";
+    private boolean enabled;
 
     // Initialize your subsystem here
     public LazySusan() {
@@ -93,5 +94,19 @@ public class LazySusan extends PIDSubsystem {
     
     public Gyro getGyro() {
         return susanGyro;
+    }
+    
+    public void enable() {
+        super.enable();
+        enabled = true;
+    }
+    
+    public void disable() {
+        super.disable();
+        enabled = false;
+    }
+    
+    public boolean isEnabled() {
+        return enabled;
     }
 }

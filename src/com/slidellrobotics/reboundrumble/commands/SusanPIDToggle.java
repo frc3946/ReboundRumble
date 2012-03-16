@@ -5,57 +5,50 @@
 package com.slidellrobotics.reboundrumble.commands;
 
 import com.slidellrobotics.reboundrumble.RobotMap;
+import edu.wpi.first.wpilibj.Relay.Value;
 
 /**
  *
  * @author Gus Michel
  */
-public class LazySusanRight extends CommandBase {
-    private boolean wasEnabled;
+public class SusanPIDToggle extends CommandBase {
     
-    public LazySusanRight() {
+    public SusanPIDToggle() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-       requires(camera);
-       requires(lazySusan);
-       requires(leftShootingMotors);
-       requires(rightShootingMotors);
-       if(lazySusan.isEnabled()) {
-           wasEnabled = true;
-       } else {
-           wasEnabled = false;
-       }
+        requires(camera);
+        requires(lazySusan);
+        requires(leftShootingMotors);
+        requires(rightShootingMotors);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        if(lazySusan.isEnabled()) {
-            lazySusan.disable();
-        }
+        
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        lazySusan.getSpike().set(RobotMap.susanRight);
+        if(lazySusan.isEnabled()) {
+            lazySusan.disable();
+            lazySusan.setRelay(RobotMap.susanOff);
+        } else {
+            lazySusan.setSetpoint(lazySusan.getGyro().getAngle());
+            lazySusan.enable();
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        lazySusan.getSpike().set(RobotMap.susanOff);
-        lazySusan.setSetpoint(lazySusan.getGyro().getAngle());
-        if(wasEnabled) {
-            lazySusan.enable();
-        }
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        end();
     }
 }
